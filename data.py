@@ -2,6 +2,7 @@ import csv
 import numpy as np
 from scipy import signal
 from scipy.io import wavfile
+import matplotlib.pyplot as plt
 
 filenames = ['96-22b124-L', '96-41b228-L', '96-44b243-E2']
 
@@ -15,18 +16,24 @@ for filename in filenames:
     print('number of samples:', len(samples))
     print('duration (sec):', len(samples) / sample_rate)
 
-    T_real = 0.2
+    T_real = 0.1
     T = T_real * 8 / 7
     nperseg = int(sample_rate * T)
     noverlap = nperseg // 8
 
     frequencies, times, spectrogram = signal.spectrogram(samples, sample_rate, nperseg=nperseg, noverlap=noverlap)
+    # frequencies, times, spectrogram = signal.spectrogram(samples, sample_rate)
     print('frequencies:')
     print(frequencies, len(frequencies))
     print('times:')
     print(times, len(times))
     print('spectrogram:')
     print(spectrogram, spectrogram.shape)
+
+    # plt.pcolormesh(times, frequencies, spectrogram)
+    # plt.ylabel('Frequency [Hz]')
+    # plt.xlabel('Time [sec]')
+    # plt.show()
 
     # read txt annotations
     calls = None
