@@ -1,0 +1,6 @@
+train: (1959, 5042)
+test: (1084, 5042)
+-----training-----
+accuracy_score:  0.9785604900459418
+-----testing-----
+accuracy_score:  0.9603321033210332
