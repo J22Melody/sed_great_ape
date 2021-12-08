@@ -1,0 +1,12 @@
+train: (5479, 2522)
+test: (609, 2522)
+-----training-----
+precision_score:  0.9877300613496932
+recall_score:  0.8797814207650273
+f1_score:  0.9306358381502889
+accuracy_score:  0.9956196386201862
+-----testing-----
+precision_score:  0.5625
+recall_score:  0.4090909090909091
+f1_score:  0.47368421052631576
+accuracy_score:  0.9671592775041051
