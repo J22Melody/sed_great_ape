@@ -1,8 +1,8 @@
 import random
 import math
 import time
+from tqdm import tqdm
 import numpy as np
-import pandas as pd
 import matplotlib.pyplot as plt
 import itertools
 from pathlib import Path
@@ -11,18 +11,19 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 import torch.optim as optim
-from torch.utils.data import TensorDataset, IterableDataset, DataLoader
+from torch.utils.data import TensorDataset, DataLoader
 from sklearn.metrics import precision_score, recall_score, f1_score, accuracy_score
 
-DATA_PATH = '../data/data_waveform_1_split'
+
+DATA_PATH = './data_waveform_1'
 MODEL_PATH = './torch_cnn.pt'
 
 batch_size = 256
 log_interval = 20
-n_epoch = 100
+n_epoch = 50
 lr = 0.001
 step_size = 10
-patience = 7
+patience = 10
 step_factor = 0.3
 
 seed = 42
@@ -31,25 +32,76 @@ torch.manual_seed(0)
 np.random.seed(0)
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-print(device)
 start_time = time.time()
 
-# read data
+# # data loading
 
-class MyIterableDataset(IterableDataset):
-    def __init__(self, csv_path):
-        super(MyIterableDataset).__init__()
-        self.csv_path = csv_path
+# number_all = 300
 
-    def __iter__(self):
-        reader = pd.read_csv(self.csv_path, sep=",", header=None, chunksize=1000)
+# paths = Path(DATA_PATH).rglob('*.csv')
+# paths = list(itertools.islice(paths, number_all))
+# print('Split {} files: {}'.format(len(paths), paths))
 
-        for chunk in reader:
-            chunk_arr = chunk.to_numpy()
-            for i in range(chunk_arr.shape[0]):
-                yield torch.tensor(chunk_arr[i, 1:]).float(), torch.tensor(chunk_arr[i, 0]).float()
+# data = [np.loadtxt(path, delimiter=',') for path in paths]
+# data = np.concatenate(data, axis=0)
 
-print('Reading data ...')
+# # data split
+# random.shuffle(data)
+
+# total_size = len(data)
+# train_size = math.floor(total_size*0.8)
+# dev_size = math.floor(total_size*0.1)
+# test_size = total_size - train_size - dev_size
+
+# dev = torch.Tensor(data[:dev_size])
+# test = torch.Tensor(data[dev_size:test_size + dev_size])
+# train = torch.Tensor(data[test_size + dev_size:])
+
+# print('Train:', train.size())
+# print('Dev:', dev.size())
+# print('Test:', test.size())
+
+# number_1 = train[:, 0].sum().item()
+# print('Number of 1 samples', number_1)
+# ratio_1 = number_1 / len(train)
+# print('Ratio of 1 samples', ratio_1)
+
+# data loading
+
+number_all = 300
+
+paths = Path(DATA_PATH).rglob('*.csv')
+paths = list(itertools.islice(paths, number_all))
+print('Split {} files: {}'.format(len(paths), paths))
+
+data = [np.loadtxt(path, delimiter=',') for path in paths]
+random.shuffle(data)
+
+# data split
+
+total_size = len(data)
+train_size = math.floor(total_size*0.8)
+dev_size = math.floor(total_size*0.1)
+test_size = total_size - train_size - dev_size
+
+dev = torch.tensor(np.concatenate(data[:dev_size], axis=0)).float()
+test = torch.tensor(np.concatenate(data[dev_size:test_size + dev_size], axis=0)).float()
+train = torch.tensor(np.concatenate(data[test_size + dev_size:], axis=0)).float()
+
+print('Train:', train.size())
+print('Dev:', dev.size())
+print('Test:', test.size())
+
+number_1 = train[:, 0].sum().item()
+print('Number of 1 samples', number_1)
+ratio_1 = number_1 / len(train)
+print('Ratio of 1 samples', ratio_1)
+
+# dataset and dataloader
+
+train_set = TensorDataset(train[:, 1:], train[:, 0])
+dev_set = TensorDataset(dev[:, 1:], dev[:, 0])
+test_set = TensorDataset(test[:, 1:], test[:, 0])
 
 if device == "cuda":
     num_workers = 1
@@ -60,11 +112,6 @@ else:
 
 g = torch.Generator()
 g.manual_seed(0)
-
-# train = torch.Tensor(np.loadtxt('{}/train.csv'.format(DATA_PATH), delimiter=','))
-# print('Train:', train.size())
-# train_set = TensorDataset(train[:, 1:], train[:, 0])
-train_set = MyIterableDataset('{}/train.csv'.format(DATA_PATH))
 train_loader = DataLoader(
     train_set,
     batch_size=batch_size,
@@ -72,11 +119,6 @@ train_loader = DataLoader(
     pin_memory=pin_memory,
     generator=g,
 )
-
-# dev = torch.Tensor(np.loadtxt('{}/dev.csv'.format(DATA_PATH), delimiter=','))
-# print('Dev:', dev.size())
-# dev_set = TensorDataset(dev[:, 1:], dev[:, 0])
-dev_set = MyIterableDataset('{}/dev.csv'.format(DATA_PATH))
 dev_loader = DataLoader(
     dev_set,
     batch_size=batch_size,
@@ -85,11 +127,6 @@ dev_loader = DataLoader(
     drop_last=False,
     generator=g,
 )
-
-# test = torch.Tensor(np.loadtxt('{}/test.csv'.format(DATA_PATH), delimiter=','))
-# print('Test:', test.size())
-# test_set = TensorDataset(test[:, 1:], test[:, 0])
-test_set = MyIterableDataset('{}/test.csv'.format(DATA_PATH))
 test_loader = DataLoader(
     test_set,
     batch_size=batch_size,
@@ -98,6 +135,8 @@ test_loader = DataLoader(
     drop_last=False,
     generator=g,
 )
+
+print("--- %s seconds ---" % (time.time() - start_time))
 
 # model
 
@@ -152,16 +191,10 @@ scheduler = optim.lr_scheduler.StepLR(optimizer, step_size=step_size, gamma=step
 
 # train, dev, test functions
 
-def get_likely_index(tensor):
-    # find most likely label index for each element in the batch
-    return tensor.argmax(dim=-1)
-
 def train(model, epoch, log_interval):
     model.train()
-    pred_list = []
-    target_list = []
-
     for batch_idx, (data, target) in enumerate(train_loader):
+
         data = data.to(device)
         data = data.view(data.size()[0], 1, -1)
         target = target.to(device).long()
@@ -169,12 +202,8 @@ def train(model, epoch, log_interval):
         output = model(data)
 
         # negative log-likelihood for a tensor of size (batch x 1 x n_output)
-        loss = F.nll_loss(output.squeeze(), target, weight=torch.tensor([1.0, 20.0]).to(device))
-        # loss = F.nll_loss(output.squeeze(), target)
-        pred = get_likely_index(output)
-
-        pred_list.append(pred.squeeze())
-        target_list.append(target.squeeze())
+        # loss = F.nll_loss(output.squeeze(), target, weight=torch.tensor([1.0, 100.0]))
+        loss = F.nll_loss(output.squeeze(), target)
 
         optimizer.zero_grad()
         loss.backward()
@@ -182,20 +211,16 @@ def train(model, epoch, log_interval):
 
         # print training stats
         if batch_idx % log_interval == 0:
-            print(f"Train Epoch: {epoch} loss: {loss.item():.6f}")
+            print(f"Train Epoch: {epoch} [{batch_idx * len(data)}/{len(train_loader.dataset)} ({100. * batch_idx / len(train_loader):.0f}%)]\tLoss: {loss.item():.6f}")
 
+        # update progress bar
+        pbar.update(pbar_update)
         # record loss
         losses.append(loss.item())
-    
-    pred = torch.cat(pred_list).to('cpu').detach().numpy()
-    target = torch.cat(target_list).to('cpu').detach().numpy()
 
-    accuracy = accuracy_score(pred, target)
-    precision = precision_score(pred, target)
-    recall = recall_score(pred, target)
-    f1 = f1_score(pred, target)
-
-    print(f"\nTrain Epoch: {epoch} accuracy: {accuracy:.2f} precision: {precision:.2f} recall: {recall:.2f} f1: {f1:.2f}\n")
+def get_likely_index(tensor):
+    # find most likely label index for each element in the batch
+    return tensor.argmax(dim=-1)
 
 def validate(model, epoch):
     model.eval()
@@ -214,6 +239,9 @@ def validate(model, epoch):
         pred_list.append(pred.squeeze())
         target_list.append(target.squeeze())
 
+        # update progress bar
+        pbar.update(pbar_update)
+
     pred = torch.cat(pred_list).to('cpu').numpy()
     target = torch.cat(target_list).to('cpu').numpy()
 
@@ -222,10 +250,9 @@ def validate(model, epoch):
     recall = recall_score(pred, target)
     f1 = f1_score(pred, target)
 
-    scheduler.step()
-    # scheduler.step(f1)
+    print(f"Validate Epoch: {epoch} accuracy: {accuracy:.2f} precision: {precision:.2f} recall: {recall:.2f} f1: {f1:.2f}\n")
 
-    print(f"\nValidate Epoch: {epoch} accuracy: {accuracy:.2f} precision: {precision:.2f} recall: {recall:.2f} f1: {f1:.2f}\n")
+    return f1
 
 def test(model):
     model.eval()
@@ -252,18 +279,26 @@ def test(model):
     recall = recall_score(pred, target)
     f1 = f1_score(pred, target)
 
-    print(f"\nTest: accuracy: {accuracy:.2f} precision: {precision:.2f} recall: {recall:.2f} f1: {f1:.2f}\n")
+    print(f"Test: accuracy: {accuracy:.2f} precision: {precision:.2f} recall: {recall:.2f} f1: {f1:.2f}\n")
+
+    return f1
 
 # train and save
 
+pbar_update = 1 / (len(train_loader) + len(dev_loader))
 losses = []
-for epoch in range(1, n_epoch + 1):
-    train(model, epoch, log_interval)
-    validate(model, epoch)
-    torch.save(model.state_dict(), MODEL_PATH)
-    print("--- %s seconds ---" % (time.time() - start_time))
 
-# # Let's plot the training loss versus the number of iteration.
+with tqdm(total=n_epoch) as pbar:
+    for epoch in range(1, n_epoch + 1):
+        train(model, epoch, log_interval)
+        dev_score = validate(model, epoch)
+
+        scheduler.step()
+        
+        if dev_score > 0.8:
+            torch.save(model.state_dict(), MODEL_PATH)
+
+# Let's plot the training loss versus the number of iteration.
 # plt.plot(losses)
 # plt.title("training loss")
 # plt.show()
@@ -274,7 +309,6 @@ model = M5(n_input=1, n_output=2)
 model.to(device)
 model.load_state_dict(torch.load(MODEL_PATH))
 test(model)
-
 
 print("--- %s seconds ---" % (time.time() - start_time))
 
