@@ -53,15 +53,12 @@ def parse_raw():
         target = torch.zeros(1, new_length)
         target[:, :length] = transformed
         target = target.view(-1, new_sample_rate)
-        print(target.size())
 
         # wav2vec2
         with torch.inference_mode():
             features, _ = model.extract_features(target)
         output_features = features[len(features) - 1]
-        print(output_features.size())
         output_features = output_features.view(output_features.size()[0], -1).cpu()
-        print(output_features.size())
 
         # read txt annotations
         calls = None
@@ -85,12 +82,10 @@ def parse_raw():
 
         data = torch.cat((y, output_features), dim=1)
 
-        print(data.size())
-
         np.savetxt('./data_wav2vec2_1/{}.csv'.format(filename), data.numpy(), delimiter=',')
 
 def data_split():
-    paths = Path('./data_wav2vec2_1').rglob('94*.csv')
+    paths = Path('./data_wav2vec2_1').rglob('*.csv')
     paths = list(itertools.islice(paths, 999999))
     print('Split {} files: {}'.format(len(paths), paths))
     data = [np.loadtxt(path, delimiter=',') for path in paths]
@@ -117,5 +112,5 @@ def data_split():
 
     print("--- %s seconds ---" % (time.time() - start_time))
 
-# parse_raw()
+parse_raw()
 data_split()
