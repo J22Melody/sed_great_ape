@@ -14,15 +14,16 @@ import torch.optim as optim
 from torch.utils.data import TensorDataset, DataLoader
 from sklearn.metrics import precision_score, recall_score, f1_score, accuracy_score
 
-DATA_PATH = './data_waveform_1_split'
+
+DATA_PATH = './data_waveform_1'
 MODEL_PATH = './torch_cnn.pt'
 
 batch_size = 256
 log_interval = 20
-n_epoch = 100
-lr = 0.01
+n_epoch = 50
+lr = 0.001
 step_size = 10
-patience = 7
+patience = 10
 step_factor = 0.3
 
 seed = 42
@@ -33,15 +34,68 @@ np.random.seed(0)
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 start_time = time.time()
 
-# read data
+# # data loading
 
-dev = torch.Tensor(np.loadtxt('{}/dev.csv'.format(DATA_PATH), delimiter=','))
-test = torch.Tensor(np.loadtxt('{}/test.csv'.format(DATA_PATH), delimiter=','))
-train = torch.Tensor(np.loadtxt('{}/train.csv'.format(DATA_PATH), delimiter=','))
+# number_all = 300
+
+# paths = Path(DATA_PATH).rglob('*.csv')
+# paths = list(itertools.islice(paths, number_all))
+# print('Split {} files: {}'.format(len(paths), paths))
+
+# data = [np.loadtxt(path, delimiter=',') for path in paths]
+# data = np.concatenate(data, axis=0)
+
+# # data split
+# random.shuffle(data)
+
+# total_size = len(data)
+# train_size = math.floor(total_size*0.8)
+# dev_size = math.floor(total_size*0.1)
+# test_size = total_size - train_size - dev_size
+
+# dev = torch.Tensor(data[:dev_size])
+# test = torch.Tensor(data[dev_size:test_size + dev_size])
+# train = torch.Tensor(data[test_size + dev_size:])
+
+# print('Train:', train.size())
+# print('Dev:', dev.size())
+# print('Test:', test.size())
+
+# number_1 = train[:, 0].sum().item()
+# print('Number of 1 samples', number_1)
+# ratio_1 = number_1 / len(train)
+# print('Ratio of 1 samples', ratio_1)
+
+# data loading
+
+number_all = 300
+
+paths = Path(DATA_PATH).rglob('*.csv')
+paths = list(itertools.islice(paths, number_all))
+print('Split {} files: {}'.format(len(paths), paths))
+
+data = [np.loadtxt(path, delimiter=',') for path in paths]
+random.shuffle(data)
+
+# data split
+
+total_size = len(data)
+train_size = math.floor(total_size*0.8)
+dev_size = math.floor(total_size*0.1)
+test_size = total_size - train_size - dev_size
+
+dev = torch.tensor(np.concatenate(data[:dev_size], axis=0)).float()
+test = torch.tensor(np.concatenate(data[dev_size:test_size + dev_size], axis=0)).float()
+train = torch.tensor(np.concatenate(data[test_size + dev_size:], axis=0)).float()
 
 print('Train:', train.size())
 print('Dev:', dev.size())
 print('Test:', test.size())
+
+number_1 = train[:, 0].sum().item()
+print('Number of 1 samples', number_1)
+ratio_1 = number_1 / len(train)
+print('Ratio of 1 samples', ratio_1)
 
 # dataset and dataloader
 
@@ -81,6 +135,8 @@ test_loader = DataLoader(
     drop_last=False,
     generator=g,
 )
+
+print("--- %s seconds ---" % (time.time() - start_time))
 
 # model
 
@@ -146,7 +202,7 @@ def train(model, epoch, log_interval):
         output = model(data)
 
         # negative log-likelihood for a tensor of size (batch x 1 x n_output)
-        # loss = F.nll_loss(output.squeeze(), target, weight=torch.tensor([1.0, 20.0]))
+        # loss = F.nll_loss(output.squeeze(), target, weight=torch.tensor([1.0, 100.0]))
         loss = F.nll_loss(output.squeeze(), target)
 
         optimizer.zero_grad()
@@ -194,9 +250,9 @@ def validate(model, epoch):
     recall = recall_score(pred, target)
     f1 = f1_score(pred, target)
 
-    # scheduler.step(f1)
-
     print(f"Validate Epoch: {epoch} accuracy: {accuracy:.2f} precision: {precision:.2f} recall: {recall:.2f} f1: {f1:.2f}\n")
+
+    return f1
 
 def test(model):
     model.eval()
@@ -225,6 +281,8 @@ def test(model):
 
     print(f"Test: accuracy: {accuracy:.2f} precision: {precision:.2f} recall: {recall:.2f} f1: {f1:.2f}\n")
 
+    return f1
+
 # train and save
 
 pbar_update = 1 / (len(train_loader) + len(dev_loader))
@@ -233,14 +291,17 @@ losses = []
 with tqdm(total=n_epoch) as pbar:
     for epoch in range(1, n_epoch + 1):
         train(model, epoch, log_interval)
-        validate(model, epoch)
+        dev_score = validate(model, epoch)
+
         scheduler.step()
-        torch.save(model.state_dict(), MODEL_PATH)
+        
+        if dev_score > 0.8:
+            torch.save(model.state_dict(), MODEL_PATH)
 
 # Let's plot the training loss versus the number of iteration.
-plt.plot(losses)
-plt.title("training loss")
-plt.show()
+# plt.plot(losses)
+# plt.title("training loss")
+# plt.show()
 
 # load and test
 
@@ -248,7 +309,6 @@ model = M5(n_input=1, n_output=2)
 model.to(device)
 model.load_state_dict(torch.load(MODEL_PATH))
 test(model)
-
 
 print("--- %s seconds ---" % (time.time() - start_time))
 
