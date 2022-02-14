@@ -5,6 +5,7 @@ import itertools
 import time
 import os
 from pathlib import Path
+import matplotlib.pyplot as plt
 
 import numpy as np
 import torch
@@ -16,12 +17,17 @@ torch.manual_seed(0)
 np.random.seed(0)
 
 start_time = time.time()
+device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
 TXT_PATH = './data_full/Klaus_Zuberbuhler_1994_2002/Raven Pro Tables'
 WAV_PATH = './data_full/Klaus_Zuberbuhler_1994_2002/Recordings'
 
 def parse_raw():
+    bundle = torchaudio.pipelines.WAV2VEC2_BASE
+    model = bundle.get_model().to(device)
+
     wavpaths = Path(WAV_PATH).rglob('*.wav')
+
     for i, wavpath in enumerate(wavpaths):
         wavpath = str(wavpath)
         filename = wavpath.split('/')[-1].split('.')[0]
@@ -34,9 +40,10 @@ def parse_raw():
 
         # read wav file
         waveform, sample_rate = torchaudio.load(wavpath)
+        waveform = waveform.to(device)
 
         # transform
-        new_sample_rate = 8000
+        new_sample_rate = bundle.sample_rate
         transform = torchaudio.transforms.Resample(orig_freq=sample_rate, new_freq=new_sample_rate)
         transformed = transform(waveform)
 
@@ -46,6 +53,15 @@ def parse_raw():
         target = torch.zeros(1, new_length)
         target[:, :length] = transformed
         target = target.view(-1, new_sample_rate)
+        print(target.size())
+
+        # wav2vec2
+        with torch.inference_mode():
+            features, _ = model.extract_features(target)
+        output_features = features[len(features) - 1]
+        print(output_features.size())
+        output_features = output_features.view(output_features.size()[0], -1).cpu()
+        print(output_features.size())
 
         # read txt annotations
         calls = None
@@ -56,7 +72,7 @@ def parse_raw():
 
         # create y
         y = []
-        for i in range(target.size()[0]):
+        for i in range(output_features.size()[0]):
             is_call = 0
             t_begin = i
             t_end = i + 1
@@ -67,12 +83,14 @@ def parse_raw():
             y.append(is_call)
         y = torch.tensor(y).view(-1, 1)
 
-        data = torch.cat((y, target), dim=1)
+        data = torch.cat((y, output_features), dim=1)
 
-        np.savetxt('./data_waveform_1/{}.csv'.format(filename), data.numpy(), delimiter=',')
+        print(data.size())
+
+        np.savetxt('./data_wav2vec2_1/{}.csv'.format(filename), data.numpy(), delimiter=',')
 
 def data_split():
-    paths = Path('./data_waveform_1').rglob('*.csv')
+    paths = Path('./data_wav2vec2_1').rglob('94*.csv')
     paths = list(itertools.islice(paths, 999999))
     print('Split {} files: {}'.format(len(paths), paths))
     data = [np.loadtxt(path, delimiter=',') for path in paths]
@@ -93,9 +111,9 @@ def data_split():
     print('Dev:', dev.shape)
     print('Test:', test.shape)
 
-    np.savetxt('./data_waveform_1_split/train.csv', train, delimiter=',')
-    np.savetxt('./data_waveform_1_split/dev.csv', dev, delimiter=',')
-    np.savetxt('./data_waveform_1_split/test.csv', test, delimiter=',')
+    np.savetxt('./data_wav2vec2_1_split/train.csv', train, delimiter=',')
+    np.savetxt('./data_wav2vec2_1_split/dev.csv', dev, delimiter=',')
+    np.savetxt('./data_wav2vec2_1_split/test.csv', test, delimiter=',')
 
     print("--- %s seconds ---" % (time.time() - start_time))
 

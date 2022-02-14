@@ -14,11 +14,13 @@ import torch.optim as optim
 from torch.utils.data import TensorDataset, IterableDataset, DataLoader
 from sklearn.metrics import precision_score, recall_score, f1_score, accuracy_score
 
-# DATA_PATH = '../data/data_waveform_1_split'
-DATA_PATH = './data_waveform_1_split'
-MODEL_PATH = './torch_cnn.pt'
 
-batch_size = 256
+DATA_PATH = './data_wav2vec2_1_split'
+MODEL_PATH = './torch_rnn.pt'
+
+n_embedding = 768
+n_hidden = 16
+batch_size = 16
 log_interval = 20
 n_epoch = 100
 lr = 0.001
@@ -43,7 +45,7 @@ class MyIterableDataset(IterableDataset):
         self.csv_path = csv_path
 
     def __iter__(self):
-        reader = pd.read_csv(self.csv_path, sep=",", header=None, chunksize=5000)
+        reader = pd.read_csv(self.csv_path, sep=",", header=None, chunksize=batch_size)
 
         for chunk in reader:
             chunk_arr = chunk.to_numpy()
@@ -104,42 +106,21 @@ print("--- %s seconds ---" % (time.time() - start_time))
 
 # model
 
-class M5(nn.Module):
-    def __init__(self, n_input=1, n_output=35, stride=16, n_channel=32):
-        super().__init__()
-        self.conv1 = nn.Conv1d(n_input, n_channel, kernel_size=80, stride=stride)
-        self.bn1 = nn.BatchNorm1d(n_channel)
-        self.pool1 = nn.MaxPool1d(4)
-        self.conv2 = nn.Conv1d(n_channel, n_channel, kernel_size=3)
-        self.bn2 = nn.BatchNorm1d(n_channel)
-        self.pool2 = nn.MaxPool1d(4)
-        self.conv3 = nn.Conv1d(n_channel, 2 * n_channel, kernel_size=3)
-        self.bn3 = nn.BatchNorm1d(2 * n_channel)
-        self.pool3 = nn.MaxPool1d(4)
-        self.conv4 = nn.Conv1d(2 * n_channel, 2 * n_channel, kernel_size=3)
-        self.bn4 = nn.BatchNorm1d(2 * n_channel)
-        self.pool4 = nn.MaxPool1d(4)
-        self.fc1 = nn.Linear(2 * n_channel, n_output)
+class LSTM(nn.Module):
+    def __init__(self, embedding_dim, hidden_dim, tagset_size):
+        super(LSTM, self).__init__()
+        self.hidden_dim = hidden_dim
+        self.lstm = nn.LSTM(embedding_dim, hidden_dim, num_layers=2, dropout=0.2)
+        self.hidden2tag = nn.Linear(hidden_dim, tagset_size)
 
-    def forward(self, x):
-        x = self.conv1(x)
-        x = F.relu(self.bn1(x))
-        x = self.pool1(x)
-        x = self.conv2(x)
-        x = F.relu(self.bn2(x))
-        x = self.pool2(x)
-        x = self.conv3(x)
-        x = F.relu(self.bn3(x))
-        x = self.pool3(x)
-        x = self.conv4(x)
-        x = F.relu(self.bn4(x))
-        x = self.pool4(x)
-        x = F.avg_pool1d(x, x.shape[-1])
-        x = x.permute(0, 2, 1)
-        x = self.fc1(x)
-        return F.log_softmax(x, dim=2)
+    def forward(self, input):
+        input = input.view(input.size()[0], -1, n_embedding)
+        lstm_out, _ = self.lstm(input)
+        tag_space = self.hidden2tag(lstm_out)[:, -1]
+        tag_scores = F.log_softmax(tag_space, dim=1)
+        return tag_scores
 
-model = M5(n_input=1, n_output=2)
+model = LSTM(n_embedding, n_hidden, 2)
 model.to(device)
 print(model)
 
@@ -172,8 +153,8 @@ def train(model, epoch, log_interval):
         output = model(data)
 
         # negative log-likelihood for a tensor of size (batch x 1 x n_output)
-        loss = F.nll_loss(output.squeeze(), target, weight=torch.tensor([1.0, 10.0]).to(device))
-        # loss = F.nll_loss(output.squeeze(), target)
+        # loss = F.nll_loss(output.squeeze(), target, weight=torch.tensor([1.0, 10.0]).to(device))
+        loss = F.nll_loss(output.squeeze(), target)
         pred = get_likely_index(output)
 
         pred_list.append(pred.squeeze())
@@ -258,21 +239,21 @@ def test(model):
 
 # train and save
 
-# best_val_score = 0
-# losses = []
-# for epoch in range(1, n_epoch + 1):
-#     train(model, epoch, log_interval)
+best_val_score = 0
+losses = []
+for epoch in range(1, n_epoch + 1):
+    train(model, epoch, log_interval)
 
-#     val_score = validate(model, epoch)
-#     # scheduler.step()
-#     scheduler.step(val_score)
+    val_score = validate(model, epoch)
+    # scheduler.step()
+    scheduler.step(val_score)
 
-#     if val_score > best_val_score:
-#         print('New best val score, save model ...')
-#         torch.save(model.state_dict(), MODEL_PATH)
-#         best_val_score = val_score
+    if val_score > best_val_score:
+        print('New best val score, save model ...')
+        torch.save(model.state_dict(), MODEL_PATH)
+        best_val_score = val_score
 
-#     print("--- %s seconds ---" % (time.time() - start_time))
+    print("--- %s seconds ---" % (time.time() - start_time))
 
 # # Let's plot the training loss versus the number of iteration.
 # plt.plot(losses)
@@ -281,7 +262,7 @@ def test(model):
 
 # load and test
 
-model = M5(n_input=1, n_output=2)
+model = LSTM(n_embedding, n_hidden, 2)
 model.to(device)
 model.load_state_dict(torch.load(MODEL_PATH))
 test(model)
