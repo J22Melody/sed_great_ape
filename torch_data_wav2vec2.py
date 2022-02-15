@@ -19,8 +19,9 @@ np.random.seed(0)
 start_time = time.time()
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
-TXT_PATH = './data_full/Klaus_Zuberbuhler_1994_2002/Raven Pro Tables'
-WAV_PATH = './data_full/Klaus_Zuberbuhler_1994_2002/Recordings'
+DATA_PATH = '../data'
+TXT_PATH = '{}/data_full/Klaus_Zuberbuhler_1994_2002/Raven Pro Tables'.format(DATA_PATH)
+WAV_PATH = '{}/data_full/Klaus_Zuberbuhler_1994_2002/Recordings'.format(DATA_PATH)
 
 def parse_raw():
     bundle = torchaudio.pipelines.WAV2VEC2_BASE
@@ -44,13 +45,12 @@ def parse_raw():
 
         # transform
         new_sample_rate = bundle.sample_rate
-        transform = torchaudio.transforms.Resample(orig_freq=sample_rate, new_freq=new_sample_rate)
-        transformed = transform(waveform)
+        transformed = torchaudio.functional.resample(waveform, sample_rate, new_sample_rate)
 
         # reshape
         length = transformed.size()[1]
         new_length = math.ceil(length / new_sample_rate) * new_sample_rate
-        target = torch.zeros(1, new_length)
+        target = torch.zeros(1, new_length).to(device)
         target[:, :length] = transformed
         target = target.view(-1, new_sample_rate)
 
@@ -82,10 +82,10 @@ def parse_raw():
 
         data = torch.cat((y, output_features), dim=1)
 
-        np.savetxt('./data_wav2vec2_1/{}.csv'.format(filename), data.numpy(), delimiter=',')
+        np.savetxt('{}/data_wav2vec2_1/{}.csv'.format(DATA_PATH, filename), data.numpy(), delimiter=',')
 
 def data_split():
-    paths = Path('./data_wav2vec2_1').rglob('*.csv')
+    paths = Path('{}/data_wav2vec2_1'.format(DATA_PATH)).rglob('*.csv')
     paths = list(itertools.islice(paths, 999999))
     print('Split {} files: {}'.format(len(paths), paths))
     data = [np.loadtxt(path, delimiter=',') for path in paths]
@@ -106,9 +106,9 @@ def data_split():
     print('Dev:', dev.shape)
     print('Test:', test.shape)
 
-    np.savetxt('./data_wav2vec2_1_split/train.csv', train, delimiter=',')
-    np.savetxt('./data_wav2vec2_1_split/dev.csv', dev, delimiter=',')
-    np.savetxt('./data_wav2vec2_1_split/test.csv', test, delimiter=',')
+    np.savetxt('{}/data_wav2vec2_1_split/train.csv'.format(DATA_PATH), train, delimiter=',')
+    np.savetxt('{}/data_wav2vec2_1_split/dev.csv'.format(DATA_PATH), dev, delimiter=',')
+    np.savetxt('{}/data_wav2vec2_1_split/test.csv'.format(DATA_PATH), test, delimiter=',')
 
     print("--- %s seconds ---" % (time.time() - start_time))
 

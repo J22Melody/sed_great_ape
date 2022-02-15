@@ -15,17 +15,17 @@ from torch.utils.data import TensorDataset, IterableDataset, DataLoader
 from sklearn.metrics import precision_score, recall_score, f1_score, accuracy_score
 
 
-DATA_PATH = './data_wav2vec2_1_split'
+DATA_PATH = '../data/data_wav2vec2_1_split'
 MODEL_PATH = './torch_rnn.pt'
 
 n_embedding = 768
-n_hidden = 16
-batch_size = 16
+n_hidden = 256
+batch_size = 256
 log_interval = 20
 n_epoch = 100
 lr = 0.001
 step_size = 10
-patience = 7
+patience = 5
 step_factor = 0.3
 
 seed = 42
@@ -45,7 +45,7 @@ class MyIterableDataset(IterableDataset):
         self.csv_path = csv_path
 
     def __iter__(self):
-        reader = pd.read_csv(self.csv_path, sep=",", header=None, chunksize=batch_size)
+        reader = pd.read_csv(self.csv_path, sep=",", header=None, chunksize=1000)
 
         for chunk in reader:
             chunk_arr = chunk.to_numpy()
@@ -153,8 +153,8 @@ def train(model, epoch, log_interval):
         output = model(data)
 
         # negative log-likelihood for a tensor of size (batch x 1 x n_output)
-        # loss = F.nll_loss(output.squeeze(), target, weight=torch.tensor([1.0, 10.0]).to(device))
-        loss = F.nll_loss(output.squeeze(), target)
+        loss = F.nll_loss(output.squeeze(), target, weight=torch.tensor([1.0, 10.0]).to(device))
+        # loss = F.nll_loss(output.squeeze(), target)
         pred = get_likely_index(output)
 
         pred_list.append(pred.squeeze())
