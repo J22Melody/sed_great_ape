@@ -30,7 +30,7 @@ for i, wavpath in enumerate(wavpaths):
     # print('number of samples:', len(samples))
     # print('duration (sec):', len(samples) / sample_rate)
 
-    T_real = 0.5
+    T_real = 1
     T = T_real * 8 / 7
     nperseg = int(sample_rate * T)
     noverlap = nperseg // 8
@@ -77,7 +77,7 @@ for i, wavpath in enumerate(wavpaths):
     # print('data:')
     # print(data, data.shape)
 
-    np.savetxt('./data_full_clf_0.5/{}.csv'.format(filename), data, delimiter=',')
+    np.savetxt('./data_full_clf_1/{}.csv'.format(filename), data, delimiter=',')
 
 
 print("--- %s seconds ---" % (time.time() - start_time))
