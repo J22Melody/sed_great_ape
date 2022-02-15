@@ -12,11 +12,11 @@ import torch.nn as nn
 import torch.nn.functional as F
 import torch.optim as optim
 from torch.utils.data import TensorDataset, IterableDataset, DataLoader
-from sklearn.metrics import precision_score, recall_score, f1_score, accuracy_score
+from sklearn.metrics import precision_score, recall_score, f1_score, accuracy_score, PrecisionRecallDisplay
 
 
-DATA_PATH = '../data/data_wav2vec2_1_split'
-MODEL_PATH = './torch_rnn.pt'
+DATA_PATH = './data_wav2vec2_1_split'
+MODEL_PATH = './torch_rnn_copy.pt'
 
 n_embedding = 768
 n_hidden = 256
@@ -174,10 +174,10 @@ def train(model, epoch, log_interval):
     pred = torch.cat(pred_list).to('cpu').detach().numpy()
     target = torch.cat(target_list).to('cpu').detach().numpy()
 
-    accuracy = accuracy_score(pred, target)
-    precision = precision_score(pred, target)
-    recall = recall_score(pred, target)
-    f1 = f1_score(pred, target)
+    accuracy = accuracy_score(target, pred)
+    precision = precision_score(target, pred)
+    recall = recall_score(target, pred)
+    f1 = f1_score(target, pred)
 
     print(f"\nTrain Epoch: {epoch} accuracy: {accuracy:.2f} precision: {precision:.2f} recall: {recall:.2f} f1: {f1:.2f}\n")
 
@@ -201,10 +201,10 @@ def validate(model, epoch):
     pred = torch.cat(pred_list).to('cpu').numpy()
     target = torch.cat(target_list).to('cpu').numpy()
 
-    accuracy = accuracy_score(pred, target)
-    precision = precision_score(pred, target)
-    recall = recall_score(pred, target)
-    f1 = f1_score(pred, target)
+    accuracy = accuracy_score(target, pred)
+    precision = precision_score(target, pred)
+    recall = recall_score(target, pred)
+    f1 = f1_score(target, pred)
 
     print(f"\nValidate Epoch: {epoch} accuracy: {accuracy:.2f} precision: {precision:.2f} recall: {recall:.2f} f1: {f1:.2f}\n")
 
@@ -214,6 +214,7 @@ def test(model):
     model.eval()
     pred_list = []
     target_list = []
+    output_list = []
     for data, target in test_loader:
 
         data = data.to(device)
@@ -226,34 +227,43 @@ def test(model):
 
         pred_list.append(pred.squeeze())
         target_list.append(target.squeeze())
+        output_list.append(output.squeeze())
 
     pred = torch.cat(pred_list).to('cpu').numpy()
     target = torch.cat(target_list).to('cpu').numpy()
+    output = torch.cat(output_list).detach().to('cpu').numpy()
 
-    accuracy = accuracy_score(pred, target)
-    precision = precision_score(pred, target)
-    recall = recall_score(pred, target)
-    f1 = f1_score(pred, target)
+    accuracy = accuracy_score(target, pred)
+    precision = precision_score(target, pred)
+    recall = recall_score(target, pred)
+    f1 = f1_score(target, pred)
 
     print(f"\nTest: accuracy: {accuracy:.2f} precision: {precision:.2f} recall: {recall:.2f} f1: {f1:.2f}\n")
+    
+    print("--- %s seconds ---" % (time.time() - start_time))
+
+    probs = np.exp(output)
+    display = PrecisionRecallDisplay.from_predictions(target, probs[:, 1], pos_label=1)
+    _ = display.ax_.set_title("2-class Precision-Recall curve")
+    plt.show()
 
 # train and save
 
-best_val_score = 0
-losses = []
-for epoch in range(1, n_epoch + 1):
-    train(model, epoch, log_interval)
+# best_val_score = 0
+# losses = []
+# for epoch in range(1, n_epoch + 1):
+#     train(model, epoch, log_interval)
 
-    val_score = validate(model, epoch)
-    # scheduler.step()
-    scheduler.step(val_score)
+#     val_score = validate(model, epoch)
+#     # scheduler.step()
+#     scheduler.step(val_score)
 
-    if val_score > best_val_score:
-        print('New best val score, save model ...')
-        torch.save(model.state_dict(), MODEL_PATH)
-        best_val_score = val_score
+#     if val_score > best_val_score:
+#         print('New best val score, save model ...')
+#         torch.save(model.state_dict(), MODEL_PATH)
+#         best_val_score = val_score
 
-    print("--- %s seconds ---" % (time.time() - start_time))
+#     print("--- %s seconds ---" % (time.time() - start_time))
 
 # # Let's plot the training loss versus the number of iteration.
 # plt.plot(losses)
@@ -264,9 +274,5 @@ for epoch in range(1, n_epoch + 1):
 
 model = LSTM(n_embedding, n_hidden, 2)
 model.to(device)
-model.load_state_dict(torch.load(MODEL_PATH))
+model.load_state_dict(torch.load(MODEL_PATH, map_location=device))
 test(model)
-
-
-print("--- %s seconds ---" % (time.time() - start_time))
-

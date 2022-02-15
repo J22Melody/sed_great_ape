@@ -245,10 +245,10 @@ def validate(model, epoch):
     pred = torch.cat(pred_list).to('cpu').numpy()
     target = torch.cat(target_list).to('cpu').numpy()
 
-    accuracy = accuracy_score(pred, target)
-    precision = precision_score(pred, target)
-    recall = recall_score(pred, target)
-    f1 = f1_score(pred, target)
+    accuracy = accuracy_score(target, pred)
+    precision = precision_score(target, pred)
+    recall = recall_score(target, pred)
+    f1 = f1_score(target, pred)
 
     print(f"Validate Epoch: {epoch} accuracy: {accuracy:.2f} precision: {precision:.2f} recall: {recall:.2f} f1: {f1:.2f}\n")
 
@@ -274,10 +274,10 @@ def test(model):
     pred = torch.cat(pred_list).to('cpu').numpy()
     target = torch.cat(target_list).to('cpu').numpy()
 
-    accuracy = accuracy_score(pred, target)
-    precision = precision_score(pred, target)
-    recall = recall_score(pred, target)
-    f1 = f1_score(pred, target)
+    accuracy = accuracy_score(target, pred)
+    precision = precision_score(target, pred)
+    recall = recall_score(target, pred)
+    f1 = f1_score(target, pred)
 
     print(f"Test: accuracy: {accuracy:.2f} precision: {precision:.2f} recall: {recall:.2f} f1: {f1:.2f}\n")
 

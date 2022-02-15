@@ -7,29 +7,31 @@ from sklearn.pipeline import make_pipeline
 from sklearn.metrics import precision_score, recall_score, f1_score, accuracy_score, PrecisionRecallDisplay
 import matplotlib.pyplot as plt
 import time
+import random
 from pathlib import Path
 import itertools
 
+
 start_time = time.time()
 
+seed = 42
+random.seed(seed)
+np.random.seed(seed)
+
 number_all = 100
-number_test = 30
+number_test = 20
 
-# data = [
-#     np.loadtxt('./data_full_clf_0.1/96-22b124-L.csv', delimiter=','),
-#     np.loadtxt('./data_full_clf_0.1/96-41b228-L.csv', delimiter=','),
-#     np.loadtxt('./data_full_clf_0.1/96-44b243-E2.csv', delimiter=','),
-# ]
 # paths = Path('./data').rglob('*.csv')
-paths = Path('./data_full_clf_1').rglob('02-*.csv')
+paths = Path('./data_full_clf_1').rglob('*.csv')
 paths = list(itertools.islice(paths, number_all))
-print('Learning from:', paths)
+print('Split {} files: {}'.format(len(paths), paths))
 data = [np.loadtxt(path, delimiter=',') for path in paths]
+random.shuffle(data)
 
-# train = np.concatenate((data[:-number_test]), axis=0)
-# test = np.concatenate((data[-number_test:]), axis=0)
-data = np.concatenate(data, axis=0)
-train, test = train_test_split(data, test_size=0.1, random_state=42)
+train = np.concatenate((data[:-number_test]), axis=0)
+test = np.concatenate((data[-number_test:]), axis=0)
+# data = np.concatenate(data, axis=0)
+# train, test = train_test_split(data, test_size=0.1, random_state=42)
 
 print('train:', train.shape)
 print('test:', test.shape)

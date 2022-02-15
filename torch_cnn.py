@@ -12,7 +12,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 import torch.optim as optim
 from torch.utils.data import TensorDataset, IterableDataset, DataLoader
-from sklearn.metrics import precision_score, recall_score, f1_score, accuracy_score
+from sklearn.metrics import precision_score, recall_score, f1_score, accuracy_score, PrecisionRecallDisplay
 
 # DATA_PATH = '../data/data_waveform_1_split'
 DATA_PATH = './data_waveform_1_split'
@@ -193,10 +193,10 @@ def train(model, epoch, log_interval):
     pred = torch.cat(pred_list).to('cpu').detach().numpy()
     target = torch.cat(target_list).to('cpu').detach().numpy()
 
-    accuracy = accuracy_score(pred, target)
-    precision = precision_score(pred, target)
-    recall = recall_score(pred, target)
-    f1 = f1_score(pred, target)
+    accuracy = accuracy_score(target, pred)
+    precision = precision_score(target, pred)
+    recall = recall_score(target, pred)
+    f1 = f1_score(target, pred)
 
     print(f"\nTrain Epoch: {epoch} accuracy: {accuracy:.2f} precision: {precision:.2f} recall: {recall:.2f} f1: {f1:.2f}\n")
 
@@ -220,10 +220,10 @@ def validate(model, epoch):
     pred = torch.cat(pred_list).to('cpu').numpy()
     target = torch.cat(target_list).to('cpu').numpy()
 
-    accuracy = accuracy_score(pred, target)
-    precision = precision_score(pred, target)
-    recall = recall_score(pred, target)
-    f1 = f1_score(pred, target)
+    accuracy = accuracy_score(target, pred)
+    precision = precision_score(target, pred)
+    recall = recall_score(target, pred)
+    f1 = f1_score(target, pred)
 
     print(f"\nValidate Epoch: {epoch} accuracy: {accuracy:.2f} precision: {precision:.2f} recall: {recall:.2f} f1: {f1:.2f}\n")
 
@@ -233,6 +233,7 @@ def test(model):
     model.eval()
     pred_list = []
     target_list = []
+    output_list = []
     for data, target in test_loader:
 
         data = data.to(device)
@@ -245,16 +246,25 @@ def test(model):
 
         pred_list.append(pred.squeeze())
         target_list.append(target.squeeze())
+        output_list.append(output.squeeze())
 
     pred = torch.cat(pred_list).to('cpu').numpy()
     target = torch.cat(target_list).to('cpu').numpy()
+    output = torch.cat(output_list).detach().to('cpu').numpy()
 
-    accuracy = accuracy_score(pred, target)
-    precision = precision_score(pred, target)
-    recall = recall_score(pred, target)
-    f1 = f1_score(pred, target)
+    accuracy = accuracy_score(target, pred)
+    precision = precision_score(target, pred)
+    recall = recall_score(target, pred)
+    f1 = f1_score(target, pred)
 
     print(f"\nTest: accuracy: {accuracy:.2f} precision: {precision:.2f} recall: {recall:.2f} f1: {f1:.2f}\n")
+    
+    print("--- %s seconds ---" % (time.time() - start_time))
+
+    probs = np.exp(output)
+    display = PrecisionRecallDisplay.from_predictions(target, probs[:, 1], pos_label=1)
+    _ = display.ax_.set_title("2-class Precision-Recall curve")
+    plt.show()
 
 # train and save
 
@@ -286,6 +296,4 @@ model.to(device)
 model.load_state_dict(torch.load(MODEL_PATH))
 test(model)
 
-
-print("--- %s seconds ---" % (time.time() - start_time))
 
