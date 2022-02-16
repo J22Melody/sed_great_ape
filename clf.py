@@ -18,20 +18,23 @@ seed = 42
 random.seed(seed)
 np.random.seed(seed)
 
-number_all = 100
-number_test = 20
+# number_all = 100
+# number_test = 20
 
-# paths = Path('./data').rglob('*.csv')
-paths = Path('./data_full_clf_1').rglob('*.csv')
-paths = list(itertools.islice(paths, number_all))
-print('Split {} files: {}'.format(len(paths), paths))
-data = [np.loadtxt(path, delimiter=',') for path in paths]
-random.shuffle(data)
+# # paths = Path('./data').rglob('*.csv')
+# paths = Path('./data_full_clf_1').rglob('*.csv')
+# paths = list(itertools.islice(paths, number_all))
+# print('Split {} files: {}'.format(len(paths), paths))
+# data = [np.loadtxt(path, delimiter=',') for path in paths]
+# random.shuffle(data)
 
-train = np.concatenate((data[:-number_test]), axis=0)
-test = np.concatenate((data[-number_test:]), axis=0)
-# data = np.concatenate(data, axis=0)
-# train, test = train_test_split(data, test_size=0.1, random_state=42)
+# train = np.concatenate((data[:-number_test]), axis=0)
+# test = np.concatenate((data[-number_test:]), axis=0)
+# # data = np.concatenate(data, axis=0)
+# # train, test = train_test_split(data, test_size=0.1, random_state=42)
+
+train = np.loadtxt('./data_full_clf_1_split/train.csv', delimiter=',')
+test = np.loadtxt('./data_full_clf_1_split/test.csv', delimiter=',')
 
 print('train:', train.shape)
 print('test:', test.shape)
