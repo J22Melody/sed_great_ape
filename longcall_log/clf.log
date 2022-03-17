@@ -1,0 +1,86 @@
+train: (3860, 25202)
+test: (966, 25202)
+Positive labels in train:  2315
+Positive labels in test:  563
+Labels in train:  {0.0: 1545, 1.0: 1748, 2.0: 506, 3.0: 46, 4.0: 2, 5.0: 13}
+Labels in test:  {0.0: 403, 1.0: 440, 2.0: 117, 3.0: 2, 5.0: 4}
+Iteration 1, loss = 7.03304800
+Validation score: 0.523316
+Iteration 2, loss = 6.03937041
+Validation score: 0.562176
+Iteration 3, loss = 5.60336577
+Validation score: 0.601036
+Iteration 4, loss = 5.22839821
+Validation score: 0.621762
+Iteration 5, loss = 4.89649826
+Validation score: 0.696891
+Iteration 6, loss = 4.56829178
+Validation score: 0.619171
+Iteration 7, loss = 4.27234110
+Validation score: 0.694301
+Iteration 8, loss = 3.99052926
+Validation score: 0.699482
+Iteration 9, loss = 3.71550172
+Validation score: 0.720207
+Iteration 10, loss = 3.46757336
+Validation score: 0.709845
+Iteration 11, loss = 3.24141258
+Validation score: 0.715026
+Iteration 12, loss = 3.01785520
+Validation score: 0.720207
+Iteration 13, loss = 2.82276336
+Validation score: 0.730570
+Iteration 14, loss = 2.64466687
+Validation score: 0.717617
+Iteration 15, loss = 2.46815690
+Validation score: 0.696891
+Iteration 16, loss = 2.32895795
+Validation score: 0.624352
+Iteration 17, loss = 2.19000836
+Validation score: 0.715026
+Iteration 18, loss = 2.05837230
+Validation score: 0.696891
+Iteration 19, loss = 1.93710363
+Validation score: 0.639896
+Iteration 20, loss = 1.82518181
+Validation score: 0.717617
+Iteration 21, loss = 1.72117072
+Validation score: 0.691710
+Iteration 22, loss = 1.65524811
+Validation score: 0.738342
+Iteration 23, loss = 1.55717774
+Validation score: 0.639896
+Iteration 24, loss = 1.47989422
+Validation score: 0.626943
+Iteration 25, loss = 1.41540903
+Validation score: 0.709845
+Iteration 26, loss = 1.34570482
+Validation score: 0.637306
+Iteration 27, loss = 1.30824158
+Validation score: 0.694301
+Iteration 28, loss = 1.24210901
+Validation score: 0.725389
+Iteration 29, loss = 1.19617674
+Validation score: 0.670984
+Iteration 30, loss = 1.15545002
+Validation score: 0.624352
+Iteration 31, loss = 1.11732574
+Validation score: 0.733161
+Iteration 32, loss = 1.06714715
+Validation score: 0.712435
+Iteration 33, loss = 1.02824409
+Validation score: 0.637306
+Validation score did not improve more than tol=0.000100 for 10 consecutive epochs. Stopping.
+-----training-----
+precision_score:  [0.86619718 0.90415704 0.9475     1.         1.         1.        ]
+recall_score:  [0.95533981 0.89588101 0.74901186 0.36956522 0.         0.53846154]
+f1_score:  [0.90858726 0.9        0.83664459 0.53968254 0.         0.7       ]
+accuracy_score:  0.8924870466321243
+-----testing-----
+precision_score:  [0.75784753 0.77116705 0.6125     1.         0.         0.        ]
+/opt/anaconda3/envs/audio_clf/lib/python3.8/site-packages/sklearn/metrics/_classification.py:1308: UndefinedMetricWarning: Recall is ill-defined and being set to 0.0 in labels with no true samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, msg_start, len(result))
+recall_score:  [0.83870968 0.76590909 0.41880342 0.         0.         0.        ]
+f1_score:  [0.79623086 0.76852908 0.49746193 0.         0.         0.        ]
+accuracy_score:  0.7494824016563147
+--- 183.73146605491638 seconds ---
