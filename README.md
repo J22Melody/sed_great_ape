@@ -1,5 +1,81 @@
 # audio_exploration
 
+## [17.03.2022] Same Experiments on Greatarc Dataset
+
+I tried to rerun some of the same experiments on the Greatarc data, as I performed in https://github.com/bambooforest/audio_exploration/pull/2. The experiments are rather rough, but a main finding is that the Greatarc data does generate across files, as opposed to the OliveColobusDatabase data. I think this is a very good signal to do further exploration.
+
+### Binary Classification on Calls
+
+Setup:
+
+- Binary classifies if a 1-second segment is a call
+- Data comes from `./data_greatarc/wetransfer_audio-files-for-zifan_2021-12-14_1301`
+- Scripts and logs are in `./greatarc`
+
+Observation on Data: 
+- There are not many audio files, but all files are very long (~20 minutes), not all of them have many annotations.
+- There are not many individuals, but the files for Kelly and YetYeni have good annotations in terms of training a classifier.
+- Still a very class-imbalanced task since most of the 1-second segments are not calls.
+
+Experiments and results:
+- Learn from `Kelly experiment Tiger 19-12-2010` to predict `Kelly experiment spots 11-1-2011`: AUC-PR (area under the precision-recall curve, the higher the better) = 0.72 (https://github.com/bambooforest/audio_exploration/blob/greatarc/greatarc/greatarc_clf_kelly_19_to_11_test.png)
+- Learn from `Kelly experiment Tiger 19-12-2010` to predict `YetYeni experiment tiger sheet 10-02-2011 (1)_1st half`: AUC-PR = 0.41 (https://github.com/bambooforest/audio_exploration/blob/greatarc/greatarc/greatarc_clf_kelly_to_yetyeni_test.png)
+- Learn from `YetYeni experiment tiger sheet 10-02-2011 (1)_1st half` to predict `Kelly experiment spots 11-1-2011`: AUC-PR = 0.64 (https://github.com/bambooforest/audio_exploration/blob/greatarc/greatarc/greatarc_clf_yetyeni_to_kelly_11_test.png)
+
+Interpretations:
+- We can successfully learn and predict the calls of the same individual (Kelly).
+- When doing so across different individuals, this might also work well (from YetYeni to Kelly), this might not work so well (from Kelly to YetYeni).
+- Why? Rather than attributing to the difference between individuals, after checking the annotation files, I believe the main cause is that from the data YetYeni has call types that Kelly does not have, such as `Complex call` and `Biarticulated voiced element`, while Kelly only has `Grumph`, `Kiss-squeak` and `Rolling call`. 
+- So I would conclude that it is promising to train an effective classifier to find out calls from audio files, given a training set that contains all the call types we are interested in, ideally from more than one individuals, to prevent overfitting to paticular individual.
+
+### Multi-class Classification on Calls
+
+Setup:
+
+- Extend previous experiments to multi-class, classifies if a 1-second segment is a non-call, `Grumph`, `Kiss-squeak`, `Rolling call`, or an unknown/other call.
+- Data comes from `./data_greatarc/wetransfer_audio-files-for-zifan_2021-12-14_1301`
+- Scripts and logs are in `./greatarc`
+
+Observation on Data:
+
+- The problem of imbalanced classes is more severe: the most common call types are `Grumph`, `Kiss-squeak` and `Rolling call`, yet in training set there are 6843 non-call segments, 438 `Kiss-squeak`s, 59 `Grumph`s and 41 `Rolling call`s.
+
+Experiments and results:
+- Train a classifier to tell different call types? f1 score for the 3 classes: 0.84, 0.22222222, 0.46666667 (https://github.com/bambooforest/audio_exploration/blob/greatarc/greatarc/cnn_nonzero.log)
+- Train a classifier to tell different call types and non-calls? f1 score for the 4 classes: 0.0869565, 0.0, 0.10526316, 0.96308725 (https://github.com/bambooforest/audio_exploration/blob/greatarc/greatarc_log/cnn.log)
+
+Interpretations:
+- The imbalanced distribution of classes is tricky to deal with, and the minority samples are just too few. 
+
+### Multi-class Classification on Long Calls
+
+Setup:
+
+- Multi-class classifies if a 1-second segment is a non-call, or a type of pulse from long calls
+- Data comes from `./data_greatarc/wetransfer_long-call-recordings-raven-acoustics_2021-11-22_1051`
+- Scripts and logs are in `./longcall`
+
+Observation on Data:
+
+- The long call data is much more friendly for training a classifier! More audio files (each with a short duration of ~60s) and annotations.
+- The class distribution on long call data is more even (yet there are many calls unannotated so they are with unknown pulse type):
+
+```
+{'Unknown': {'count': 2872, 'id': 1}, 'Full pulse': {'count': 445, 'id': 2}, 'Sub-pulse transitory element': {'count': 252, 'id': 3}, 'Pulse body': {'count': 176, 'id': 4}, 'Bubble sub-pulse': {'count': 853, 'id': 5}, 'Grumble sub-pulse': {'count': 23, 'id': 6}}
+```
+- But many pulse types are very short, so after 1-second segmentation, the distribution of classes becomes (0 stands for non-calls):
+
+```
+Labels in train:  {0.0: 1545, 1.0: 1748, 2.0: 506, 3.0: 46, 4.0: 2, 5.0: 13}
+```
+
+Experiments and results:
+- Learn from 80% of the files and predict the rest: f1 score of 5 classes: 0.73981191, 0.71527778, 0.34693878, 0.66666667 0.66666667 (https://github.com/bambooforest/audio_exploration/blob/greatarc/longcall/clf_by_file.log)
+
+Interpretations:
+- The statistics look much better, surprisingly good results on those minority classes.
+- Perhaps the 1-second segmentation no longer works well here, considering some pulse types are very short if terms of time duration, such as `Grumble sub-pulse`.
+
 ## [18.02.2022] Experiments on Full OliveColobusDatabase Dataset
 
 I did many experiments on classifying whether each 1-second segment from the .wav files contain a monkey call. The data source is the 284 annotated files (.wav + .txt). All of the models perform similarly and suffer from a same issue: they cannot generalize well across different .wav files.
