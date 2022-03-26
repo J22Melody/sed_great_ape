@@ -84,6 +84,8 @@ def parse_raw():
 
         np.savetxt('{}/data_wav2vec2_1/{}.csv'.format(DATA_PATH, filename), data.numpy(), delimiter=',')
 
+    print("--- %s seconds ---" % (time.time() - start_time))
+
 def data_split():
     paths = Path('{}/data_wav2vec2_1'.format(DATA_PATH)).rglob('*.csv')
     paths = list(itertools.islice(paths, 999999))
