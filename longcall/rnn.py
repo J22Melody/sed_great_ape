@@ -18,10 +18,6 @@ from sklearn.metrics import precision_score, recall_score, f1_score, accuracy_sc
 from torch.utils.tensorboard import SummaryWriter
 writer = SummaryWriter()
 
-
-DATA_PATH = './data_wav2vec2'
-MODEL_PATH = './rnn.pt'
-
 n_embedding = 768
 n_hidden = 256
 batch_size = 1
@@ -32,7 +28,7 @@ step_size = 10
 patience = 7
 step_factor = 0.7
 n_class = 7
-include_unknown = False
+include_unknown = True
 
 seed = 42
 random.seed(seed)
@@ -42,6 +38,10 @@ np.random.seed(0)
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 print(device)
 start_time = time.time()
+
+# DATA_PATH = './data_wav2vec2'
+DATA_PATH = '../../data/data_wav2vec2'
+MODEL_PATH = './rnn_unknown.pt' if include_unknown else './rnn.pt'
 
 # read data
 
