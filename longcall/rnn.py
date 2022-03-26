@@ -22,13 +22,13 @@ n_embedding = 768
 n_hidden = 256
 batch_size = 1
 log_interval = 1
-n_epoch = 100
+n_epoch = 300
 lr = 0.001
 step_size = 10
-patience = 7
+patience = 10
 step_factor = 0.7
 n_class = 7
-include_unknown = True
+include_unknown = False
 
 seed = 42
 random.seed(seed)
@@ -183,7 +183,7 @@ def train(model, epoch, log_interval):
         output = model(data)
 
         # negative log-likelihood for a tensor of size (batch x m x n_output)
-        weight = torch.tensor([1.0, 1.0, 10.0, 100.0, 20.0, 20.0, 100.0]).to(device)
+        weight = torch.tensor([1.0, 1.0, 10.0, 100.0, 20.0, 20.0, 1000.0]).to(device)
         loss = F.nll_loss(output.squeeze(), target.squeeze(), weight=weight)
         # loss = F.nll_loss(output.squeeze(), target.squeeze())
         pred = get_likely_index(output)
