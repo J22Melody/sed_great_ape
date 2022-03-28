@@ -25,7 +25,7 @@ log_interval = 1
 n_epoch = 300
 lr = 0.001
 step_size = 10
-patience = 10
+patience = 100000
 step_factor = 0.7
 n_class = 7
 include_unknown = False
@@ -41,7 +41,8 @@ start_time = time.time()
 
 # DATA_PATH = './data_wav2vec2'
 DATA_PATH = '../../data/data_wav2vec2'
-MODEL_PATH = './rnn_unknown.pt' if include_unknown else './rnn.pt'
+# MODEL_PATH = './rnn_unknown.pt' if include_unknown else './rnn.pt'
+MODEL_PATH = './rnn_1.pt'
 
 # read data
 
