@@ -22,10 +22,10 @@ n_embedding = 768
 n_hidden = 256
 batch_size = 1
 log_interval = 1
-n_epoch = 300
+n_epoch = 100
 lr = 0.001
-step_size = 10
-patience = 100000
+dropout = 0.2
+patience = 10
 step_factor = 0.7
 n_class = 7
 include_unknown = False
@@ -52,8 +52,9 @@ class MyIterableDataset(IterableDataset):
         self.data = data
 
     def __iter__(self):
-        for item in data:
-            yield torch.tensor(item[:, 1:]).float(), torch.tensor(item[:, 0]).float()
+        for i in range(20):
+            for item in data:
+                yield torch.tensor(item[:, 1:]).float(), torch.tensor(item[:, 0]).float()
 
 print('Reading data ...')
 
@@ -138,7 +139,7 @@ class LSTM(nn.Module):
     def __init__(self, embedding_dim, hidden_dim, tagset_size):
         super(LSTM, self).__init__()
         self.hidden_dim = hidden_dim
-        self.lstm = nn.LSTM(embedding_dim, hidden_dim, num_layers=2, dropout=0.2, bidirectional=True)
+        self.lstm = nn.LSTM(embedding_dim, hidden_dim, num_layers=2, dropout=dropout, bidirectional=True)
         self.hidden2tag = nn.Linear(hidden_dim * 2, tagset_size)
 
     def forward(self, input):
@@ -184,7 +185,7 @@ def train(model, epoch, log_interval):
         output = model(data)
 
         # negative log-likelihood for a tensor of size (batch x m x n_output)
-        weight = torch.tensor([1.0, 1.0, 10.0, 100.0, 20.0, 20.0, 1000.0]).to(device)
+        weight = torch.tensor([1.0, 0.1, 10.0, 100.0, 20.0, 20.0, 1000.0]).to(device)
         loss = F.nll_loss(output.squeeze(), target.squeeze(), weight=weight)
         # loss = F.nll_loss(output.squeeze(), target.squeeze())
         pred = get_likely_index(output)
@@ -197,8 +198,8 @@ def train(model, epoch, log_interval):
         optimizer.step()
 
         # print training stats
-        if batch_idx % log_interval == 0:
-            print(f"Train Epoch: {epoch} loss: {loss.item():.6f}")
+        # if batch_idx % log_interval == 0:
+        #     print(f"Train Epoch: {epoch} loss: {loss.item():.6f}")
 
         # record loss
         losses.append(loss.item())
