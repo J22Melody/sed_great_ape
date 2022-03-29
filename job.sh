@@ -7,7 +7,7 @@
 
 #SBATCH --job-name=baseline  	## job name
 #SBATCH --time=0-48:00:00       ## days-hours:minutes:seconds
-#SBATCH --mem=8000M             ##   3GB ram (hardware ratio is < 4GB/core)
+#SBATCH --mem=4000M             ##   3GB ram (hardware ratio is < 4GB/core)
 
 ### SBATCH --output=job.out	## standard out file
 #SBATCH --ntasks=1            ## Ntasks.  default is 1.

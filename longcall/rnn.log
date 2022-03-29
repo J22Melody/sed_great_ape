@@ -5,6 +5,8 @@ Train on 13 annotated files
 (52200, 769)
 Labels in data:  {0.0: 32196, 1.0: 323, 2.0: 9163, 3.0: 923, 4.0: 5458, 5.0: 4019, 6.0: 118}
 train, dev, test number of files: 11, 1, 1.
+dev files:  [PosixPath('../../data/data_wav2vec2/5T10lcFugit.csv')]
+test files:  [PosixPath('../../data/data_wav2vec2/4T10lcFugit.csv')]
 --- 118.4976806640625 seconds ---
 LSTM(
   (lstm): LSTM(768, 256, num_layers=2, dropout=0.2, bidirectional=True)

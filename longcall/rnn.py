@@ -28,14 +28,15 @@ dropout = 0.2
 patience = 10
 step_factor = 0.7
 n_class = 7
-include_unknown = True
+include_unknown = False
 
 seed = 42
 random.seed(seed)
 torch.manual_seed(0)
 np.random.seed(0)
 
-device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+# device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+device = torch.device("cpu")
 print(device)
 start_time = time.time()
 
@@ -71,23 +72,26 @@ paths = Path(DATA_PATH).rglob('*.csv')
 paths = list(itertools.islice(paths, 1000))
 print('Read {} files: {}'.format(len(paths), paths))
 
-data = []
+data_with_files = []
 for path in paths:
     item = np.loadtxt(path, delimiter=',')
     if include_unknown:
-        data.append(item)
+        data_with_files.append((path, item))
     else:
         known_class_samples = item[item[:, 0] > 1]
         if known_class_samples.shape[0] > 0:
-            data.append(item)
+            data_with_files.append((path, item))
+
+random.shuffle(data_with_files)
+
+data = [d[1] for d in data_with_files]
+
 print('Train on {} annotated files'.format(len(data)))
 
 data_all = np.concatenate(data)
 print(data_all.shape)
 unique, counts = np.unique(data_all[:, 0], return_counts=True)
 print('Labels in data: ', dict(zip(unique, counts)))
-
-random.shuffle(data)
 
 if include_unknown:
     train_index = int(len(data) * 0.8)
@@ -100,6 +104,8 @@ dev = data[train_index:dev_index]
 test = data[dev_index:]
 
 print('train, dev, test number of files: {}, {}, {}.'.format(len(train), len(dev), len(test)))
+print('dev files: ', [d[0] for d in data_with_files[train_index:dev_index]])
+print('test files: ', [d[0] for d in data_with_files[dev_index:]])
 
 train_set = MyIterableDataset(train)
 train_loader = DataLoader(
@@ -288,6 +294,9 @@ def test(model):
     recall = recall_score(target, pred, average=None, zero_division=1)
     f1 = f1_score(target, pred, average=None, zero_division=1)
     f1_avg = f1_score(target, pred, average='weighted', zero_division=1)
+
+    np.savetxt('./rnn.target.txt', target, delimiter=',')
+    np.savetxt('./rnn.pred.txt', pred, delimiter=',')
 
     print(f"\nTest Epoch: accuracy: {accuracy:.2f} \n precision: {precision} \n recall: {recall} \n f1: {f1} \n f1_avg: {f1_avg}\n")
     
