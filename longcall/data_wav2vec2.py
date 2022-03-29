@@ -123,5 +123,5 @@ def data_split():
 
     print("--- %s seconds ---" % (time.time() - start_time))
 
-# parse_raw()
-data_split()
+parse_raw()
+# data_split()

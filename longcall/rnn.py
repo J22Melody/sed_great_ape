@@ -40,19 +40,20 @@ device = torch.device("cpu")
 print(device)
 start_time = time.time()
 
-# DATA_PATH = './data_wav2vec2'
-DATA_PATH = '../../data/data_wav2vec2'
+DATA_PATH = './data_wav2vec2'
+# DATA_PATH = '../../data/data_wav2vec2'
 MODEL_PATH = './rnn_unknown.pt' if include_unknown else './rnn.pt'
 
 # read data
 
 class MyIterableDataset(IterableDataset):
-    def __init__(self, data):
+    def __init__(self, data, repeat=1):
         super(MyIterableDataset).__init__()
         self.data = data
+        self.repeat = repeat
 
     def __iter__(self):
-        for i in range(20):
+        for i in range(self.repeat):
             for item in data:
                 yield torch.tensor(item[:, 1:]).float(), torch.tensor(item[:, 0]).float()
 
@@ -107,7 +108,7 @@ print('train, dev, test number of files: {}, {}, {}.'.format(len(train), len(dev
 print('dev files: ', [d[0] for d in data_with_files[train_index:dev_index]])
 print('test files: ', [d[0] for d in data_with_files[dev_index:]])
 
-train_set = MyIterableDataset(train)
+train_set = MyIterableDataset(train, repeat=20)
 train_loader = DataLoader(
     train_set,
     batch_size=batch_size,
