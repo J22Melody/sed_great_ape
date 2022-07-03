@@ -35,13 +35,13 @@ random.seed(seed)
 torch.manual_seed(0)
 np.random.seed(0)
 
-# device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-device = torch.device("cpu")
+# device = torch.device("cpu")
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 print(device)
 start_time = time.time()
 
 DATA_PATH = './data_wav2vec2'
-# DATA_PATH = '../../data/data_wav2vec2'
+DATA_PATH = '../../data/data_wav2vec2'
 MODEL_PATH = './rnn_unknown.pt' if include_unknown else './rnn.pt'
 
 # read data
@@ -54,7 +54,7 @@ class MyIterableDataset(IterableDataset):
 
     def __iter__(self):
         for i in range(self.repeat):
-            for item in data:
+            for item in self.data:
                 yield torch.tensor(item[:, 1:]).float(), torch.tensor(item[:, 0]).float()
 
 print('Reading data ...')
@@ -127,6 +127,7 @@ dev_loader = DataLoader(
     generator=g,
 )
 
+# test = [np.loadtxt(DATA_PATH + '/4T10lcFugit.csv', delimiter=',')]
 test_set = MyIterableDataset(test)
 test_loader = DataLoader(
     test_set,
