@@ -1,5 +1,70 @@
 # audio_exploration
 
+## [29.03.2022] Recurrent Sequence Modeling on Long Calls
+
+Following the exploration in https://github.com/bambooforest/audio_exploration/pull/3, I experimented with a more sophisticated model architecture.  I modeled each whole long call audio (~60 s) as a long sequence in a LSTM model, then output a class distribution of pulse levels at each time step (20 ms segment). It turns out to be a big success, the average f1 score on test set reaches 0.91.
+
+### Inspiration
+
+Sequence modeling are very common in NLP, for example, we build a recurrent language model to model a sentence (a sequence of word), then predict the part of speech tag of each word at each time step. In audio field, I find a similar approach in https://distill.pub/2017/ctc/, where they tackle the problem of speech recognition by a CTC loss (because the audio and the target sentence are not aligned). 
+
+In our case, fortunately, the audio and the annotation of pulse levels are strictly aligned by time, so we can simply use a recurrent model and a cross-entropy loss to handle it.
+
+### Data
+
+There are 66 annotated long call audio files from Greatarc dataset, 13 of them have pulse level annotation. So we can naturally train multi-class models on the 13 files, or we can train binary classifiers (simply whether there is a call or not) on all the 66 files.
+
+I decide to go the multi-class way, using an 8/1/1 data split, I have the file `4T10lcFugit` as test set, the file `5T10lcFugit` as dev set, and the rest 11 files as training set. I also did a contrast experiment on 66 files, by giving all the annotated entries without pulse level a class `unknown`.
+
+All the experiments happened inside `./longcall`, so to preprocess the data, first enter the directory, then run `python data_wav2vec2.py` - read the raw data, extract `wav2vec2` features for each 20ms segment (introduced in https://github.com/bambooforest/audio_exploration/pull/2, approach 3) and align them with annotations. 
+
+The result is in https://github.com/bambooforest/audio_exploration/blob/rnn_clf/longcall/data_wav2vec2.log, most importantly, the statistics of class numbers before and after segmentation:
+
+`{'Unknown': {'count': 2872, 'id': 1}, 'Full pulse': {'count': 445, 'id': 2}, 'Sub-pulse transitory element': {'count': 252, 'id': 3}, 'Pulse body': {'count': 176, 'id': 4}, 'Bubble sub-pulse': {'count': 853, 'id': 5}, 'Grumble sub-pulse': {'count': 23, 'id': 6}}`
+
+`{0.0: 164462, 1.0: 60907, 2.0: 9163, 3.0: 923, 4.0: 5458, 5.0: 4019, 6.0: 118}`
+
+Again, `0` represents segment without calls, and there are many unknown samples since most of the files do not have pulse level information, in the 13 files that have pulse level, we only have 323 unknown samples.
+
+### Training and Results
+
+Run `python rnn.py`, the experiments finish within one hour on a GPU. The evaluation results (https://github.com/bambooforest/audio_exploration/blob/rnn_clf/longcall/rnn.log) on test set (for each class):
+
+```
+Test Epoch: accuracy: 0.87 
+ precision: [0.99128129 0.07217281 0.93826027 0.9189463  0.97115908 0.91433147
+ 0.06640405] 
+ recall: [0.84752764 0.87925697 0.89228419 0.98266522 0.9809454  0.85245086
+ 1.        ] 
+ f1: [0.91378531 0.13339596 0.91469486 0.94973822 0.97602771 0.88230749
+ 0.12453826] 
+ f1_avg: 0.9120521962326353
+```
+
+To get a more direct feeling of the predictions, see in parallel https://github.com/bambooforest/audio_exploration/blob/rnn_clf/longcall/rnn.pred.txt and https://github.com/bambooforest/audio_exploration/blob/rnn_clf/longcall/rnn.target.txt. 
+
+The statistics, in general, are very satisfying, most of the known classes perform very well (over 0.90), the `unknown` class perform badly as expected, the last class `Grumble sub-pulse` perform badly probably because of lack of samples.
+
+To dig more into the training process, I use `tensorboard` to see the graphs (`tensorboard` files in `./runs`), here are some:
+
+<img width="703" alt="image" src="https://user-images.githubusercontent.com/2316987/160625783-64c5a67f-0ac3-4183-be0a-5efe5b11963f.png">
+<img width="1117" alt="image" src="https://user-images.githubusercontent.com/2316987/160625895-d4632cd1-d8b6-4807-b34d-91a28ded89df.png">
+
+(orange lines represent experiment on 13 files without too many `unknown` class samples, blue lines represent experiment on 66 files with many `unknown` class samples)
+
+All these plots also show clearly that the `unknown` class samples do confuse the model to correctly classify, however, we can also expect if we annotate pulse level for all the 66 files, the model would be much more robust.
+
+### Conclusion
+
+I think the results are very good to me, so I would probably stop my audio exploration at the moment on these data. We might try to use the models to work on new real data, and do some human evaluation to see how well it works indeed ;)
+
+Some takeaway on my side:
+
+- We can successfully train classifiers to extract monkey calls from audio, no matter binary or multi-class.
+- One key aspect is data (as always). We are still in a very low-resource setting, but as long as we have balanced, well-structured data, it's promising to train a good classifier.
+- Another thing is how we want to generalize. In https://github.com/bambooforest/audio_exploration/pull/2 I find that data cannot generalize across files in the `OliveColobusDatabase ` dataset (but do not know why). In https://github.com/bambooforest/audio_exploration/pull/3, I find that the reason might be: different individuals? Different call repertoires, etc. It is definitely hard to classify when, say, we train a model on some data, then there comes a new individual with totally unseen repertoires. Conversely, if we, say, have (at least) tens of audio of Kelly, which contains a comprehensive list of his repertoires, then we can confidently deal with a future file of his (at least) (semi-)automatically.
+- In terms of features and model architecture, I think especially the features, all kinds of feature selection would work to some extent, raw wavforms, spectrogram, wav2vec, etc. It is similar in terms of modeling, nevertheless, the model architecture in this couple of experiments turns out to be the most sophisticated and performs the best.
+
 ## [17.03.2022] Same Experiments on Greatarc Dataset
 
 I tried to rerun some of the same experiments on the Greatarc data, as I performed in https://github.com/bambooforest/audio_exploration/pull/2. The experiments are rather rough, but a main finding is that the Greatarc data does generate across files, as opposed to the OliveColobusDatabase data. I think this is a very good signal to do further exploration.
