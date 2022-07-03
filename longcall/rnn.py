@@ -305,23 +305,23 @@ def test(model):
     print("--- %s seconds ---" % (time.time() - start_time))
 
 # train and save
-# best_val_score = 0
-# for epoch in range(1, n_epoch + 1):
-#     train(model, epoch, log_interval)
+best_val_score = 0
+for epoch in range(1, n_epoch + 1):
+    train(model, epoch, log_interval)
 
-#     val_score = validate(model, epoch)
-#     # scheduler.step()
-#     scheduler.step(val_score)
-#     writer.flush()
+    val_score = validate(model, epoch)
+    # scheduler.step()
+    scheduler.step(val_score)
+    writer.flush()
 
-#     if val_score > best_val_score:
-#         print('New best val score, save model ...')
-#         torch.save(model.state_dict(), MODEL_PATH)
-#         best_val_score = val_score
+    if val_score > best_val_score:
+        print('New best val score, save model ...')
+        torch.save(model.state_dict(), MODEL_PATH)
+        best_val_score = val_score
 
-#     print("--- %s seconds ---" % (time.time() - start_time))
+    print("--- %s seconds ---" % (time.time() - start_time))
 
-# writer.close()
+writer.close()
 
 # load and test
 model = LSTM(n_embedding, n_hidden, n_class)
