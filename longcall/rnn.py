@@ -23,7 +23,7 @@ n_hidden = 256
 batch_size = 1
 log_interval = 1
 n_epoch = 100
-lr = 0.001
+lr = 0.0001
 dropout = 0.2
 patience = 10
 step_factor = 0.7
@@ -192,7 +192,7 @@ def train(model, epoch, log_interval):
         output = model(data)
 
         # negative log-likelihood for a tensor of size (batch x m x n_output)
-        weight = torch.tensor([1.0, 0.1, 10.0, 100.0, 20.0, 20.0, 1000.0]).to(device)
+        weight = torch.tensor([1.0, 0.00001, 10.0, 100.0, 20.0, 20.0, 1000.0]).to(device)
         loss = F.nll_loss(output.squeeze(), target.squeeze(), weight=weight)
         # loss = F.nll_loss(output.squeeze(), target.squeeze())
         pred = get_likely_index(output)
@@ -269,23 +269,28 @@ def validate(model, epoch):
 
     return f1_avg
 
-def test(model):
+def test(model, use_dev=False):
     model.eval()
     pred_list = []
     target_list = []
     output_list = []
 
-    for data, target in test_loader:
+    loader = dev_loader if use_dev else test_loader
+    for data, target in loader:
         data = data.to(device)
-        target = target.to(device).long()
+        target = target.to(device).long().squeeze()
 
         output = model(data)
 
-        pred = get_likely_index(output)
+        pred = get_likely_index(output).squeeze()
 
-        pred_list.append(pred.squeeze())
-        target_list.append(target.squeeze())
+        pred_list.append(pred)
+        target_list.append(target)
         output_list.append(output.squeeze())
+
+        filename = 'dev' if use_dev else 'test'
+        np.savetxt('./rnn_results/{}.target.txt'.format(filename), target.to('cpu').numpy(), delimiter=',')
+        np.savetxt('./rnn_results/{}.pred.txt'.format(filename), pred.to('cpu').numpy(), delimiter=',')
 
     pred = torch.cat(pred_list).to('cpu').numpy()
     target = torch.cat(target_list).to('cpu').numpy()
@@ -297,34 +302,31 @@ def test(model):
     f1 = f1_score(target, pred, average=None, zero_division=1)
     f1_avg = f1_score(target, pred, average='weighted', zero_division=1)
 
-    np.savetxt('./rnn.target.txt', target, delimiter=',')
-    np.savetxt('./rnn.pred.txt', pred, delimiter=',')
-
     print(f"\nTest Epoch: accuracy: {accuracy:.2f} \n precision: {precision} \n recall: {recall} \n f1: {f1} \n f1_avg: {f1_avg}\n")
     
     print("--- %s seconds ---" % (time.time() - start_time))
 
 # train and save
-best_val_score = 0
-for epoch in range(1, n_epoch + 1):
-    train(model, epoch, log_interval)
+# best_val_score = 0
+# for epoch in range(1, n_epoch + 1):
+#     train(model, epoch, log_interval)
 
-    val_score = validate(model, epoch)
-    # scheduler.step()
-    scheduler.step(val_score)
-    writer.flush()
+#     val_score = validate(model, epoch)
+#     # scheduler.step()
+#     scheduler.step(val_score)
+#     writer.flush()
 
-    if val_score > best_val_score:
-        print('New best val score, save model ...')
-        torch.save(model.state_dict(), MODEL_PATH)
-        best_val_score = val_score
+#     if val_score > best_val_score:
+#         print('New best val score, save model ...')
+#         torch.save(model.state_dict(), MODEL_PATH)
+#         best_val_score = val_score
 
-    print("--- %s seconds ---" % (time.time() - start_time))
-
-writer.close()
+#     print("--- %s seconds ---" % (time.time() - start_time))
+# writer.close()
 
 # load and test
 model = LSTM(n_embedding, n_hidden, n_class)
 model.to(device)
 model.load_state_dict(torch.load(MODEL_PATH, map_location=device))
 test(model)
+test(model, use_dev=True)
