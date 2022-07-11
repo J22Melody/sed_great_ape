@@ -2137,5 +2137,16 @@ Test Epoch: accuracy: 0.70
  f1_avg: 0.7552242056919353
 
 --- 729.3031342029572 seconds ---
+
+Test Epoch: accuracy: 0.60 
+ precision: [0.9196806  0.         0.67705382 0.28888889 0.01750547 0.61502347
+ 0.        ] 
+ recall: [0.80708986 1.         0.2985634  0.40206186 0.21621622 0.65174129
+ 1.        ] 
+ f1: [0.8597146  0.         0.41439098 0.3362069  0.03238866 0.63285024
+ 0.        ] 
+ f1_avg: 0.6605483066360208
+
+--- 99.28180241584778 seconds ---
 slurmstepd: Exceeded job memory limit at some point.
 slurmstepd: Exceeded job memory limit at some point.
