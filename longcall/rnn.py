@@ -69,44 +69,52 @@ else:
 g = torch.Generator()
 g.manual_seed(0)
 
-paths = Path(DATA_PATH).rglob('*.csv')
-paths = list(itertools.islice(paths, 1000))
-print('Read {} files: {}'.format(len(paths), paths))
+# paths = Path(DATA_PATH).rglob('*.csv')
+# paths = list(itertools.islice(paths, 1000))
+# print('Read {} files: {}'.format(len(paths), paths))
 
-data_with_files = []
-for path in paths:
-    item = np.loadtxt(path, delimiter=',')
-    if include_unknown:
-        data_with_files.append((path, item))
-    else:
-        known_class_samples = item[item[:, 0] > 1]
-        if known_class_samples.shape[0] > 0:
-            data_with_files.append((path, item))
+# data_with_files = []
+# for path in paths:
+#     item = np.loadtxt(path, delimiter=',')
+#     if include_unknown:
+#         data_with_files.append((path, item))
+#     else:
+#         known_class_samples = item[item[:, 0] > 1]
+#         if known_class_samples.shape[0] > 0:
+#             data_with_files.append((path, item))
 
-random.shuffle(data_with_files)
+# random.shuffle(data_with_files)
 
-data = [d[1] for d in data_with_files]
+# data = [d[1] for d in data_with_files]
 
-print('Train on {} annotated files'.format(len(data)))
+# print('Train on {} annotated files'.format(len(data)))
 
-data_all = np.concatenate(data)
-print(data_all.shape)
-unique, counts = np.unique(data_all[:, 0], return_counts=True)
-print('Labels in data: ', dict(zip(unique, counts)))
+# data_all = np.concatenate(data)
+# print(data_all.shape)
+# unique, counts = np.unique(data_all[:, 0], return_counts=True)
+# print('Labels in data: ', dict(zip(unique, counts)))
 
-if include_unknown:
-    train_index = int(len(data) * 0.8)
-    dev_index = int(len(data) * 0.9)
-else:
-    train_index = 11
-    dev_index = 12
-train = data[:train_index]
-dev = data[train_index:dev_index]
-test = data[dev_index:]
+# if include_unknown:
+#     train_index = int(len(data) * 0.8)
+#     dev_index = int(len(data) * 0.9)
+# else:
+#     train_index = 11
+#     dev_index = 12
+# train = data[:train_index]
+# dev = data[train_index:dev_index]
+# test = data[dev_index:]
 
-print('train, dev, test number of files: {}, {}, {}.'.format(len(train), len(dev), len(test)))
-print('dev files: ', [d[0] for d in data_with_files[train_index:dev_index]])
-print('test files: ', [d[0] for d in data_with_files[dev_index:]])
+# print('train, dev, test number of files: {}, {}, {}.'.format(len(train), len(dev), len(test)))
+# print('dev files: ', [d[0] for d in data_with_files[train_index:dev_index]])
+# print('test files: ', [d[0] for d in data_with_files[dev_index:]])
+
+# np.save('{}/train.npy'.format(DATA_PATH), train, allow_pickle=True)
+# np.save('{}/dev.npy'.format(DATA_PATH), dev, allow_pickle=True)
+# np.save('{}/test.npy'.format(DATA_PATH), test, allow_pickle=True)
+
+train = np.load('{}/train.npy'.format(DATA_PATH), allow_pickle=True)
+dev = np.load('{}/dev.npy'.format(DATA_PATH), allow_pickle=True)
+test = np.load('{}/test.npy'.format(DATA_PATH), allow_pickle=True)
 
 train_set = MyIterableDataset(train, repeat=20)
 train_loader = DataLoader(
