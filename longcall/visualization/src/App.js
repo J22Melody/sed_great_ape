@@ -36,7 +36,7 @@ function App() {
     return <div/>
   }
 
-  const {dev, test} = data;
+  const {dev, test} = data.transformer;
 
   return (
     <div className="App">
