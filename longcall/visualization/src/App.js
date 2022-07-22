@@ -36,64 +36,13 @@ function App() {
     return <div/>
   }
 
-  const {pred, target} = data;
+  const {dev, test} = data;
 
   return (
     <div className="App">
       <h1>
         Visulization of Recurrent Sequence Modeling on Long Calls
       </h1>
-
-      <h3>
-        Test on File <i>4T10lcFugit.wav</i>
-      </h3>
-
-      <audio controls className='Player'>
-        <source 
-          src="4T10lcFugit.wav" 
-          type="audio/mpeg" 
-        />
-        Your browser does not support the audio element.
-      </audio>
-
-      <h3>Target ↓</h3>
-
-      <div className='Strip-container'>
-        <div className='Strip'>
-          {target.map((value, index) =>
-            <div 
-              key={index}
-              style={{background: colorTable[value]}}
-              className='Strip-segment'
-            />
-          )}
-        </div>
-        
-        <div className='Strip' style={{marginTop: '2px'}}>
-          {pred.map((value, index) =>
-            <div 
-              key={index}
-              style={{background: colorTable[value]}}
-              className='Strip-segment'
-            />
-          )}
-        </div>
-
-        <div className='Strip' style={{paddingBottom: '10px'}}>
-          {target.map((value, index) => 
-            <div
-              key={index}
-              className='Strip-axis'
-            >
-              {(index % 25 === 0) &&
-                <span>| {index / 50}</span>
-              }
-            </div>
-          )}
-        </div>
-      </div>
-
-      <h3 style={{marginTop: '4px'}}>Predicted ↑</h3>
 
       <h3>Colors</h3>
 
@@ -107,6 +56,112 @@ function App() {
           </li>
         )}
       </ul>
+
+      <div>
+        <h3>
+          Test on File <i>4T10lcFugit.wav</i>
+        </h3>
+
+        <audio controls className='Player'>
+          <source 
+            src="4T10lcFugit.wav" 
+            type="audio/mpeg" 
+          />
+          Your browser does not support the audio element.
+        </audio>
+
+        <h3>Target ↓</h3>
+
+        <div className='Strip-container'>
+          <div className='Strip'>
+            {test.target.map((value, index) =>
+              <div 
+                key={index}
+                style={{background: colorTable[value]}}
+                className='Strip-segment'
+              />
+            )}
+          </div>
+          
+          <div className='Strip' style={{marginTop: '2px'}}>
+            {test.pred.map((value, index) =>
+              <div 
+                key={index}
+                style={{background: colorTable[value]}}
+                className='Strip-segment'
+              />
+            )}
+          </div>
+
+          <div className='Strip' style={{paddingBottom: '10px'}}>
+            {test.target.map((value, index) => 
+              <div
+                key={index}
+                className='Strip-axis'
+              >
+                {(index % 25 === 0) &&
+                  <span>| {index / 50}</span>
+                }
+              </div>
+            )}
+          </div>
+        </div>
+
+        <h3 style={{marginTop: '4px'}}>Predicted ↑</h3>
+      </div>
+
+      <div>
+        <h3>
+          Dev on File <i>5T10lcFugit.wav</i>
+        </h3>
+
+        <audio controls className='Player'>
+          <source 
+            src="5T10lcFugit.wav" 
+            type="audio/mpeg" 
+          />
+          Your browser does not support the audio element.
+        </audio>
+
+        <h3>Target ↓</h3>
+
+        <div className='Strip-container'>
+          <div className='Strip'>
+            {dev.target.map((value, index) =>
+              <div 
+                key={index}
+                style={{background: colorTable[value]}}
+                className='Strip-segment'
+              />
+            )}
+          </div>
+          
+          <div className='Strip' style={{marginTop: '2px'}}>
+            {dev.pred.map((value, index) =>
+              <div 
+                key={index}
+                style={{background: colorTable[value]}}
+                className='Strip-segment'
+              />
+            )}
+          </div>
+
+          <div className='Strip' style={{paddingBottom: '10px'}}>
+            {dev.target.map((value, index) => 
+              <div
+                key={index}
+                className='Strip-axis'
+              >
+                {(index % 25 === 0) &&
+                  <span>| {index / 50}</span>
+                }
+              </div>
+            )}
+          </div>
+        </div>
+
+        <h3 style={{marginTop: '4px'}}>Predicted ↑</h3>
+      </div>
     </div>
   );
 }
