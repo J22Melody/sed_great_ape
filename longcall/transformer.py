@@ -41,11 +41,12 @@ np.random.seed(0)
 
 # device = torch.device("cpu")
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+device = torch.device("mps")
 print(device)
 start_time = time.time()
 
 DATA_PATH = './data_wav2vec2'
-DATA_PATH = '../../data/data_wav2vec2'
+# DATA_PATH = '../../data/data_wav2vec2'
 MODEL_PATH = 'transformer.pt'
 
 # read data
@@ -63,7 +64,7 @@ class MyIterableDataset(IterableDataset):
 
 print('Reading data ...')
 
-if device == "cuda":
+if device == "cuda" or device == "mps":
     num_workers = 1
     pin_memory = True
 else:
