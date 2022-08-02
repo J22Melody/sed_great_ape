@@ -23,7 +23,7 @@ n_hidden = 256
 batch_size = 1
 log_interval = 1
 n_epoch = 100
-lr = 0.001
+lr = 0.0001
 dropout = 0.2
 patience = 10
 step_factor = 0.7
@@ -35,13 +35,13 @@ random.seed(seed)
 torch.manual_seed(0)
 np.random.seed(0)
 
-# device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-device = torch.device("cpu")
+# device = torch.device("cpu")
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 print(device)
 start_time = time.time()
 
 DATA_PATH = './data_wav2vec2'
-# DATA_PATH = '../../data/data_wav2vec2'
+DATA_PATH = '../../data/data_wav2vec2'
 MODEL_PATH = './rnn_unknown.pt' if include_unknown else './rnn.pt'
 
 # read data
@@ -54,7 +54,7 @@ class MyIterableDataset(IterableDataset):
 
     def __iter__(self):
         for i in range(self.repeat):
-            for item in data:
+            for item in self.data:
                 yield torch.tensor(item[:, 1:]).float(), torch.tensor(item[:, 0]).float()
 
 print('Reading data ...')
@@ -69,44 +69,52 @@ else:
 g = torch.Generator()
 g.manual_seed(0)
 
-paths = Path(DATA_PATH).rglob('*.csv')
-paths = list(itertools.islice(paths, 1000))
-print('Read {} files: {}'.format(len(paths), paths))
+# paths = Path(DATA_PATH).rglob('*.csv')
+# paths = list(itertools.islice(paths, 1000))
+# print('Read {} files: {}'.format(len(paths), paths))
 
-data_with_files = []
-for path in paths:
-    item = np.loadtxt(path, delimiter=',')
-    if include_unknown:
-        data_with_files.append((path, item))
-    else:
-        known_class_samples = item[item[:, 0] > 1]
-        if known_class_samples.shape[0] > 0:
-            data_with_files.append((path, item))
+# data_with_files = []
+# for path in paths:
+#     item = np.loadtxt(path, delimiter=',')
+#     if include_unknown:
+#         data_with_files.append((path, item))
+#     else:
+#         known_class_samples = item[item[:, 0] > 1]
+#         if known_class_samples.shape[0] > 0:
+#             data_with_files.append((path, item))
 
-random.shuffle(data_with_files)
+# random.shuffle(data_with_files)
 
-data = [d[1] for d in data_with_files]
+# data = [d[1] for d in data_with_files]
 
-print('Train on {} annotated files'.format(len(data)))
+# print('Train on {} annotated files'.format(len(data)))
 
-data_all = np.concatenate(data)
-print(data_all.shape)
-unique, counts = np.unique(data_all[:, 0], return_counts=True)
-print('Labels in data: ', dict(zip(unique, counts)))
+# data_all = np.concatenate(data)
+# print(data_all.shape)
+# unique, counts = np.unique(data_all[:, 0], return_counts=True)
+# print('Labels in data: ', dict(zip(unique, counts)))
 
-if include_unknown:
-    train_index = int(len(data) * 0.8)
-    dev_index = int(len(data) * 0.9)
-else:
-    train_index = 11
-    dev_index = 12
-train = data[:train_index]
-dev = data[train_index:dev_index]
-test = data[dev_index:]
+# if include_unknown:
+#     train_index = int(len(data) * 0.8)
+#     dev_index = int(len(data) * 0.9)
+# else:
+#     train_index = 11
+#     dev_index = 12
+# train = data[:train_index]
+# dev = data[train_index:dev_index]
+# test = data[dev_index:]
 
-print('train, dev, test number of files: {}, {}, {}.'.format(len(train), len(dev), len(test)))
-print('dev files: ', [d[0] for d in data_with_files[train_index:dev_index]])
-print('test files: ', [d[0] for d in data_with_files[dev_index:]])
+# print('train, dev, test number of files: {}, {}, {}.'.format(len(train), len(dev), len(test)))
+# print('dev files: ', [d[0] for d in data_with_files[train_index:dev_index]])
+# print('test files: ', [d[0] for d in data_with_files[dev_index:]])
+
+# np.save('{}/train.npy'.format(DATA_PATH), train, allow_pickle=True)
+# np.save('{}/dev.npy'.format(DATA_PATH), dev, allow_pickle=True)
+# np.save('{}/test.npy'.format(DATA_PATH), test, allow_pickle=True)
+
+train = np.load('{}/train.npy'.format(DATA_PATH), allow_pickle=True)
+dev = np.load('{}/dev.npy'.format(DATA_PATH), allow_pickle=True)
+test = np.load('{}/test.npy'.format(DATA_PATH), allow_pickle=True)
 
 train_set = MyIterableDataset(train, repeat=20)
 train_loader = DataLoader(
@@ -127,6 +135,7 @@ dev_loader = DataLoader(
     generator=g,
 )
 
+# test = [np.loadtxt(DATA_PATH + '/4T10lcFugit.csv', delimiter=',')]
 test_set = MyIterableDataset(test)
 test_loader = DataLoader(
     test_set,
@@ -191,7 +200,7 @@ def train(model, epoch, log_interval):
         output = model(data)
 
         # negative log-likelihood for a tensor of size (batch x m x n_output)
-        weight = torch.tensor([1.0, 0.1, 10.0, 100.0, 20.0, 20.0, 1000.0]).to(device)
+        weight = torch.tensor([1.0, 0.00001, 10.0, 100.0, 20.0, 20.0, 1000.0]).to(device)
         loss = F.nll_loss(output.squeeze(), target.squeeze(), weight=weight)
         # loss = F.nll_loss(output.squeeze(), target.squeeze())
         pred = get_likely_index(output)
@@ -268,23 +277,28 @@ def validate(model, epoch):
 
     return f1_avg
 
-def test(model):
+def test(model, use_dev=False):
     model.eval()
     pred_list = []
     target_list = []
     output_list = []
 
-    for data, target in test_loader:
+    loader = dev_loader if use_dev else test_loader
+    for data, target in loader:
         data = data.to(device)
-        target = target.to(device).long()
+        target = target.to(device).long().squeeze()
 
         output = model(data)
 
-        pred = get_likely_index(output)
+        pred = get_likely_index(output).squeeze()
 
-        pred_list.append(pred.squeeze())
-        target_list.append(target.squeeze())
+        pred_list.append(pred)
+        target_list.append(target)
         output_list.append(output.squeeze())
+
+        filename = 'dev' if use_dev else 'test'
+        np.savetxt('./rnn_results/{}.target.txt'.format(filename), target.to('cpu').numpy(), delimiter=',')
+        np.savetxt('./rnn_results/{}.pred.txt'.format(filename), pred.to('cpu').numpy(), delimiter=',')
 
     pred = torch.cat(pred_list).to('cpu').numpy()
     target = torch.cat(target_list).to('cpu').numpy()
@@ -295,9 +309,6 @@ def test(model):
     recall = recall_score(target, pred, average=None, zero_division=1)
     f1 = f1_score(target, pred, average=None, zero_division=1)
     f1_avg = f1_score(target, pred, average='weighted', zero_division=1)
-
-    np.savetxt('./rnn.target.txt', target, delimiter=',')
-    np.savetxt('./rnn.pred.txt', pred, delimiter=',')
 
     print(f"\nTest Epoch: accuracy: {accuracy:.2f} \n precision: {precision} \n recall: {recall} \n f1: {f1} \n f1_avg: {f1_avg}\n")
     
@@ -319,7 +330,6 @@ def test(model):
 #         best_val_score = val_score
 
 #     print("--- %s seconds ---" % (time.time() - start_time))
-
 # writer.close()
 
 # load and test
@@ -327,3 +337,4 @@ model = LSTM(n_embedding, n_hidden, n_class)
 model.to(device)
 model.load_state_dict(torch.load(MODEL_PATH, map_location=device))
 test(model)
+test(model, use_dev=True)
