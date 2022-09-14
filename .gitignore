@@ -132,6 +132,7 @@ data/*.csv
 slurm-*.out
 
 data*/
+data_full/
 
 node_modules/
 

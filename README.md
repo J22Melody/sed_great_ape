@@ -1,5 +1,67 @@
 # audio_exploration
 
+## [22.07.2022] Transformer
+
+Why?
+
+- Transformer has outperformed and replaced LSTM in many NLP tasks, e.g., machine translation.
+- Transformer is a more generalized encoder architecture, with less inductive bias on input data (i.e., RNN for time series input and CNN for image input)
+  - meaning it could work worse with constrained data conditions, but has a better ability to generalize, especially on large data conditions.
+
+So I did this experiment on replacing the LSTM with a Transformer model, but I did not expect it could outperform much more than the LSTM in our low data condition.
+
+The results are close to LSTM:
+
+```
+Test Epoch: accuracy: 0.68 
+ precision: [0.9205298  0.         0.47841727 0.12380952 0.82397004 0.05577689
+ 0.        ] 
+ recall: [0.81925344 1.         0.63942308 0.61904762 0.35369775 1.
+ 1.        ] 
+ f1: [0.86694387 0.         0.5473251  0.20634921 0.49493813 0.10566038
+ 0.        ] 
+ f1_avg: 0.7173748556916042
+```
+
+But seems to be more robust when generalizing from training to test and dev:
+
+![image](https://user-images.githubusercontent.com/2316987/180486554-59893cb3-c19f-4454-87a0-faf7e345d726.png)
+
+I think we could write results and do further experiments on new data on both models.
+
+## [03.07.2022] Fix Bug, Rerun Experiment, and Visualization
+
+### Fixed Test Performance 
+
+I spot a very hidden but major bug in the model training code, which, in a word, led to training/test dataset overlapping in previous experiments. So I fix the bug and rerun the experiment (on the 13 files with pulse level annotation), and it does affect the model performance. 
+
+https://github.com/bambooforest/audio_exploration/blob/visualization/longcall/rnn.log
+
+```
+Test Epoch: accuracy: 0.70 
+ precision: [0.96845426 0.         0.456942   0.0862069  0.86376022 0.03100775
+ 0.        ] 
+ recall: [0.80419122 1.         0.625      0.23809524 0.5096463  0.28571429
+ 1.        ] 
+ f1: [0.87871199 0.         0.52791878 0.12658228 0.64105157 0.05594406
+ 0.        ] 
+ f1_avg: 0.7552242056919353
+```
+
+<img width="769" alt="image" src="https://user-images.githubusercontent.com/2316987/178314751-a4abeefd-2f1a-44b2-bae3-e8668c4f2829.png">
+
+<img width="1379" alt="image" src="https://user-images.githubusercontent.com/2316987/178314954-b9508b7e-c97e-4a77-838d-e80c7d69164e.png">
+
+Now it is not as good as before, but at least it can still detect calls quite well (0.88 f1 for class 0), and the rest classes' performance depends highly on the number of samples of each class.
+
+### Visualization
+
+I create a Web app to visualize the model's prediction:
+
+<img width="1917" alt="image" src="https://user-images.githubusercontent.com/2316987/178315061-037ace00-0647-4270-a51b-b633f8ee879d.png">
+
+To run a built version locally, navigate into the directory `audio_exploration/longcall/visualization/build`, and run `python3 -m http.server`. It starts a local server where you can see the visualization.
+
 ## [29.03.2022] Recurrent Sequence Modeling on Long Calls
 
 Following the exploration in https://github.com/bambooforest/audio_exploration/pull/3, I experimented with a more sophisticated model architecture.  I modeled each whole long call audio (~60 s) as a long sequence in a LSTM model, then output a class distribution of pulse levels at each time step (20 ms segment). It turns out to be a big success, the average f1 score on test set reaches 0.91.
