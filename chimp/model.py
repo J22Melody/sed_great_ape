@@ -96,11 +96,23 @@ unique, counts = np.unique(train_data_all[:, 0], return_counts=True)
 num_classes = dict(zip(unique, counts))
 print('Labels in train_data_all: ', num_classes)
 
+def length_to_mask(length, max_len=None, dtype=None):
+    """length: B.
+    return B x max_len.
+    If max_len is None, then max of length will be used.
+    """
+    assert len(length.shape) == 1, 'Length shape should be 1 dimensional.'
+    max_len = max_len or length.max().item()
+    mask = torch.arange(max_len, device=length.device,
+                        dtype=length.dtype).expand(len(length), max_len) < length.unsqueeze(1)
+    if dtype is not None:
+        mask = torch.as_tensor(mask, dtype=dtype, device=length.device)
+    return mask
+
 def collate_fn(batch):
-    # print(batch)
-    batch_padded = torch.nn.utils.rnn.pad_sequence(batch, batch_first=True)
-    # print(batch_padded)
-    return batch_padded
+    batch_padded = torch.nn.utils.rnn.pad_sequence(batch, batch_first=True, padding_value=0.0)
+    lengths = torch.tensor([t.shape[0] for t in batch]).to(device)
+    return batch_padded, lengths, length_to_mask(lengths)
 
 train_set = MyIterableDataset(train, training=True)
 dev_set = MyIterableDataset(dev)
@@ -222,19 +234,19 @@ def train(model, epoch):
     target_list = []
     losses = []
 
-    for data in train_loader:
+    for data, lengths, mask in train_loader:
         input = data[:, :, 1:].to(device)
         target = data[:, :, 0].to(device).long()
 
         output = model(input)
 
-        # negative log-likelihood for a tensor of size (batch x m x n_output)
+        weight = None
         if CONFIG['balance_weights']:
-            weights = [1 / v for v in num_classes.values()]
-            weight = torch.tensor(weights).float().to(device) # inverse to num training samples
-            loss = F.nll_loss(output.transpose(1, 2), target, weight=weight)
-        else:
-            loss = F.nll_loss(output.transpose(1, 2), target)
+            weight_num = [1 / v for v in num_classes.values()]
+            weight = torch.tensor(weight_num).float().to(device) # inverse to num training samples
+
+        # loss = F.nll_loss(output.transpose(1, 2), target, weight=weight)
+        loss = F.nll_loss(output[mask], target[mask], weight=weight)
         pred = get_likely_index(output)
 
         pred_list.append(torch.flatten(pred))
@@ -327,8 +339,9 @@ def test(model, use_dev=False):
 
         filename = filename[0]
 
-        np.savetxt('./{}/{}.target.txt'.format(RESULT_PATH, filename), target.to('cpu').numpy(), delimiter=',')
-        np.savetxt('./{}/{}.pred.txt'.format(RESULT_PATH, filename), pred.to('cpu').numpy(), delimiter=',')
+        if CONFIG['test_only']:
+            np.savetxt('./{}/{}.target.txt'.format(RESULT_PATH, filename), target.to('cpu').numpy(), delimiter=',')
+            np.savetxt('./{}/{}.pred.txt'.format(RESULT_PATH, filename), pred.to('cpu').numpy(), delimiter=',')
 
     pred = torch.cat(pred_list).to('cpu').numpy()
     target = torch.cat(target_list).to('cpu').numpy()
