@@ -96,7 +96,10 @@ unique, counts = np.unique(train_data_all[:, 0], return_counts=True)
 print('Labels in train_data_all: ', dict(zip(unique, counts)))
 
 def collate_fn(batch):
-    return torch.nn.utils.rnn.pad_sequence(batch)
+    # print(batch)
+    batch_padded = torch.nn.utils.rnn.pad_sequence(batch, batch_first=True)
+    # print(batch_padded)
+    return batch_padded
 
 train_set = MyIterableDataset(train, training=True)
 dev_set = MyIterableDataset(dev)
