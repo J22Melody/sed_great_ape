@@ -31,14 +31,14 @@ np.random.seed(0)
 
 # config
 parser = ArgumentParser()
-parser.add_argument("-m", "--model")
+parser.add_argument("-c", "--config")
 args = parser.parse_args()
 
-CONFIG = json.load(open(args.model + '/config.json'))
+CONFIG = json.load(open(args.config))
 
 DATA_PATH = CONFIG['data_path']
-RESULT_PATH = args.model + '/results'
-MODEL_PATH = args.model + '/model.pt'
+RESULT_PATH =  './models/{}/results'.format(CONFIG['name'])
+MODEL_PATH = './models/{}/model.pt'.format(CONFIG['name'])
 
 writer = SummaryWriter(log_dir='runs/{}/{}/'.format(CONFIG['name'], datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")))
 
@@ -50,15 +50,25 @@ print(device)
 # read data
 
 class MyIterableDataset(IterableDataset):
-    def __init__(self, data, repeat=1):
+    def __init__(self, data, repeat=1, training=False):
         super(MyIterableDataset).__init__()
+
+        # bucketing
+        if training:
+            data = list(sorted(data, key=lambda d: -d[1].shape[0]))
+
         self.data = data
         self.repeat = repeat
+        self.training = training
 
     def __iter__(self):
-        for i in range(self.repeat):
+        for _ in range(self.repeat):
             for filename, item in self.data:
-                yield torch.tensor(item[:, 1:]).float(), torch.tensor(item[:, 0]).float(), str(filename)
+                if self.training:
+                    yield torch.tensor(item).float()
+                else:
+                    yield torch.tensor(item[:, 1:]).float(), torch.tensor(item[:, 0]).float(), str(filename)
+                
 
 print('Reading data ...')
 
@@ -72,33 +82,9 @@ else:
 g = torch.Generator()
 g.manual_seed(seed)
 
-if not Path(DATA_PATH + '/train.npy').is_file():
-    paths = Path(DATA_PATH).rglob('*.csv')
-    paths = list(itertools.islice(paths, 100000))
-    # print('Read {} files: {}'.format(len(paths), paths))
-    print('Read {} files'.format(len(paths)))
-
-    data_with_files = []
-    for path in paths:
-        item = np.loadtxt(path, delimiter=',')
-        data_with_files.append((path.stem, item))
-
-    random.shuffle(data_with_files)   
-
-    train_index = int(len(data_with_files) * 0.8)
-    dev_index = int(len(data_with_files) * 0.9)
-
-    train = data_with_files[:train_index]
-    dev = data_with_files[train_index:dev_index]
-    test = data_with_files[dev_index:]
-    
-    np.save('{}/train.npy'.format(DATA_PATH), train, allow_pickle=True)
-    np.save('{}/dev.npy'.format(DATA_PATH), dev, allow_pickle=True)
-    np.save('{}/test.npy'.format(DATA_PATH), test, allow_pickle=True)
-else:
-    train = np.load('{}/train.npy'.format(DATA_PATH), allow_pickle=True)
-    dev = np.load('{}/dev.npy'.format(DATA_PATH), allow_pickle=True)
-    test = np.load('{}/test.npy'.format(DATA_PATH), allow_pickle=True)
+train = np.load('{}/train.npy'.format(DATA_PATH), allow_pickle=True)
+dev = np.load('{}/dev.npy'.format(DATA_PATH), allow_pickle=True)
+test = np.load('{}/test.npy'.format(DATA_PATH), allow_pickle=True)
 
 print('train, dev, test number of files: {}, {}, {}.'.format(len(train), len(dev), len(test)))
 print('dev files: ', [d[0] for d in dev])
@@ -109,29 +95,32 @@ print('train_data_all:', train_data_all.shape)
 unique, counts = np.unique(train_data_all[:, 0], return_counts=True)
 print('Labels in train_data_all: ', dict(zip(unique, counts)))
 
-train_set = MyIterableDataset(train)
+def collate_fn(batch):
+    return torch.nn.utils.rnn.pad_sequence(batch)
+
+train_set = MyIterableDataset(train, training=True)
+dev_set = MyIterableDataset(dev)
+test_set = MyIterableDataset(test)
+
 train_loader = DataLoader(
     train_set,
     batch_size=CONFIG['batch_size'],
     num_workers=num_workers,
     pin_memory=pin_memory,
     generator=g,
+    collate_fn=collate_fn,
 )
-
-dev_set = MyIterableDataset(dev)
 dev_loader = DataLoader(
     dev_set,
-    batch_size=CONFIG['batch_size'],
+    batch_size=1,
     num_workers=num_workers,
     pin_memory=pin_memory,
     drop_last=False,
     generator=g,
 )
-
-test_set = MyIterableDataset(test)
 test_loader = DataLoader(
     test_set,
-    batch_size=CONFIG['batch_size'],
+    batch_size=1,
     num_workers=num_workers,
     pin_memory=pin_memory,
     drop_last=False,
@@ -229,20 +218,20 @@ def train(model, epoch):
     target_list = []
     losses = []
 
-    for data, target, _ in train_loader:
-        data = data.to(device)
-        target = target.to(device).long()
+    for data in train_loader:
+        input = data[:, :, 1:].to(device)
+        target = data[:, :, 0].to(device).long()
 
-        output = model(data)
+        output = model(input)
 
         # negative log-likelihood for a tensor of size (batch x m x n_output)
-        weight = torch.tensor([1 / 5338, 1 / 39463, 1 / 15824, 1 / 15941, 1 / 6484]).to(device) # inverse to num training samples
-        # loss = F.nll_loss(output.squeeze(), target.squeeze(), weight=weight)
-        loss = F.nll_loss(output.squeeze(), target.squeeze())
+        # weight = torch.tensor([1 / 5338, 1 / 39463, 1 / 15824, 1 / 15941, 1 / 6484]).to(device) # inverse to num training samples
+        # loss = F.nll_loss(output.transpose(1, 2), target, weight=weight)
+        loss = F.nll_loss(output.transpose(1, 2), target)
         pred = get_likely_index(output)
 
-        pred_list.append(pred.squeeze())
-        target_list.append(target.squeeze())
+        pred_list.append(torch.flatten(pred))
+        target_list.append(torch.flatten(target))
 
         optimizer.zero_grad()
         loss.backward()
