@@ -240,13 +240,16 @@ def train(model, epoch):
 
         output = model(input)
 
+        target = target[mask]
+        output = output[mask]
+
         weight = None
         if CONFIG['balance_weights']:
             weight_num = [1 / v for v in num_classes.values()]
             weight = torch.tensor(weight_num).float().to(device) # inverse to num training samples
 
         # loss = F.nll_loss(output.transpose(1, 2), target, weight=weight)
-        loss = F.nll_loss(output[mask], target[mask], weight=weight)
+        loss = F.nll_loss(output, target, weight=weight)
         pred = get_likely_index(output)
 
         pred_list.append(torch.flatten(pred))
