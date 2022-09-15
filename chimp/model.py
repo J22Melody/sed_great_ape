@@ -31,23 +31,9 @@ np.random.seed(0)
 # config
 parser = ArgumentParser()
 parser.add_argument("-m", "--model")
-
 args = parser.parse_args()
 
 CONFIG = json.load(open(args.model + '/config.json'))
-
-# TODO: move to config
-n_embedding = 768
-d_hid = 2048  # dimension of the feedforward network model in nn.TransformerEncoder
-nlayers = 6  # number of nn.TransformerEncoderLayer in nn.TransformerEncoder
-nhead = 8  # number of heads in nn.MultiheadAttention
-batch_size = 1
-n_epoch = 100
-lr = 0.0001
-dropout = 0.4
-patience = 10
-step_factor = 0.7
-n_class = 5
 
 DATA_PATH = CONFIG['data_path']
 RESULT_PATH = args.model + '/results'
@@ -125,7 +111,7 @@ print('Labels in train_data_all: ', dict(zip(unique, counts)))
 train_set = MyIterableDataset(train, repeat=20)
 train_loader = DataLoader(
     train_set,
-    batch_size=batch_size,
+    batch_size=CONFIG['batch_size'],
     num_workers=num_workers,
     pin_memory=pin_memory,
     generator=g,
@@ -134,7 +120,7 @@ train_loader = DataLoader(
 dev_set = MyIterableDataset(dev)
 dev_loader = DataLoader(
     dev_set,
-    batch_size=batch_size,
+    batch_size=CONFIG['batch_size'],
     num_workers=num_workers,
     pin_memory=pin_memory,
     drop_last=False,
@@ -144,7 +130,7 @@ dev_loader = DataLoader(
 test_set = MyIterableDataset(test)
 test_loader = DataLoader(
     test_set,
-    batch_size=batch_size,
+    batch_size=CONFIG['batch_size'],
     num_workers=num_workers,
     pin_memory=pin_memory,
     drop_last=False,
@@ -212,7 +198,7 @@ class PositionalEncoding(nn.Module):
         x = x + self.pe[:x.size(0)]
         return self.dropout(x)
 
-model = Transformer(n_embedding, nhead, d_hid, nlayers, n_class, dropout)
+model = Transformer(CONFIG['n_embedding'], CONFIG['nhead'], CONFIG['d_hid'], CONFIG['nlayers'], CONFIG['n_class'], CONFIG['dropout'])
 model.to(device)
 print(model)
 
@@ -222,9 +208,9 @@ def count_parameters(model):
 n = count_parameters(model)
 print("Number of parameters: %s" % n)
 
-optimizer = optim.Adam(model.parameters(), lr=lr, weight_decay=0.0001)
+optimizer = optim.Adam(model.parameters(), lr=CONFIG['lr'], weight_decay=0.0001)
 # scheduler = optim.lr_scheduler.StepLR(optimizer, step_size=step_size, gamma=step_factor)
-scheduler = optim.lr_scheduler.ReduceLROnPlateau(optimizer, patience=patience, factor=step_factor, mode='max')
+scheduler = optim.lr_scheduler.ReduceLROnPlateau(optimizer, patience=CONFIG['patience'], factor=CONFIG['step_factor'], mode='max')
 
 # train, dev, test functions
 
@@ -361,7 +347,7 @@ def test(model, use_dev=False):
 
 # train and save
 best_val_score = 0
-for epoch in range(1, n_epoch + 1):
+for epoch in range(1, CONFIG['n_epoch'] + 1):
     train(model, epoch)
 
     val_score = validate(model, epoch)
@@ -378,7 +364,7 @@ for epoch in range(1, n_epoch + 1):
 writer.close()
 
 # load and test
-model = Transformer(n_embedding, nhead, d_hid, nlayers, n_class, dropout)
+model = Transformer(CONFIG['n_embedding'], CONFIG['nhead'], CONFIG['d_hid'], CONFIG['nlayers'], CONFIG['n_class'], CONFIG['dropout'])
 model.to(device)
 model.load_state_dict(torch.load(MODEL_PATH, map_location=device))
 test(model)
