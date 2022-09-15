@@ -136,4 +136,4 @@ data_full/
 
 node_modules/
 
-transformer.pt
+*.pt

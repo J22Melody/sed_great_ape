@@ -80,7 +80,7 @@ if not Path(DATA_PATH + '/train.npy').is_file():
     data_with_files = []
     for path in paths:
         item = np.loadtxt(path, delimiter=',')
-        data_with_files.append((path, item))
+        data_with_files.append((path.stem, item))
 
     random.shuffle(data_with_files)   
 
@@ -108,7 +108,7 @@ print('train_data_all:', train_data_all.shape)
 unique, counts = np.unique(train_data_all[:, 0], return_counts=True)
 print('Labels in train_data_all: ', dict(zip(unique, counts)))
 
-train_set = MyIterableDataset(train, repeat=20)
+train_set = MyIterableDataset(train)
 train_loader = DataLoader(
     train_set,
     batch_size=CONFIG['batch_size'],
@@ -328,6 +328,8 @@ def test(model, use_dev=False):
         target_list.append(target)
         output_list.append(output.squeeze())
 
+        filename = filename[0]
+
         np.savetxt('./{}/{}.target.txt'.format(RESULT_PATH, filename), target.to('cpu').numpy(), delimiter=',')
         np.savetxt('./{}/{}.pred.txt'.format(RESULT_PATH, filename), pred.to('cpu').numpy(), delimiter=',')
 
@@ -345,27 +347,28 @@ def test(model, use_dev=False):
     
     print("--- %s seconds ---" % (time.time() - start_time))
 
-# train and save
-best_val_score = 0
-for epoch in range(1, CONFIG['n_epoch'] + 1):
-    train(model, epoch)
+if not CONFIG['test_only']:
+    # train and save
+    best_val_score = 0
+    for epoch in range(1, CONFIG['n_epoch'] + 1):
+        train(model, epoch)
 
-    val_score = validate(model, epoch)
-    # scheduler.step()
-    scheduler.step(val_score)
-    writer.flush()
+        val_score = validate(model, epoch)
+        # scheduler.step()
+        scheduler.step(val_score)
+        writer.flush()
 
-    if val_score > best_val_score:
-        print('New best val score, save model ...')
-        torch.save(model.state_dict(), MODEL_PATH)
-        best_val_score = val_score
+        if val_score > best_val_score:
+            print('New best val score, save model ...')
+            torch.save(model.state_dict(), MODEL_PATH)
+            best_val_score = val_score
 
-    print("--- %s seconds ---" % (time.time() - start_time))
-writer.close()
+        print("--- %s seconds ---" % (time.time() - start_time))
+    writer.close()
 
 # load and test
 model = Transformer(CONFIG['n_embedding'], CONFIG['nhead'], CONFIG['d_hid'], CONFIG['nlayers'], CONFIG['n_class'], CONFIG['dropout'])
 model.to(device)
 model.load_state_dict(torch.load(MODEL_PATH, map_location=device))
 test(model)
-test(model, use_dev=False)
+test(model, use_dev=True)
