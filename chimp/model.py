@@ -93,7 +93,8 @@ print('test files: ', [d[0] for d in test])
 train_data_all = np.concatenate([d[1] for d in train])
 print('train_data_all:', train_data_all.shape)
 unique, counts = np.unique(train_data_all[:, 0], return_counts=True)
-print('Labels in train_data_all: ', dict(zip(unique, counts)))
+num_classes = dict(zip(unique, counts))
+print('Labels in train_data_all: ', num_classes)
 
 def collate_fn(batch):
     # print(batch)
@@ -228,9 +229,12 @@ def train(model, epoch):
         output = model(input)
 
         # negative log-likelihood for a tensor of size (batch x m x n_output)
-        weight = torch.tensor([1 / 771, 1 / 38417, 1 / 17352, 1 / 15900, 1 / 6033]).to(device) # inverse to num training samples
-        loss = F.nll_loss(output.transpose(1, 2), target, weight=weight)
-        # loss = F.nll_loss(output.transpose(1, 2), target)
+        if CONFIG['balance_weights']:
+            weights = [1 / v for v in num_classes.values()]
+            weight = torch.tensor(weights).float().to(device) # inverse to num training samples
+            loss = F.nll_loss(output.transpose(1, 2), target, weight=weight)
+        else:
+            loss = F.nll_loss(output.transpose(1, 2), target)
         pred = get_likely_index(output)
 
         pred_list.append(torch.flatten(pred))
@@ -358,10 +362,11 @@ if not CONFIG['test_only']:
 
         print("--- %s seconds ---" % (time.time() - start_time))
     writer.close()
-
+    
 # load and test
 model = Transformer(CONFIG['n_embedding'], CONFIG['nhead'], CONFIG['d_hid'], CONFIG['nlayers'], CONFIG['n_class'], CONFIG['dropout'])
 model.to(device)
 model.load_state_dict(torch.load(MODEL_PATH, map_location=device))
+
 test(model)
 test(model, use_dev=True)

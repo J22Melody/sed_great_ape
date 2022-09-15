@@ -2,6 +2,7 @@
     "name": "chimp_transformer",
     "data_path": "/home/cluster/zifjia/data/wav2vec2_split_by_file",
     "test_only": false,
+    "balance_weights": true,
     "n_embedding": 768,
     "d_hid": 2048, 
     "nlayers": 6,  
