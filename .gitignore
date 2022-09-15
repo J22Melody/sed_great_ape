@@ -137,3 +137,7 @@ data_full/
 node_modules/
 
 *.pt
+
+#hack
+chimp/chimp/raw
+chimp/chimp/wav2vec2*
