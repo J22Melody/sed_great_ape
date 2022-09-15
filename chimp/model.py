@@ -1,5 +1,6 @@
 import random
 import math
+import datetime
 import time
 import numpy as np
 import pandas as pd
@@ -39,7 +40,7 @@ DATA_PATH = CONFIG['data_path']
 RESULT_PATH = args.model + '/results'
 MODEL_PATH = args.model + '/model.pt'
 
-writer = SummaryWriter(log_dir='runs/' + CONFIG['name'])
+writer = SummaryWriter(log_dir='runs/{}/{}/'.format(CONFIG['name'], datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")))
 
 # The MPS backend is supported on MacOS 12.3+
 device = torch.device('cuda' if torch.cuda.is_available() else ('mps' if torch.has_mps else 'cpu'))
