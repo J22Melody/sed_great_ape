@@ -237,8 +237,8 @@ def train(model, epoch):
 
         # negative log-likelihood for a tensor of size (batch x m x n_output)
         weight = torch.tensor([1 / 5338, 1 / 39463, 1 / 15824, 1 / 15941, 1 / 6484]).to(device) # inverse to num training samples
-        loss = F.nll_loss(output.squeeze(), target.squeeze(), weight=weight)
-        # loss = F.nll_loss(output.squeeze(), target.squeeze())
+        # loss = F.nll_loss(output.squeeze(), target.squeeze(), weight=weight)
+        loss = F.nll_loss(output.squeeze(), target.squeeze())
         pred = get_likely_index(output)
 
         pred_list.append(pred.squeeze())
