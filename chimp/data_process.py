@@ -18,7 +18,7 @@ np.random.seed(0)
 
 start_time = time.time()
 # The MPS backend is supported on MacOS 12.3+
-# device = torch.device('cuda' if torch.cuda.is_available() else ('mps' if torch.has_mps else 'cpu'))
+device = torch.device('cuda' if torch.cuda.is_available() else ('mps' if torch.has_mps else 'cpu'))
 device = torch.device('cpu')
 
 print(device)

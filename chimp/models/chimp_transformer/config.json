@@ -1,0 +1,4 @@
+{
+    "name": "chimp_transformer",
+    "data_path": "./data_chimp_wav2vec2"
+}
