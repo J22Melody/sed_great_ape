@@ -8,7 +8,7 @@
     "nlayers": 6,  
     "nhead": 8,  
     "batch_size": 1,
-    "n_epoch": 200,
+    "n_epoch": 300,
     "lr": 0.0001,
     "dropout": 0.4,
     "patience": 10,
