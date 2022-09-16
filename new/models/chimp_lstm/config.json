@@ -1,7 +1,7 @@
 {
     "name": "chimp_lstm",
     "data_path": "/home/cluster/zifjia/data/wav2vec2_split_by_file",
-    "test_only": false,
+    "test_only": true,
     "balance_weights": true,
     "model_type": "lstm",
     "n_embedding": 768,
