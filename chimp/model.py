@@ -204,7 +204,7 @@ class PositionalEncoding(nn.Module):
         x = x + self.pe[:x.size(0)]
         return self.dropout(x)
 
-model = Transformer(CONFIG['n_embedding'], CONFIG['nhead'], CONFIG['d_hid'], CONFIG['nlayers'], CONFIG['n_class'], CONFIG['dropout'])
+model = Transformer(CONFIG['n_embedding'], CONFIG['nhead'], CONFIG['d_hid'], CONFIG['nlayers'], len(num_classes), CONFIG['dropout'])
 model.to(device)
 print(model)
 
@@ -380,7 +380,7 @@ if not CONFIG['test_only']:
     writer.close()
     
 # load and test
-model = Transformer(CONFIG['n_embedding'], CONFIG['nhead'], CONFIG['d_hid'], CONFIG['nlayers'], CONFIG['n_class'], CONFIG['dropout'])
+model = Transformer(CONFIG['n_embedding'], CONFIG['nhead'], CONFIG['d_hid'], CONFIG['nlayers'], len(num_classes), CONFIG['dropout'])
 model.to(device)
 model.load_state_dict(torch.load(MODEL_PATH, map_location=device))
 
