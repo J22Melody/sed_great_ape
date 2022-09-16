@@ -204,8 +204,28 @@ class PositionalEncoding(nn.Module):
         x = x + self.pe[:x.size(0)]
         return self.dropout(x)
 
-model = Transformer(CONFIG['n_embedding'], CONFIG['nhead'], CONFIG['d_hid'], CONFIG['nlayers'], len(num_classes), CONFIG['dropout'])
-model.to(device)
+class LSTM(nn.Module):
+    def __init__(self, embedding_dim, hidden_dim, nlayers, tagset_size, dropout):
+        super(LSTM, self).__init__()
+        self.hidden_dim = hidden_dim
+        self.lstm = nn.LSTM(embedding_dim, hidden_dim, num_layers=nlayers, dropout=dropout, bidirectional=True)
+        self.hidden2tag = nn.Linear(hidden_dim * 2, tagset_size)
+
+    def forward(self, input):
+        lstm_out, _ = self.lstm(input)
+        tag_space = self.hidden2tag(lstm_out)
+        tag_scores = F.log_softmax(tag_space, dim=1)
+        return tag_scores
+
+def init_model(model_type):
+    if model_type == 'transformer':
+        model = Transformer(CONFIG['n_embedding'], CONFIG['nhead'], CONFIG['d_hid'], CONFIG['nlayers'], len(num_classes), CONFIG['dropout'])
+    elif model_type == 'LSTM':
+        model = LSTM(CONFIG['n_embedding'], CONFIG['d_hid'], CONFIG['nlayers'], len(num_classes), CONFIG['dropout'])
+    model.to(device)
+    return model
+
+model = init_model(CONFIG['model_type'])
 print(model)
 
 def count_parameters(model):
@@ -380,8 +400,7 @@ if not CONFIG['test_only']:
     writer.close()
     
 # load and test
-model = Transformer(CONFIG['n_embedding'], CONFIG['nhead'], CONFIG['d_hid'], CONFIG['nlayers'], len(num_classes), CONFIG['dropout'])
-model.to(device)
+model = init_model()
 model.load_state_dict(torch.load(MODEL_PATH, map_location=device))
 
 test(model)
