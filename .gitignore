@@ -141,3 +141,4 @@ node_modules/
 !new/data_chimp
 new/data_chimp/raw
 new/data_chimp/wav2vec2*
+new/visualization/public/data/
