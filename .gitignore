@@ -138,6 +138,6 @@ node_modules/
 
 *.pt
 
-#hack
-new/chimp/raw
-new/chimp/wav2vec2*
+!new/data_chimp
+new/data_chimp/raw
+new/data_chimp/wav2vec2*
