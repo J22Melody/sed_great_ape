@@ -36,6 +36,8 @@ args = parser.parse_args()
 
 CONFIG = json.load(open(args.config))
 
+print(CONFIG)
+
 DATA_PATH = CONFIG['data_path']
 RESULT_PATH =  './models/{}/results'.format(CONFIG['name'])
 MODEL_PATH = './models/{}/model.pt'.format(CONFIG['name'])
@@ -220,7 +222,7 @@ class LSTM(nn.Module):
 def init_model(model_type):
     if model_type == 'transformer':
         model = Transformer(CONFIG['n_embedding'], CONFIG['nhead'], CONFIG['d_hid'], CONFIG['nlayers'], len(num_classes), CONFIG['dropout'])
-    elif model_type == 'LSTM':
+    elif model_type == 'lstm':
         model = LSTM(CONFIG['n_embedding'], CONFIG['d_hid'], CONFIG['nlayers'], len(num_classes), CONFIG['dropout'])
     model.to(device)
     return model
@@ -340,7 +342,8 @@ def validate(model, epoch):
     return f1_avg
 
 def test(model, use_dev=False):
-    Path(RESULT_PATH).mkdir(parents=True, exist_ok=True)
+    if CONFIG['test_only']:
+        Path(RESULT_PATH).mkdir(parents=True, exist_ok=True)
 
     model.eval()
     pred_list = []
@@ -400,7 +403,7 @@ if not CONFIG['test_only']:
     writer.close()
     
 # load and test
-model = init_model()
+model = init_model(CONFIG['model_type'])
 model.load_state_dict(torch.load(MODEL_PATH, map_location=device))
 
 test(model)
