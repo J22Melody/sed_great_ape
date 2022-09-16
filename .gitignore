@@ -139,5 +139,5 @@ node_modules/
 *.pt
 
 #hack
-chimp/chimp/raw
-chimp/chimp/wav2vec2*
+new/chimp/raw
+new/chimp/wav2vec2*
