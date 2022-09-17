@@ -136,4 +136,9 @@ data_full/
 
 node_modules/
 
-transformer.pt
+*.pt
+
+!new/data_chimp
+new/data_chimp/raw
+new/data_chimp/wav2vec2*
+new/visualization/public/data/

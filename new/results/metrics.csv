@@ -1,0 +1,3 @@
+data," split"," model"," dev_accuracy"," dev_f1"," test_accuracy"," test_f1"
+chimp," wav2vec2_split_by_file"," transformer",0.69,0.70,0.69,0.71
+chimp," wav2vec2_split_by_file"," lstm",0.75,0.74,0.74,"0.72 "
