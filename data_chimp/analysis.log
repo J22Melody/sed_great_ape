@@ -1,0 +1,32 @@
+                                             File Name        Date      Time  ID  Birth year  Intro starts (s)  Intro ends (s)  Build-up starts  Build-up ends  Climax starts  Climax ends  Let-down starts  Let-down ends  Drumming Context  Type  Non-classic order          Notes  For Steven  duration  intro_duration  build_up_duration  climax_duration  let_down_duration
+0    ASO0020 Sonso SQ single ph, PS single ph other...  12.11.2018  13:12:00  SQ        1991               0.0            3.90             0.00           0.00           0.00         0.00              0.0            0.0         0       R     I                0.0              0           1  3.907982            3.90               0.00             0.00                0.0
+2                   ASO0083 Sonso HW single ph slap_01  05.09.2018  09:36:00  HW        1993               0.0            3.71             3.71           6.70           0.00         0.00              0.0            0.0         1       T    IB                0.0  (drum = slap)           1  6.709138            3.71               2.99             0.00                0.0
+3                ASO0087 Sonso HW single ph feeding_01  05.09.2018  09:55:00  HW        1993               0.0            2.21             2.21           4.63           4.63         6.60              0.0            0.0         0       F   IBC                0.0              0           1  6.606417            2.21               2.42             1.97                0.0
+4    ASO0088 Sonso HW single ph drum,  group ph, un...  05.09.2018  10:20:00  HW        1993               0.0            3.10             3.10           3.98           0.00         0.00              0.0            0.0         1       T    IB                0.0        (pause)           1  3.981088            3.10               0.88             0.00                0.0
+5                   ASO0089 Sonso HW single ph drum_01  05.09.2018  10:21:00  HW        1993               0.0            2.97             2.97           4.76           4.76         6.70              6.7            7.3         1       T  IBCL                0.0              0           1  7.300249            2.97               1.79             1.94                0.6
+..                                                 ...         ...       ...  ..         ...               ...             ...              ...            ...            ...          ...              ...            ...       ...     ...   ...                ...            ...         ...       ...             ...                ...              ...                ...
+262                    ASO4816 PS single ph feeding_01  16.03.2020  06:43:00  PS        1998               0.0            6.96             0.00           0.00           0.00         0.00              0.0            0.0         0       F     I                0.0              0           1  6.961406            6.96               0.00             0.00                0.0
+263                    ASO4817 PS single ph intro, _01  16.03.2020  07:02:00  PS        1998               0.0            5.72             0.00           0.00           5.72         7.59              0.0            0.0         0       F    IC                0.0              0           1  7.598299            5.72               0.00             1.87                0.0
+264                     ASO4817 PS single ph intro,_02  16.03.2020  07:02:00  PS        1998               0.0            6.80             0.00           0.00           0.00         0.00              0.0            0.0         0       F     I                0.0              0           1  6.800862            6.80               0.00             0.00                0.0
+265                  ASO4817 SM single ph feeding, _01  16.03.2020  07:02:00  SM        1993               0.0            1.43             1.43           3.39           0.00         0.00              0.0            0.0         0       F    IB                0.0              0           1  3.393447            1.43               1.96             0.00                0.0
+266                  ASO4817 SM single ph feeding, _02  16.03.2020  07:02:00  SM        1993               0.0            5.50             0.00           0.00           5.50         8.81              0.0            0.0         0       F    IC                0.0              0           1  8.811474            5.50               0.00             3.31                0.0
+
+[235 rows x 24 columns]
+Birth year           468842.000000
+Intro starts (s)          0.000000
+Intro ends (s)          976.710000
+Build-up starts         641.272000
+Build-up ends          1068.698000
+Climax starts          1092.186000
+Climax ends            1488.110000
+Let-down starts         843.970000
+Let-down ends           999.155000
+Drumming                 78.000000
+Non-classic order        18.000000
+For Steven              235.000000
+duration               1964.217937
+intro_duration          976.710000
+build_up_duration       427.426000
+climax_duration         395.924000
+let_down_duration       155.185000
+dtype: float64

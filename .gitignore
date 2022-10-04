@@ -131,14 +131,13 @@ dmypy.json
 data/*.csv
 slurm-*.out
 
-data*/
-data_full/
+legacy/**/data*/
 
 node_modules/
 
 *.pt
 
-!new/data_chimp
-new/data_chimp/raw
-new/data_chimp/wav2vec2*
-new/visualization/public/data/
+data*/raw
+data*/wav2vec2*
+
+visualization/public/data/
