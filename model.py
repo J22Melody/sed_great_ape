@@ -35,8 +35,11 @@ print(CONFIG)
 # seed
 seed = CONFIG['seed']
 random.seed(seed)
-torch.manual_seed(seed)
 np.random.seed(seed)
+torch.manual_seed(seed)
+torch.cuda.manual_seed(seed)
+torch.backends.cudnn.benchmark = False
+torch.use_deterministic_algorithms(True)
 
 DATA_PATH = CONFIG['data_path']
 RESULT_PATH =  './models/{}/results'.format(CONFIG['name'])
