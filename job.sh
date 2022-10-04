@@ -24,4 +24,4 @@ pip3 install scikit-learn
 pip3 install tensorboard
 pip3 install torch torchvision torchaudio
 
-CUBLAS_WORKSPACE_CONFIG=:4096:8 stdbuf -o0 -e0 srun --unbuffered python model.py -c $1/config.json 
+CUBLAS_WORKSPACE_CONFIG=:4096:8 stdbuf -o0 -e0 srun --unbuffered python model.py -c $1

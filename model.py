@@ -43,7 +43,8 @@ torch.use_deterministic_algorithms(True)
 
 DATA_PATH = CONFIG['data_path']
 RESULT_PATH =  './models/{}/results'.format(CONFIG['name'])
-MODEL_PATH = './models/{}/model.pt'.format(CONFIG['name'])
+# MODEL_PATH = './models/{}/model.pt'.format(CONFIG['name'])
+MODEL_PATH = '/home/cluster/zifjia/data/models/{}.pt'.format(CONFIG['name'])
 
 writer = SummaryWriter(log_dir='runs/{}/{}/'.format(CONFIG['name'], datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")))
 
@@ -386,6 +387,7 @@ def test(model, use_dev=False):
     
     print("--- %s seconds ---" % (time.time() - start_time))
 
+count = 0
 if not CONFIG['test_only']:
     # train and save
     best_val_score = 0
@@ -401,6 +403,12 @@ if not CONFIG['test_only']:
             print('New best val score, save model ...')
             torch.save(model.state_dict(), MODEL_PATH)
             best_val_score = val_score
+        else:
+            count = count + 1
+
+        if count > CONFIG['patience'] * 5:
+            print('Early stopping!')
+            break
 
         print("--- %s seconds ---" % (time.time() - start_time))
     writer.close()
