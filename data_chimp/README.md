@@ -4,7 +4,9 @@ Assume you have the raw chimp data here in `./raw`.
 
 ## Analysis
 
-There are 235 annotated audio files, annotated with phase information in the excel file.
+`python analysis.py`
+
+There are 235 audio files, annotated with phase information in the excel file.
 
 Now have a look at the total duration (second) and the total duration for each phase:
 
@@ -15,3 +17,11 @@ build_up_duration       427.426000
 climax_duration         395.924000
 let_down_duration       155.185000
 ```
+
+## Process
+
+`python process.py`
+
+## Split
+
+`python split.py`
