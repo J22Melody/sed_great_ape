@@ -24,9 +24,9 @@ let_down_duration       155.185000
 
 Read the raw files and match every 0.02s segment to the annotations, as well as the following features:
 
-- `./waveform`
-- `./spectrogram`
-- `./wav2vec2`
+- `./waveform` (size 320)
+- `./spectrogram` (size 201)
+- `./wav2vec2` (size 768)
 
 ## Split
 

@@ -23,12 +23,6 @@ from torch.utils.tensorboard import SummaryWriter
 
 start_time = time.time()
 
-# seed
-seed = 42
-random.seed(seed)
-torch.manual_seed(0)
-np.random.seed(0)
-
 # config
 parser = ArgumentParser()
 parser.add_argument("-c", "--config")
@@ -37,6 +31,12 @@ args = parser.parse_args()
 CONFIG = json.load(open(args.config))
 
 print(CONFIG)
+
+# seed
+seed = CONFIG['seed']
+random.seed(seed)
+torch.manual_seed(seed)
+np.random.seed(seed)
 
 DATA_PATH = CONFIG['data_path']
 RESULT_PATH =  './models/{}/results'.format(CONFIG['name'])
