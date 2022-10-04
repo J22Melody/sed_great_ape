@@ -2,7 +2,7 @@
 
 ## Legacy
 
-See previous exploration logs in 
+See previous exploration logs in https://github.com/bambooforest/audio_exploration/tree/main/legacy.
 
 ## Data
 
@@ -22,6 +22,6 @@ To train a model, make a model directory with a `config.json` inside of `models`
 python model.py -c models/chimp_lstm_8/config.json
 ```
 
-### Visualize
+## Visualize
 
-See 
+See https://github.com/bambooforest/audio_exploration/tree/main/visualization.
