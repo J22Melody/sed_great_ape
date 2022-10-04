@@ -1,0 +1,89 @@
+Split 100 files: [PosixPath('data_full_clf_1/99-20a028-DIA(L).csv'), PosixPath('data_full_clf_1/96-46a251-L2(2).csv'), PosixPath('data_full_clf_1/96-20b111-L.csv'), PosixPath('data_full_clf_1/02-04a021-DIA(L).csv'), PosixPath('data_full_clf_1/97-59a358-D.csv'), PosixPath('data_full_clf_1/96-29a161-E.csv'), PosixPath('data_full_clf_1/96-58a310-L1.csv'), PosixPath('data_full_clf_1/00-18a115-dia(e).csv'), PosixPath('data_full_clf_1/97-34b203-CAM(L).csv'), PosixPath('data_full_clf_1/96-46a251-L2.csv'), PosixPath('data_full_clf_1/99-39b174-CAM(Sequ-L!long).csv'), PosixPath('data_full_clf_1/96-44b243-E.csv'), PosixPath('data_full_clf_1/96-21b118-C(H).csv'), PosixPath('data_full_clf_1/97-19b113-L3.csv'), PosixPath('data_full_clf_1/99-27b076-E1.csv'), PosixPath('data_full_clf_1/98-15a089-L.csv'), PosixPath('data_full_clf_1/94-25a075-DIA(D).csv'), PosixPath('data_full_clf_1/96-62b337-GF.csv'), PosixPath('data_full_clf_1/00-05b039-cam(h).csv'), PosixPath('data_full_clf_1/99-32a111-CAM(Sequ).csv'), PosixPath('data_full_clf_1/97-24a138-L3.csv'), PosixPath('data_full_clf_1/98-09a050-DIA(L).csv'), PosixPath('data_full_clf_1/96-55b299-L1.csv'), PosixPath('data_full_clf_1/96-25b141-L.csv'), PosixPath('data_full_clf_1/97-80a482-NIC(E).csv'), PosixPath('data_full_clf_1/97-75b460-L3.csv'), PosixPath('data_full_clf_1/98-15a089-C(SCR).csv'), PosixPath('data_full_clf_1/02-10a057-DIA(L).csv'), PosixPath('data_full_clf_1/96-45a245-L.csv'), PosixPath('data_full_clf_1/95-12a043-POL(E).csv'), PosixPath('data_full_clf_1/02-03a014-B-CAM(L).csv'), PosixPath('data_full_clf_1/94-21a059-DIA(E).csv'), PosixPath('data_full_clf_1/96-21b118-D.csv'), PosixPath('data_full_clf_1/99-23a046-VisL.csv'), PosixPath('data_full_clf_1/95-14a056-L.csv'), PosixPath('data_full_clf_1/00-12a082-nic(e).csv'), PosixPath('data_full_clf_1/00-31a204-boom.csv'), PosixPath('data_full_clf_1/95-13a053-L.csv'), PosixPath('data_full_clf_1/99-30b097-CAM(Sequ).csv'), PosixPath('data_full_clf_1/97-38a225-POL(L).csv'), PosixPath('data_full_clf_1/00-30a199-boom-LEO.csv'), PosixPath('data_full_clf_1/97-59a358-DIA(E).csv'), PosixPath('data_full_clf_1/96-39b217-BAD(E).csv'), PosixPath('data_full_clf_1/97-51b311-L3.csv'), PosixPath('data_full_clf_1/95-07a039-DIA(L).csv'), PosixPath('data_full_clf_1/96-41a226-L2.csv'), PosixPath('data_full_clf_1/96-66b358-L.csv'), PosixPath('data_full_clf_1/96-66a354-L1.csv'), PosixPath('data_full_clf_1/00-09a064-dia(e).csv'), PosixPath('data_full_clf_1/94-15a022-E1.csv'), PosixPath('data_full_clf_1/97-13b074-D!E.csv'), PosixPath('data_full_clf_1/00-02a011-boom-cam(l).csv'), PosixPath('data_full_clf_1/97-22a131-L3.csv'), PosixPath('data_full_clf_1/96-21a113-E.csv'), PosixPath('data_full_clf_1/02-09a051-DIA(E).csv'), PosixPath('data_full_clf_1/00-26b172-boom-LEO.csv'), PosixPath('data_full_clf_1/97-24a138-CAM(L).csv'), PosixPath('data_full_clf_1/97-75b458-L3.csv'), PosixPath('data_full_clf_1/99-41a184-L.csv'), PosixPath('data_full_clf_1/97-72b442-C(A).csv'), PosixPath('data_full_clf_1/96-69a372-GF.csv'), PosixPath('data_full_clf_1/95-04b023-L1.csv'), PosixPath('data_full_clf_1/96-44b243-E2.csv'), PosixPath('data_full_clf_1/94-25a075-DIA(E).csv'), PosixPath('data_full_clf_1/00-27b179-boom-LEO.csv'), PosixPath('data_full_clf_1/95-01a002-L1.csv'), PosixPath('data_full_clf_1/95-06a033-E1.csv'), PosixPath('data_full_clf_1/96-54b294-L1.csv'), PosixPath('data_full_clf_1/94-06b008-L1.csv'), PosixPath('data_full_clf_1/99-21a036-CAM(L).csv'), PosixPath('data_full_clf_1/97-75b458-DIA(L).csv'), PosixPath('data_full_clf_1/96-64a343-E2.csv'), PosixPath('data_full_clf_1/97-70a425-DIA(E).csv'), PosixPath('data_full_clf_1/96-58b315-L1.csv'), PosixPath('data_full_clf_1/96-14a072-C(H).csv'), PosixPath('data_full_clf_1/02-02b012-DIA(E).csv'), PosixPath('data_full_clf_1/00-27b182-boom-EAG.csv'), PosixPath('data_full_clf_1/97-30a175-CAM(E).csv'), PosixPath('data_full_clf_1/96-70b380-L1.csv'), PosixPath('data_full_clf_1/96-54b293-E.csv'), PosixPath('data_full_clf_1/00-09a064-pol(e).csv'), PosixPath('data_full_clf_1/00-12a082-dia(e).csv'), PosixPath('data_full_clf_1/97-36b214-DIA(E).csv'), PosixPath('data_full_clf_1/99-37b156-CAM(Sequ-no booms).csv'), PosixPath('data_full_clf_1/01-13b096-B-CAM(L)-ATY(L).csv'), PosixPath('data_full_clf_1/96-30b167-L.csv'), PosixPath('data_full_clf_1/94-34b097-DIA(L).csv'), PosixPath('data_full_clf_1/97-01a001-L1.csv'), PosixPath('data_full_clf_1/98-02a007-CAM(L).csv'), PosixPath('data_full_clf_1/97-51a307-DIA(E).csv'), PosixPath('data_full_clf_1/97-22a131-GF.csv'), PosixPath('data_full_clf_1/96-22b124-L.csv'), PosixPath('data_full_clf_1/01-13b097-B-CAM(L)-ATY(L).csv'), PosixPath('data_full_clf_1/97-01b006-L1.csv'), PosixPath('data_full_clf_1/95-14a057-L.csv'), PosixPath('data_full_clf_1/96-64b346-SQU(L).csv'), PosixPath('data_full_clf_1/96-38a209-DIA(T).csv'), PosixPath('data_full_clf_1/96-64a343-SQU(L).csv'), PosixPath('data_full_clf_1/99-19b027-HeGF.csv'), PosixPath('data_full_clf_1/97-32a189-D.csv')]
+train: (15187, 25202)
+test: (3691, 25202)
+Iteration 1, loss = 0.79306151
+Iteration 2, loss = 0.34998730
+Iteration 3, loss = 0.21222691
+Iteration 4, loss = 0.22348543
+Iteration 5, loss = 0.20838297
+Iteration 6, loss = 0.19518103
+Iteration 7, loss = 0.23988108
+Iteration 8, loss = 0.20035381
+Iteration 9, loss = 0.14392072
+Iteration 10, loss = 0.16232266
+Iteration 11, loss = 0.15791783
+Iteration 12, loss = 0.16977978
+Iteration 13, loss = 0.18968472
+Iteration 14, loss = 0.19831212
+Iteration 15, loss = 0.17170499
+Iteration 16, loss = 0.13152981
+Iteration 17, loss = 0.20195111
+Iteration 18, loss = 0.24195999
+Iteration 19, loss = 0.17654619
+Iteration 20, loss = 0.14810768
+Iteration 21, loss = 0.13558549
+Iteration 22, loss = 0.13383001
+Iteration 23, loss = 0.21545759
+Iteration 24, loss = 0.17957570
+Iteration 25, loss = 0.14893530
+Iteration 26, loss = 0.15814646
+Iteration 27, loss = 0.12849601
+Iteration 28, loss = 0.09806919
+Iteration 29, loss = 0.10384057
+Iteration 30, loss = 0.15825965
+Iteration 31, loss = 0.21739083
+Iteration 32, loss = 0.22581843
+Iteration 33, loss = 0.17216746
+Iteration 34, loss = 0.11904653
+Iteration 35, loss = 0.10633724
+Iteration 36, loss = 0.10787725
+Iteration 37, loss = 0.09479454
+Iteration 38, loss = 0.10079885
+Iteration 39, loss = 0.14592217
+Iteration 40, loss = 0.14195264
+Iteration 41, loss = 0.18025513
+Iteration 42, loss = 0.17159304
+Iteration 43, loss = 0.14648975
+Iteration 44, loss = 0.10879097
+Iteration 45, loss = 0.09321377
+Iteration 46, loss = 0.09212258
+Iteration 47, loss = 0.11191819
+Iteration 48, loss = 0.11702522
+Iteration 49, loss = 0.12357574
+Iteration 50, loss = 0.16850875
+Iteration 51, loss = 0.15758816
+Iteration 52, loss = 0.11636199
+Iteration 53, loss = 0.08517657
+Iteration 54, loss = 0.08128974
+Iteration 55, loss = 0.19708268
+Iteration 56, loss = 0.17632209
+Iteration 57, loss = 0.13376733
+Iteration 58, loss = 0.09801144
+Iteration 59, loss = 0.13564393
+Iteration 60, loss = 0.11801644
+Iteration 61, loss = 0.09183386
+Iteration 62, loss = 0.07888075
+Iteration 63, loss = 0.06769301
+Iteration 64, loss = 0.07523294
+Iteration 65, loss = 0.11872826
+Iteration 66, loss = 0.13156959
+Iteration 67, loss = 0.11867997
+Iteration 68, loss = 0.12000335
+Iteration 69, loss = 0.15141982
+Iteration 70, loss = 0.11808782
+Iteration 71, loss = 0.09193202
+Iteration 72, loss = 0.07663268
+Iteration 73, loss = 0.08405570
+Iteration 74, loss = 0.09941276
+Training loss did not improve more than tol=0.000100 for 10 consecutive epochs. Stopping.
+-----training-----
+precision_score:  0.9983948635634029
+recall_score:  0.924219910846954
+f1_score:  0.9598765432098765
+accuracy_score:  0.9965760189635873
+-----testing-----
+precision_score:  0.12
+recall_score:  0.04411764705882353
+f1_score:  0.06451612903225806
+accuracy_score:  0.9528583039826605
+--- 4256.429047822952 seconds ---
