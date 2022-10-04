@@ -1,0 +1,66 @@
+train: (1312, 27430)
+test: (212, 27430)
+Positive labels in train:  1312
+Positive labels in test:  212
+Labels in train:  {-1.0: 328, 1.0: 328, 2.0: 328, 3.0: 328}
+Labels in test:  {-1.0: 3, 1.0: 20, 2.0: 183, 3.0: 6}
+Iteration 1, loss = 27.78861368
+Validation score: 0.712121
+Iteration 2, loss = 25.67038308
+Validation score: 0.810606
+Iteration 3, loss = 23.81726616
+Validation score: 0.878788
+Iteration 4, loss = 22.02901091
+Validation score: 0.931818
+Iteration 5, loss = 20.30897210
+Validation score: 0.954545
+Iteration 6, loss = 18.66967803
+Validation score: 0.977273
+Iteration 7, loss = 17.12777204
+Validation score: 0.977273
+Iteration 8, loss = 15.68934128
+Validation score: 0.984848
+Iteration 9, loss = 14.35939608
+Validation score: 0.984848
+Iteration 10, loss = 13.13358036
+Validation score: 0.984848
+Iteration 11, loss = 12.00932729
+Validation score: 0.984848
+Iteration 12, loss = 10.98328804
+Validation score: 0.984848
+Iteration 13, loss = 10.04712459
+Validation score: 0.992424
+Iteration 14, loss = 9.19788601
+Validation score: 0.992424
+Iteration 15, loss = 8.42642777
+Validation score: 0.992424
+Iteration 16, loss = 7.72895056
+Validation score: 0.992424
+Iteration 17, loss = 7.09964895
+Validation score: 0.992424
+Iteration 18, loss = 6.53235975
+Validation score: 0.992424
+Iteration 19, loss = 6.02172639
+Validation score: 0.992424
+Iteration 20, loss = 5.56700927
+Validation score: 0.992424
+Iteration 21, loss = 5.15181352
+Validation score: 0.992424
+Iteration 22, loss = 4.78208926
+Validation score: 0.992424
+Iteration 23, loss = 4.45226851
+Validation score: 0.992424
+Iteration 24, loss = 4.15792144
+Validation score: 0.992424
+Validation score did not improve more than tol=0.000100 for 10 consecutive epochs. Stopping.
+-----training-----
+precision_score:  [0.99093656 0.99393939 1.         0.99696049]
+recall_score:  [1.         1.         0.98170732 1.        ]
+f1_score:  [0.99544765 0.99696049 0.99076923 0.99847793]
+accuracy_score:  0.9954268292682927
+-----testing-----
+precision_score:  [0.01680672 0.33333333 0.96511628 0.        ]
+recall_score:  [0.66666667 0.1        0.45355191 0.        ]
+f1_score:  [0.03278689 0.15384615 0.61710037 0.        ]
+accuracy_score:  0.41037735849056606
+--- 47.43877196311951 seconds ---
