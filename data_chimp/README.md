@@ -1,4 +1,4 @@
-# Data chimp
+# Data Chimp
 
 Assume you have the raw chimp data here in `./raw`.
 
@@ -22,6 +22,14 @@ let_down_duration       155.185000
 
 `python process.py`
 
+Read the raw files and match every 0.02s segment to the annotations, as well as the following features:
+
+- `./waveform`
+- `./spectrogram`
+- `./wav2vec2`
+
 ## Split
 
 `python split.py`
+
+Read the processed files and generate 3 different splits based on different random seeds.
