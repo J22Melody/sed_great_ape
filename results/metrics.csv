@@ -2,4 +2,4 @@ data,feature," model"," dev_accuracy"," dev_f1"," test_accuracy"," test_f1"
 chimp,waveform,"lstm","21.0±1.7","27.5±0.8","18.7±0.6","25.5±1.6"
 chimp,spectrogram,"lstm","33.0±1.7","34.5±0.4","35.0±1.7","37.7±2.6"
 chimp,wav2vec2,"lstm","75.3±1.5","75.6±2.0","74.7±3.1","74.8±3.3"
-chimp,wav2vec2,"transformer",,,,
+chimp,wav2vec2,"transformer","65.0±2.6","66.4±2.4","63.3±2.3","65.1±2.6"
