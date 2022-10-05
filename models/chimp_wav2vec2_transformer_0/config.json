@@ -1,0 +1,18 @@
+{
+    "name": "chimp_wav2vec2_transformer_0",
+    "data_path": "/home/cluster/zifjia/data/data_chimp/wav2vec2_split_0",
+    "test_only": false,
+    "balance_weights": true,
+    "model_type": "transformer",
+    "n_embedding": 768,
+    "d_hid": 1024, 
+    "nlayers": 2,  
+    "nhead": 8,
+    "batch_size": 1,
+    "n_epoch": 200,
+    "lr": 0.0001,
+    "dropout": 0.4,
+    "patience": 10,
+    "step_factor": 0.7,
+    "seed": 0
+}
