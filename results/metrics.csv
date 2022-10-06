@@ -1,4 +1,4 @@
-data,feature," model",hyper-parameter," dev_accuracy"," dev_f1"," test_accuracy"," test_f1",test_per_class_f1,note
+data,feature," model",hyper-parameter," dev_accuracy"," dev_f1"," test_accuracy"," test_f1",test_f1_per_class,note
 chimp,waveform,"lstm","batch_size=1, dropout=0.4, balance_weights=true","21.0±1.7","27.5±0.8","18.7±0.6","25.5±1.6",,
 chimp,spectrogram,"lstm",^,"33.0±1.7","34.5±0.4","35.0±1.7","37.7±2.6",,
 chimp,wav2vec2,"lstm",^,"75.3±1.5","75.6±2.0","74.7±3.1","74.8±3.3",,best feature + model
