@@ -1,6 +1,6 @@
 # Data Greatarc Long Call
 
-Assume you have the raw data here in `./raw`.
+Assume you have the raw data (https://www.dropbox.com/home/GreatARC/wetransfer_long-call-recordings-raven-acoustics_2021-11-22_1051) here in `./raw`.
 
 ## Analysis
 
