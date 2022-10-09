@@ -1,6 +1,6 @@
 # Data Chimp
 
-Assume you have the raw chimp data here in `./raw`.
+Assume you have the raw data here in `./raw`.
 
 ## Analysis
 
@@ -8,7 +8,7 @@ Assume you have the raw chimp data here in `./raw`.
 
 There are 235 audio files, annotated with phase information in the excel file.
 
-Now have a look at the total duration (second) and the total duration for each phase:
+Now have a look at the total duration (in second) and the total duration for each phase:
 
 ```
 duration               1964.217937
