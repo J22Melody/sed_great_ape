@@ -98,8 +98,17 @@ print('test files: ', [d[0] for d in test])
 
 train_data_all = np.concatenate([d[1] for d in train])
 print('train_data_all:', train_data_all.shape)
+
 unique, counts = np.unique(train_data_all[:, 0], return_counts=True)
-num_classes = dict(zip(unique, counts))
+num_classes_raw = dict(zip(unique, counts))
+# HACK: add missing classes (if any) for model to work with
+num_classes = {}
+for i in range(int(list(num_classes_raw.keys())[-1]) + 1):
+    if i in num_classes_raw:
+        num_classes[i] = num_classes_raw[i]
+    else:
+        num_classes[i] = 0
+
 print('Labels in train_data_all: ', num_classes)
 
 def length_to_mask(length, max_len=None, dtype=None):
@@ -271,7 +280,7 @@ def train(model, epoch):
 
         weight = None
         if CONFIG['balance_weights']:
-            weight_num = [1 / v for v in num_classes.values()]
+            weight_num = [1 / v if v != 0 else 0 for v in num_classes.values()]
             weight = torch.tensor(weight_num).float().to(device) # inverse to num training samples
 
         # loss = F.nll_loss(output.transpose(1, 2), target, weight=weight)
