@@ -5,36 +5,45 @@ import itertools
 import time
 import os
 from pathlib import Path
-import matplotlib.pyplot as plt
 
+import pandas as pd
 import numpy as np
-import torch
-import torchaudio
 
-seed = 42
-random.seed(seed)
-torch.manual_seed(seed)
-np.random.seed(seed)
+DATA_PATHS = ['./wav2vec2']
+seeds = [0, 42, 3407]
 
-start_time = time.time()
-device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+for seed in seeds:
+    for DATA_PATH in DATA_PATHS:
+        random.seed(seed)
+        np.random.seed(seed)
 
-DATA_PATH = './data_wav2vec2'
-TXT_PATH = '../data_greatarc/wetransfer_long-call-recordings-raven-acoustics_2021-11-22_1051/LC rhythm - all LC Tuanan/Raven tables'
-WAV_PATH = '../data_greatarc/wetransfer_long-call-recordings-raven-acoustics_2021-11-22_1051/LC rhythm - all LC Tuanan'
+        start_time = time.time()
 
-def data_split():
-    paths = Path(DATA_PATH).rglob('*.csv')
-    paths = list(itertools.islice(paths, 99999))
-    print('Split {} files: {}'.format(len(paths), paths))
-    data = [np.loadtxt(path, delimiter=',') for path in paths]
+        # split by file
+        SPLIT_PATH = '{}_split_{}'.format(DATA_PATH, seed)
 
-    data = np.concatenate(data)
-    print(data.shape)
+        paths = Path(DATA_PATH).rglob('*.csv')
+        paths = list(itertools.islice(paths, 100000))
+        print('Read {} files'.format(len(paths)))
 
-    unique, counts = np.unique(data[:, 0], return_counts=True)
-    print('Labels in train: ', dict(zip(unique, counts)))
+        data_with_files = []
+        for path in paths:
+            item = np.loadtxt(path, delimiter=',')
+            data_with_files.append((path.stem, item))
 
-    print("--- %s seconds ---" % (time.time() - start_time))
+        random.shuffle(data_with_files)   
 
-data_split()
+        train_index = int(len(data_with_files) * 0.8)
+        dev_index = int(len(data_with_files) * 0.9)
+
+        train = data_with_files[:train_index]
+        dev = data_with_files[train_index:dev_index]
+        test = data_with_files[dev_index:]
+
+        Path(SPLIT_PATH).mkdir(parents=True, exist_ok=True)
+
+        np.save('{}/train.npy'.format(SPLIT_PATH), train, allow_pickle=True)
+        np.save('{}/dev.npy'.format(SPLIT_PATH), dev, allow_pickle=True)
+        np.save('{}/test.npy'.format(SPLIT_PATH), test, allow_pickle=True)
+
+        print("--- %s seconds ---" % (time.time() - start_time))

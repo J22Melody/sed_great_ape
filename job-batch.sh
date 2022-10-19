@@ -30,6 +30,10 @@
 # sbatch --output=models/chimp_wav2vec2_lstm_dropout_0.1_42/train.log ./job.sh models/chimp_wav2vec2_lstm_dropout_0.1_42/config.json
 # sbatch --output=models/chimp_wav2vec2_lstm_dropout_0.1_3407/train.log ./job.sh models/chimp_wav2vec2_lstm_dropout_0.1_3407/config.json
 
-sbatch --output=models/chimp_wav2vec2_lstm_dropout_0.2_bw_0/train.log ./job.sh models/chimp_wav2vec2_lstm_dropout_0.2_bw_0/config.json
-sbatch --output=models/chimp_wav2vec2_lstm_dropout_0.2_bw_42/train.log ./job.sh models/chimp_wav2vec2_lstm_dropout_0.2_bw_42/config.json
-sbatch --output=models/chimp_wav2vec2_lstm_dropout_0.2_bw_3407/train.log ./job.sh models/chimp_wav2vec2_lstm_dropout_0.2_bw_3407/config.json
+# sbatch --output=models/chimp_wav2vec2_lstm_dropout_0.2_bw_0/train.log ./job.sh models/chimp_wav2vec2_lstm_dropout_0.2_bw_0/config.json
+# sbatch --output=models/chimp_wav2vec2_lstm_dropout_0.2_bw_42/train.log ./job.sh models/chimp_wav2vec2_lstm_dropout_0.2_bw_42/config.json
+# sbatch --output=models/chimp_wav2vec2_lstm_dropout_0.2_bw_3407/train.log ./job.sh models/chimp_wav2vec2_lstm_dropout_0.2_bw_3407/config.json
+
+sbatch --output=models/greatarc_longcall_wav2vec2_lstm_0/train.log ./job.sh models/greatarc_longcall_wav2vec2_lstm_0/config.json
+sbatch --output=models/greatarc_longcall_wav2vec2_lstm_42/train.log ./job.sh models/greatarc_longcall_wav2vec2_lstm_42/config.json
+sbatch --output=models/greatarc_longcall_wav2vec2_lstm_3407/train.log ./job.sh models/greatarc_longcall_wav2vec2_lstm_3407/config.json

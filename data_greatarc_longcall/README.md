@@ -57,15 +57,13 @@ For the 65 annotated files:
  'Unknown': {'count': 0, 'duration': 0, 'id': 1}}
 ```
 
+Note the audio files have ~60s duration each, we remove 2 extreme long (> 200s) audio files at training.
+
 ## Process
 
 `python process.py`
 
-Read the raw files and match every 0.02s segment to the annotations, as well as the following features:
-
-- `./waveform` (size 320)
-- `./spectrogram` (size 201)
-- `./wav2vec2` (size 768)
+Read the raw files and match every 0.02s segment to the annotations, as well as the wav2vec 2 features (size 768), save to `./wav2vec2`.
 
 ## Split
 
