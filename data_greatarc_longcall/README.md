@@ -45,6 +45,9 @@ Now have a look at the total duration (in second) and the total duration for eac
 For the 65 annotated files:
 
 ```
+Total duration of the pulse level annotated files: 4817.258911564626
+annotation_duration: 2792.8863999999953
+
 {'Bubble sub-pulse': {'count': 4422, 'duration': 329.68749999999926, 'id': 5},
  'Full pulse': {'count': 1929, 'duration': 1762.548500000001, 'id': 2},
  'Grumble sub-pulse': {'count': 757, 'duration': 45.81939999999997, 'id': 6},
