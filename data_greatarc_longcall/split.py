@@ -11,6 +11,7 @@ import numpy as np
 
 DATA_PATHS = ['./wav2vec2']
 seeds = [0, 42, 3407]
+# seeds = [22]
 
 for seed in seeds:
     for DATA_PATH in DATA_PATHS:
