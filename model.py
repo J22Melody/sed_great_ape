@@ -96,6 +96,14 @@ print('train, dev, test number of files: {}, {}, {}.'.format(len(train), len(dev
 print('dev files: ', [d[0] for d in dev])
 print('test files: ', [d[0] for d in test])
 
+if CONFIG['binary']:
+    splits = [train, dev, test]
+    for split in splits:
+        for data in split:
+            y = data[1][:, 0]
+            y_binary = np.where(y > 0, np.ones(y.shape), np.zeros(y.shape))
+            data[1][:, 0] = y_binary
+
 train_data_all = np.concatenate([d[1] for d in train])
 print('train_data_all:', train_data_all.shape)
 
