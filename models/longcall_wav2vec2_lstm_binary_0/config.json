@@ -10,7 +10,7 @@
     "nlayers": 2,  
     "batch_size": 1,
     "n_epoch": 200,
-    "lr": 0.0001,
+    "lr": 0.0005,
     "dropout": 0.2,
     "patience": 10,
     "step_factor": 0.7,
