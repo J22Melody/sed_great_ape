@@ -96,7 +96,7 @@ print('train, dev, test number of files: {}, {}, {}.'.format(len(train), len(dev
 print('dev files: ', [d[0] for d in dev])
 print('test files: ', [d[0] for d in test])
 
-if CONFIG['binary']:
+if CONFIG.get('binary', None):
     splits = [train, dev, test]
     for split in splits:
         for data in split:

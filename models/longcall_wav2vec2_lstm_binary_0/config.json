@@ -1,6 +1,6 @@
 {
     "name": "longcall_wav2vec2_lstm_binary_0",
-    "data_path": "/home/cluster/zifjia/data/data_greatarc_longcall/wav2vec2_split_22",
+    "data_path": "/home/cluster/zifjia/data/data_greatarc_longcall/wav2vec2_split_0",
     "test_only": false,
     "balance_weights": true,
     "binary": true,
