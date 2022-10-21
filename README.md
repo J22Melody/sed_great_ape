@@ -22,6 +22,10 @@ To train a model, make a model directory with a `config.json` inside of `models`
 python model.py -c models/chimp_lstm_8/config.json
 ```
 
-## Visualize
+### Results
+
+See https://github.com/bambooforest/audio_exploration/blob/main/results/metrics.csv.
+
+### Visualize
 
 See https://github.com/bambooforest/audio_exploration/tree/main/visualization.
