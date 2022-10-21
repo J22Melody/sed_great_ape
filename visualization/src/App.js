@@ -9,6 +9,8 @@ const colorTable = [
   'red',
   'fuchsia',
   'purple',
+  'orange',
+  'brown',
 ]
 
 // const classTable = [
