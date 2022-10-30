@@ -39,3 +39,7 @@ See the section about [deployment](https://facebook.github.io/create-react-app/d
     - `dataset` 
     - `model`
     - `filename`
+
+You will see:
+
+![Example](example.png "Example")

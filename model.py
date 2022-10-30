@@ -23,12 +23,6 @@ from torch.utils.tensorboard import SummaryWriter
 
 start_time = time.time()
 
-# seed
-seed = 42
-random.seed(seed)
-torch.manual_seed(0)
-np.random.seed(0)
-
 # config
 parser = ArgumentParser()
 parser.add_argument("-c", "--config")
@@ -38,9 +32,19 @@ CONFIG = json.load(open(args.config))
 
 print(CONFIG)
 
+# seed
+seed = CONFIG['seed']
+random.seed(seed)
+np.random.seed(seed)
+torch.manual_seed(seed)
+torch.cuda.manual_seed(seed)
+torch.backends.cudnn.benchmark = False
+torch.use_deterministic_algorithms(True)
+
 DATA_PATH = CONFIG['data_path']
 RESULT_PATH =  './models/{}/results'.format(CONFIG['name'])
-MODEL_PATH = './models/{}/model.pt'.format(CONFIG['name'])
+# MODEL_PATH = './models/{}/model.pt'.format(CONFIG['name'])
+MODEL_PATH = '/home/cluster/zifjia/data/models/{}.pt'.format(CONFIG['name'])
 
 writer = SummaryWriter(log_dir='runs/{}/{}/'.format(CONFIG['name'], datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")))
 
@@ -92,10 +96,27 @@ print('train, dev, test number of files: {}, {}, {}.'.format(len(train), len(dev
 print('dev files: ', [d[0] for d in dev])
 print('test files: ', [d[0] for d in test])
 
+if CONFIG.get('binary', None):
+    splits = [train, dev, test]
+    for split in splits:
+        for data in split:
+            y = data[1][:, 0]
+            y_binary = np.where(y > 0, np.ones(y.shape), np.zeros(y.shape))
+            data[1][:, 0] = y_binary
+
 train_data_all = np.concatenate([d[1] for d in train])
 print('train_data_all:', train_data_all.shape)
+
 unique, counts = np.unique(train_data_all[:, 0], return_counts=True)
-num_classes = dict(zip(unique, counts))
+num_classes_raw = dict(zip(unique, counts))
+# HACK: add missing classes (if any) for model to work with
+num_classes = {}
+for i in range(int(list(num_classes_raw.keys())[-1]) + 1):
+    if i in num_classes_raw:
+        num_classes[i] = num_classes_raw[i]
+    else:
+        num_classes[i] = 0
+
 print('Labels in train_data_all: ', num_classes)
 
 def length_to_mask(length, max_len=None, dtype=None):
@@ -267,7 +288,7 @@ def train(model, epoch):
 
         weight = None
         if CONFIG['balance_weights']:
-            weight_num = [1 / v for v in num_classes.values()]
+            weight_num = [1 / v if v != 0 else 0 for v in num_classes.values()]
             weight = torch.tensor(weight_num).float().to(device) # inverse to num training samples
 
         # loss = F.nll_loss(output.transpose(1, 2), target, weight=weight)
@@ -383,6 +404,7 @@ def test(model, use_dev=False):
     
     print("--- %s seconds ---" % (time.time() - start_time))
 
+count = 0
 if not CONFIG['test_only']:
     # train and save
     best_val_score = 0
@@ -398,6 +420,12 @@ if not CONFIG['test_only']:
             print('New best val score, save model ...')
             torch.save(model.state_dict(), MODEL_PATH)
             best_val_score = val_score
+        else:
+            count = count + 1
+
+        if count > CONFIG['patience'] * 5:
+            print('Early stopping!')
+            break
 
         print("--- %s seconds ---" % (time.time() - start_time))
     writer.close()

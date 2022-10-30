@@ -13,8 +13,8 @@ import torchaudio
 
 seed = 42
 random.seed(seed)
-torch.manual_seed(0)
-np.random.seed(0)
+torch.manual_seed(seed)
+np.random.seed(seed)
 
 start_time = time.time()
 # The MPS backend is supported on MacOS 12.3+
@@ -23,16 +23,18 @@ device = torch.device('cpu')
 
 print(device)
 
-WAV_PATH = './data_chimp/raw'
-DATA_PATH = './data_chimp/wav2vec2'
+RAW_PATH = './raw'
+WAVEFORM_PATH = './waveform'
+SPECTROGRAM_PATH = './spectrogram'
+WAV2VEC2_PATH = './wav2vec2'
 
 segment = 0.02
 bundle = torchaudio.pipelines.WAV2VEC2_BASE
 model = bundle.get_model().to(device)
 
-wavpaths = Path(WAV_PATH).rglob('*.WAV')
+wavpaths = Path(RAW_PATH).rglob('*.WAV')
 
-df = pd.read_excel('{}/Pant hoots and phases_2.xlsx'.format(WAV_PATH), dtype={'Build-up ends': float, 'Climax ends': float}, na_values=' ')
+df = pd.read_excel('{}/Pant hoots and phases_2.xlsx'.format(RAW_PATH), dtype={'Build-up ends': float, 'Climax ends': float}, na_values=' ')
 df = df.replace(np.nan, 0)
 df['File Name'] = df['File Name'].str.replace(';', '_')
 
@@ -49,33 +51,47 @@ for i, wavpath in enumerate(wavpaths):
     # print(sample_rate)
     # print(waveform.size())
 
-    # transform
+    # transform: resample to 16000 sample rate
     new_sample_rate = bundle.sample_rate
     transformed = torchaudio.functional.resample(waveform, sample_rate, new_sample_rate)
 
     # print(new_sample_rate)
     # print(transformed.size())
 
-    # padding to full seconds + 20ms (HACK for wav2vec2 length minus 1)
-    # length = transformed.size()[1]
-    # new_length = int((math.ceil(length / new_sample_rate) + segment) * new_sample_rate)
-    # target = torch.zeros(1, new_length).to(device)
-    # target[:, :length] = transformed
+    # pad to multiply of 20ms
+    length = transformed.size()[1]
+    segment_length = int(segment * new_sample_rate)
+    new_length = int(math.ceil(length / segment_length) * segment_length)
+    target = torch.zeros(1, new_length).to(device)
+    target[:, :length] = transformed
+    target_wav_vec2 = torch.zeros(1, new_length + segment_length).to(device) # HACK: wav2vec2 produces length - 1
+    target_wav_vec2[:, :length] = transformed
+    print(target.size())
 
-    target = transformed
+    # waveform
+    waveform_features = target.view(-1, segment_length)
+    print(waveform_features.size())
 
-    # print(target.size())
+    # spectrogram
+    spectrogram = torchaudio.transforms.Spectrogram(
+        hop_length=segment_length,
+        center=True,
+        pad_mode="reflect",
+        power=2.0,
+    )
+    spectrogram_features = spectrogram(target).squeeze().transpose(0, 1)[:-1, :]
+    print(spectrogram_features.size())
 
     # wav2vec2
     with torch.inference_mode():
-        features, _ = model.extract_features(target)
-    output_features = features[len(features) - 1]
-    output_features = output_features.squeeze().cpu()
-    print(output_features.size())
-
-    row = df[df['File Name'] == filename]
+        features, _ = model.extract_features(target_wav_vec2)
+    wav2vec2_features = features[len(features) - 1]
+    wav2vec2_features = wav2vec2_features.squeeze().cpu()
+    print(wav2vec2_features.size())
 
     # read annotations
+    row = df[df['File Name'] == filename]
+
     calls = [
         [float(row['Intro starts (s)']), float(row['Intro ends (s)']), 1],
         [float(row['Build-up starts']), float(row['Build-up ends']), 2],
@@ -84,7 +100,7 @@ for i, wavpath in enumerate(wavpaths):
     ]
 
     # create y
-    y = [0] * output_features.size()[0]
+    y = [0] * wav2vec2_features.size()[0]
     for begin, end, call_type in calls:
         begin_index = math.floor(begin / segment)
         end_index = math.ceil(end / segment)
@@ -93,10 +109,18 @@ for i, wavpath in enumerate(wavpaths):
                 y[i] = call_type
     y = torch.tensor(y).view(-1, 1)
 
-    data = torch.cat((y, output_features), dim=1)
+    # write files
+    Path(WAVEFORM_PATH).mkdir(parents=True, exist_ok=True)
+    data = torch.cat((y, waveform_features), dim=1)
+    np.savetxt('{}/{}.csv'.format(WAVEFORM_PATH, filename), data.numpy(), delimiter=',')
 
-    Path(DATA_PATH).mkdir(parents=True, exist_ok=True)
-    np.savetxt('{}/{}.csv'.format(DATA_PATH, filename), data.numpy(), delimiter=',')
+    Path(SPECTROGRAM_PATH).mkdir(parents=True, exist_ok=True)
+    data = torch.cat((y, spectrogram_features), dim=1)
+    np.savetxt('{}/{}.csv'.format(SPECTROGRAM_PATH, filename), data.numpy(), delimiter=',')
+
+    Path(WAV2VEC2_PATH).mkdir(parents=True, exist_ok=True)
+    data = torch.cat((y, wav2vec2_features), dim=1)
+    np.savetxt('{}/{}.csv'.format(WAV2VEC2_PATH, filename), data.numpy(), delimiter=',')
 
 print("--- %s seconds ---" % (time.time() - start_time))
 

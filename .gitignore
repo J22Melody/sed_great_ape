@@ -137,7 +137,9 @@ node_modules/
 
 *.pt
 
-data*/raw
-data*/wav2vec2*
+data*/raw/
+data*/waveform*/
+data*/spectrogram*/
+data*/wav2vec2*/
 
 visualization/public/data/

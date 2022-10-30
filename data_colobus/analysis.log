@@ -1,0 +1,16 @@
+How many audio files? How many with anotations? How many have pulse level anotations?
+649
+284
+How about duration?
+Total duration of the annotated files
+53494.50657596372
+annotation_duration: 888.9374572619978
+         duration
+count  649.000000
+mean   187.006206
+std     14.497718
+min    120.151633
+25%    181.217234
+50%    186.276281
+75%    191.222132
+max    284.847891

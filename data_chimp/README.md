@@ -1,6 +1,6 @@
-# Data chimp
+# Data Chimp
 
-Assume you have the raw chimp data here in `./raw`.
+Assume you have the raw data (https://drive.google.com/drive/folders/1FQXy6aGpXhMlMO6oqkWhI8wbjGEabA2e) here in `./raw`.
 
 ## Analysis
 
@@ -8,7 +8,7 @@ Assume you have the raw chimp data here in `./raw`.
 
 There are 235 audio files, annotated with phase information in the excel file.
 
-Now have a look at the total duration (second) and the total duration for each phase:
+Now have a look at the total duration (in second) and the total duration for each phase:
 
 ```
 duration               1964.217937
@@ -22,6 +22,14 @@ let_down_duration       155.185000
 
 `python process.py`
 
+Read the raw files and match every 0.02s segment to the annotations, as well as the following features:
+
+- `./waveform` (size 320)
+- `./spectrogram` (size 201)
+- `./wav2vec2` (size 768)
+
 ## Split
 
 `python split.py`
+
+Read the processed files and generate 3 different splits based on different random seeds.
