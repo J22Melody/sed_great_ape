@@ -230,9 +230,10 @@ class PositionalEncoding(nn.Module):
 class LSTM(nn.Module):
     def __init__(self, embedding_dim, hidden_dim, nlayers, tagset_size, dropout, autoregressive):
         super(LSTM, self).__init__()
+        self.autoregressive = autoregressive
         self.hidden_dim = hidden_dim
         self.tagset_size = tagset_size
-        self.autoregressive = autoregressive
+        embedding_dim = (embedding_dim + tagset_size) if autoregressive else embedding_dim
         self.lstm = nn.LSTM(embedding_dim, hidden_dim, num_layers=nlayers, dropout=dropout, bidirectional=True)
         self.hidden2tag = nn.Linear(hidden_dim * 2, tagset_size)
 
@@ -242,10 +243,11 @@ class LSTM(nn.Module):
             # see https://pytorch.org/tutorials/intermediate/seq2seq_translation_tutorial.html
             batch_size = input.size()[0]
             sent_len = input.size()[1]
-            hidden = None
             outputs = torch.zeros(batch_size, sent_len, self.tagset_size, device=device)
+            output = torch.zeros(batch_size, self.tagset_size, device=device)
+            hidden = None
             for i in range(sent_len):
-                output, hidden = self.lstm(input[:, i], hidden)
+                output, hidden = self.lstm(torch.cat([input[:, i], output], 1), hidden)
                 output = self.hidden2tag(output)
                 outputs[:, i] = output
             tag_scores = F.log_softmax(outputs, dim=1)
@@ -254,8 +256,6 @@ class LSTM(nn.Module):
             lstm_out, _ = self.lstm(input)
             tag_space = self.hidden2tag(lstm_out)
             tag_scores = F.log_softmax(tag_space, dim=1)
-            print(tag_scores.size())
-            print(tag_scores)
             return tag_scores
     
 def init_model(model_type):
