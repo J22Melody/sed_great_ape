@@ -50,7 +50,7 @@ writer = SummaryWriter(log_dir='runs/{}/{}/'.format(CONFIG['name'], datetime.dat
 
 # The MPS backend is supported on MacOS 12.3+
 device = torch.device('cuda' if torch.cuda.is_available() else ('mps' if torch.has_mps else 'cpu'))
-# device = torch.device('cpu')
+device = torch.device('cpu')
 print(device)
 
 # read data
@@ -228,23 +228,41 @@ class PositionalEncoding(nn.Module):
         return self.dropout(x)
 
 class LSTM(nn.Module):
-    def __init__(self, embedding_dim, hidden_dim, nlayers, tagset_size, dropout):
+    def __init__(self, embedding_dim, hidden_dim, nlayers, tagset_size, dropout, autoregressive):
         super(LSTM, self).__init__()
+        self.autoregressive = autoregressive
         self.hidden_dim = hidden_dim
+        self.tagset_size = tagset_size
+        embedding_dim = (embedding_dim + tagset_size) if autoregressive else embedding_dim
         self.lstm = nn.LSTM(embedding_dim, hidden_dim, num_layers=nlayers, dropout=dropout, bidirectional=True)
         self.hidden2tag = nn.Linear(hidden_dim * 2, tagset_size)
 
     def forward(self, input):
-        lstm_out, _ = self.lstm(input)
-        tag_space = self.hidden2tag(lstm_out)
-        tag_scores = F.log_softmax(tag_space, dim=1)
-        return tag_scores
-
+        if self.autoregressive:
+            # see https://discuss.pytorch.org/t/lstm-using-the-prediction-of-a-previous-time-step-as-input/24262 
+            # see https://pytorch.org/tutorials/intermediate/seq2seq_translation_tutorial.html
+            batch_size = input.size()[0]
+            sent_len = input.size()[1]
+            outputs = torch.zeros(batch_size, sent_len, self.tagset_size, device=device)
+            output = torch.zeros(batch_size, self.tagset_size, device=device)
+            hidden = None
+            for i in range(sent_len):
+                output, hidden = self.lstm(torch.cat([input[:, i], output], 1), hidden)
+                output = self.hidden2tag(output)
+                outputs[:, i] = output
+            tag_scores = F.log_softmax(outputs, dim=1)
+            return tag_scores
+        else:
+            lstm_out, _ = self.lstm(input)
+            tag_space = self.hidden2tag(lstm_out)
+            tag_scores = F.log_softmax(tag_space, dim=1)
+            return tag_scores
+    
 def init_model(model_type):
     if model_type == 'transformer':
         model = Transformer(CONFIG['n_embedding'], CONFIG['nhead'], CONFIG['d_hid'], CONFIG['nlayers'], len(num_classes), CONFIG['dropout'])
     elif model_type == 'lstm':
-        model = LSTM(CONFIG['n_embedding'], CONFIG['d_hid'], CONFIG['nlayers'], len(num_classes), CONFIG['dropout'])
+        model = LSTM(CONFIG['n_embedding'], CONFIG['d_hid'], CONFIG['nlayers'], len(num_classes), CONFIG['dropout'], CONFIG.get('model_autoregressive', False))
     model.to(device)
     return model
 
