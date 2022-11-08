@@ -32,4 +32,4 @@ See https://github.com/bambooforest/audio_exploration/tree/main/visualization.
 
 ## To Reminds @J22Melody of What We Are Working with ...
 
-![great apes](https://github.com/bambooforest/audio_exploration/blob/4a45ce937df5ac3dc592d3c116250fcc6ce864ef/great_apes.png?raw=true)
+![great apes](https://github.com/bambooforest/audio_exploration/blob/278bc530d643a37fe4506ce303a7cddaf9090c32/great_apes.png?raw=true)
