@@ -7,15 +7,19 @@ pd.set_option('display.width', 1000)
 
 # DATA ANALYSIS
 
-df = pd.read_excel('./data_chimp/raw/Pant hoots and phases_2.xlsx', dtype={'Build-up ends': float, 'Climax ends': float}, na_values=' ')
+df = pd.read_excel('./raw/Pant hoots and phases_2.xlsx', dtype={'Build-up ends': float, 'Climax ends': float}, na_values=' ')
 
 # filter
 df = df[df['For Steven'] == 1.0]
 
+print('How many individuals?')
+print(len(df['ID'].drop_duplicates()))
+print(df['ID'].drop_duplicates())
+
 # get duration and check file existence
 durations = []
 for filename in list(df['File Name']):
-    duration = librosa.get_duration(filename='./data_chimp/raw/{}.wav'.format(filename.replace(';', '_')))
+    duration = librosa.get_duration(filename='./raw/{}.wav'.format(filename.replace(';', '_')))
     durations.append(duration)
 
 df['duration'] = durations
@@ -30,4 +34,6 @@ print(df)
 
 df_sum = df.sum(numeric_only=True)
 print(df_sum)
+
+print(df['duration'].describe())
 

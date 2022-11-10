@@ -56,10 +56,14 @@ for i, wavpath in enumerate(wavpaths):
                     'id': len(pulse_level_map.keys()) + 1,
                 }
 
-    data.append([filename, duration, annotation_pulse_level])
+    data.append([filename, duration, annotation_pulse_level, item['Individual']])
 
-df = pd.DataFrame(data, columns=['filename', 'duration', 'annotation_pulse_level'])
+df = pd.DataFrame(data, columns=['filename', 'duration', 'annotation_pulse_level', 'individual'])
 df.to_csv('./analysis_new.csv')
+
+print('How many individuals?')
+print(len(df['individual'].drop_duplicates()))
+print(df['individual'].drop_duplicates())
 
 print('How many audio files? How many have pulse level anotations?')
 

@@ -1,3 +1,17 @@
+How many individuals?
+11
+0            Fugit
+1             Niko
+5             Zeke
+7     Flanged Male
+8              Kay
+13          Sultan
+16           Rambo
+19    Flanged male
+25            Henk
+31           Dayak
+44            Teju
+Name: individual, dtype: object
 How many audio files? How many have pulse level anotations?
 76
 65

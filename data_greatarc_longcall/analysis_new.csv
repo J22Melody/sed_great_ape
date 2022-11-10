@@ -1,77 +1,77 @@
-,filename,duration,annotation_pulse_level
-0,134dat LC Fugit,56.726349206349205,True
-1,20T5lcNiko,67.1,True
-2,165datLongCallFugit,41.0,True
-3,24T5lcNico,47.6,True
-4,13dat LC Male,29.4,False
-5,15T6lcZeke,45.5,True
-6,13T8lcksqFugit,300.0,True
-7,100dat LC FlangedMale,93.6,True
-8,119dat LC Kay,48.2,True
-9,130dat LC Kay,111.4,True
-10,14T8lcksqFugit,151.2,True
-11,102dat LC FlangedMale,125.8,True
-12,149dat LC Fugit,57.5,True
-13,47dat LC Sultan,65.2,True
-14,12dat LC Male,31.9,False
-15,133dat LC Fugit,94.4,True
-16,125dat LC Rambo,39.114013605442175,True
-17,11T10lcFugit,83.0,True
-18,10dat LC Male,36.6,False
-19,26dat LC  Male,45.9,True
-20,26T5lcNiko,53.0,True
-21,7T6lcZeke,43.1,True
-22,132dat LC Fugit,90.9,True
-23,91dat LC Sultan,78.6,True
-24,148dat LC Fugit,47.5,True
-25,26datA LC Henk,28.8,True
-26,13T6lcZeke,55.8,True
-27,12T2lcNiko,44.23401360544218,True
-28,2T6lcZeke,45.3,True
-29,135dat LC Fugit,103.7,True
-30,16T6lcZeke,47.6,True
-31,13T4lcDayak,31.2,True
-32,4T10lcFugit,51.2,True
-33,52dat LC Sultan,49.8,True
-34,104dat LC Male,38.1,True
-35,38datA LC unkMale ,55.7,False
-36,11T8lcFugit,111.6,True
-37,122dat LC Rambo,61.9,True
-38,5T10lcFugit,92.0,True
-39,2T7lcNico,54.7,True
-40,86dat LC Sultan,200.9,True
-41,22dat LC Male,64.3,False
-42,77datA LC Fugit,64.2,True
-43,33datA LC Fugit,116.2,True
-44,111dat LC Teju,31.3,True
-45,47datA LC Niko,17.4,False
-46,75datA LC Kay,102.07492063492063,True
-47,10T10lcFugit,54.00961451247166,True
-48,64dat LC Sultan,35.4,False
-49,28T5lcNiko,54.0,True
-50,137dat LC Fugit,71.5,True
-51,12T8lcFugit,55.4,True
-52,31T5lcZeke,135.6,True
-53,72datA LC Kay,113.5,True
-54,139dat LC Male,25.1,False
-55,6T10lcFugit,45.7,True
-56,9T6lcZeke,42.9,True
-57,24dat LC Male,25.1,True
-58,23datA LC Fugit,73.2,True
-59,51dat LC Sultan,44.3,True
-60,48datA LC Niko,40.0,True
-61,21T5lcNiko,90.3,True
-62,93dat LC Sultan,54.7,True
-63,8T10lcFugit,78.0,True
-64,131dat LC Kay,132.7,True
-65,32T5lcZeke,55.2,True
-66,17T6lcZeke,54.1,True
-67,13T2lcNiko,99.7,True
-68,49datA LC Niko,52.5,False
-69,12T6lcZeke,59.8,True
-70,25datA LC Henk,67.1,True
-71,1T7lcNico,52.5,True
-72,27T5lcNiko,73.6,True
-73,180LongCallFugit,46.2,False
-74,179LongCallKay,52.9,False
-75,123dat LCandKSQ Rambo,127.4,True
+,filename,duration,annotation_pulse_level,individual
+0,134dat LC Fugit,56.726349206349205,True,Fugit
+1,20T5lcNiko,67.1,True,Niko
+2,165datLongCallFugit,41.0,True,Fugit
+3,24T5lcNico,47.6,True,Niko
+4,13dat LC Male,29.4,False,Niko
+5,15T6lcZeke,45.5,True,Zeke
+6,13T8lcksqFugit,300.0,True,Fugit
+7,100dat LC FlangedMale,93.6,True,Flanged Male
+8,119dat LC Kay,48.2,True,Kay
+9,130dat LC Kay,111.4,True,Kay
+10,14T8lcksqFugit,151.2,True,Fugit
+11,102dat LC FlangedMale,125.8,True,Flanged Male
+12,149dat LC Fugit,57.5,True,Fugit
+13,47dat LC Sultan,65.2,True,Sultan
+14,12dat LC Male,31.9,False,Sultan
+15,133dat LC Fugit,94.4,True,Fugit
+16,125dat LC Rambo,39.114013605442175,True,Rambo
+17,11T10lcFugit,83.0,True,Fugit
+18,10dat LC Male,36.6,False,Fugit
+19,26dat LC  Male,45.9,True,Flanged male
+20,26T5lcNiko,53.0,True,Niko
+21,7T6lcZeke,43.1,True,Zeke
+22,132dat LC Fugit,90.9,True,Fugit
+23,91dat LC Sultan,78.6,True,Sultan
+24,148dat LC Fugit,47.5,True,Fugit
+25,26datA LC Henk,28.8,True,Henk
+26,13T6lcZeke,55.8,True,Zeke
+27,12T2lcNiko,44.23401360544218,True,Niko
+28,2T6lcZeke,45.3,True,Zeke
+29,135dat LC Fugit,103.7,True,Fugit
+30,16T6lcZeke,47.6,True,Zeke
+31,13T4lcDayak,31.2,True,Dayak
+32,4T10lcFugit,51.2,True,Fugit
+33,52dat LC Sultan,49.8,True,Sultan
+34,104dat LC Male,38.1,True,Flanged male
+35,38datA LC unkMale ,55.7,False,Flanged male
+36,11T8lcFugit,111.6,True,Fugit
+37,122dat LC Rambo,61.9,True,Rambo
+38,5T10lcFugit,92.0,True,Fugit
+39,2T7lcNico,54.7,True,Niko
+40,86dat LC Sultan,200.9,True,Sultan
+41,22dat LC Male,64.3,False,Sultan
+42,77datA LC Fugit,64.2,True,Fugit
+43,33datA LC Fugit,116.2,True,Fugit
+44,111dat LC Teju,31.3,True,Teju
+45,47datA LC Niko,17.4,False,Teju
+46,75datA LC Kay,102.07492063492063,True,Kay
+47,10T10lcFugit,54.00961451247166,True,Fugit
+48,64dat LC Sultan,35.4,False,Fugit
+49,28T5lcNiko,54.0,True,Niko
+50,137dat LC Fugit,71.5,True,Fugit
+51,12T8lcFugit,55.4,True,Fugit
+52,31T5lcZeke,135.6,True,Zeke
+53,72datA LC Kay,113.5,True,Kay
+54,139dat LC Male,25.1,False,Kay
+55,6T10lcFugit,45.7,True,Fugit
+56,9T6lcZeke,42.9,True,Zeke
+57,24dat LC Male,25.1,True,Flanged male
+58,23datA LC Fugit,73.2,True,Fugit
+59,51dat LC Sultan,44.3,True,Sultan
+60,48datA LC Niko,40.0,True,Niko
+61,21T5lcNiko,90.3,True,Niko
+62,93dat LC Sultan,54.7,True,Sultan
+63,8T10lcFugit,78.0,True,Fugit
+64,131dat LC Kay,132.7,True,Kay
+65,32T5lcZeke,55.2,True,Zeke
+66,17T6lcZeke,54.1,True,Zeke
+67,13T2lcNiko,99.7,True,Niko
+68,49datA LC Niko,52.5,False,Niko
+69,12T6lcZeke,59.8,True,Zeke
+70,25datA LC Henk,67.1,True,Henk
+71,1T7lcNico,52.5,True,Niko
+72,27T5lcNiko,73.6,True,Niko
+73,180LongCallFugit,46.2,False,Niko
+74,179LongCallKay,52.9,False,Niko
+75,123dat LCandKSQ Rambo,127.4,True,Rambo
