@@ -50,7 +50,7 @@ writer = SummaryWriter(log_dir='runs/{}/{}/'.format(CONFIG['name'], datetime.dat
 
 # The MPS backend is supported on MacOS 12.3+
 device = torch.device('cuda' if torch.cuda.is_available() else ('mps' if torch.has_mps else 'cpu'))
-device = torch.device('cpu')
+# device = torch.device('cpu')
 print(device)
 
 # read data
@@ -241,6 +241,7 @@ class LSTM(nn.Module):
         if self.autoregressive:
             # see https://discuss.pytorch.org/t/lstm-using-the-prediction-of-a-previous-time-step-as-input/24262 
             # see https://pytorch.org/tutorials/intermediate/seq2seq_translation_tutorial.html
+            # caution: super slow!
             batch_size = input.size()[0]
             sent_len = input.size()[1]
             outputs = torch.zeros(batch_size, sent_len, self.tagset_size, device=device)
