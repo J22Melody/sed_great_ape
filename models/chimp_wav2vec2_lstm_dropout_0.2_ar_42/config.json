@@ -1,6 +1,6 @@
 {
-    "name": "chimp_wav2vec2_lstm_dropout_0.2_ar_0",
-    "data_path": "/home/cluster/zifjia/data/data_chimp/wav2vec2_split_0",
+    "name": "chimp_wav2vec2_lstm_dropout_0.2_ar_42",
+    "data_path": "/home/cluster/zifjia/data/data_chimp/wav2vec2_split_42",
     "test_only": false,
     "balance_weights": true,
     "model_type": "lstm",
@@ -14,5 +14,5 @@
     "dropout": 0.2,
     "patience": 10,
     "step_factor": 0.7,
-    "seed": 0
+    "seed": 42
 }
