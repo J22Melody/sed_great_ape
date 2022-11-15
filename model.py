@@ -409,6 +409,9 @@ def test(model, use_dev=False):
             np.savetxt('./{}/{}.target.txt'.format(RESULT_PATH, filename), target.to('cpu').numpy(), delimiter=',')
             np.savetxt('./{}/{}.pred.txt'.format(RESULT_PATH, filename), pred.to('cpu').numpy(), delimiter=',')
 
+            if CONFIG.get('test_distribution', None):
+                np.savetxt('./{}/{}.dist.txt'.format(RESULT_PATH, filename), output.squeeze().to('cpu').detach().numpy(), delimiter=',')
+
     pred = torch.cat(pred_list).to('cpu').numpy()
     target = torch.cat(target_list).to('cpu').numpy()
     output = torch.cat(output_list).detach().to('cpu').numpy()
