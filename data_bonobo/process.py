@@ -30,24 +30,24 @@ ANNOTATION_PATH = './raw/metadata.csv'
 df_raw = pd.read_csv(ANNOTATION_PATH, keep_default_na=False)
 
 # copy from ./analysis.log
-call_map = {
-    'ba': {'count': 2, 'duration': 0.569, 'id': 13},
-    'gr': {'count': 24, 'duration': 2.863, 'id': 4},
-    'hh': {'count': 62, 'duration': 13.508999999999997, 'id': 8},
-    'hhsb': {'count': 1, 'duration': 0.506, 'id': 9},
-    'in': {'count': 12, 'duration': 0.9899999999999999, 'id': 15},
-    'lh': {'count': 2, 'duration': 0.956, 'id': 16},
-    'pe': {'count': 6, 'duration': 0.7, 'id': 11},
-    'pg': {'count': 19, 'duration': 1.385, 'id': 3},
-    'py': {'count': 32, 'duration': 4.433, 'id': 2},
-    'sb': {'count': 33, 'duration': 9.000000000000002, 'id': 5},
-    'sc': {'count': 1, 'duration': 0.127, 'id': 14},
-    'scb': {'count': 10, 'duration': 2.84, 'id': 12},
-    'wb': {'count': 10, 'duration': 2.265, 'id': 10},
-    'wh': {'count': 1, 'duration': 0.622, 'id': 7},
-    'wi': {'count': 1, 'duration': 0.394, 'id': 1},
-    'ye': {'count': 10, 'duration': 1.298, 'id': 6}
-}
+call_map = {'NA': {'count': 2, 'duration': 0.32599999999999996, 'id': 13},
+ 'ba': {'count': 2, 'duration': 0.569, 'id': 17},
+ 'gr': {'count': 24, 'duration': 2.863, 'id': 4},
+ 'hh': {'count': 93, 'duration': 22.822, 'id': 7},
+ 'hhsb': {'count': 1, 'duration': 0.506, 'id': 9},
+ 'hhsc': {'count': 3, 'duration': 1.7719999999999998, 'id': 15},
+ 'in': {'count': 34, 'duration': 2.5500000000000003, 'id': 12},
+ 'lh': {'count': 35, 'duration': 4.07, 'id': 11},
+ 'pe': {'count': 8, 'duration': 0.873, 'id': 10},
+ 'pg': {'count': 19, 'duration': 1.385, 'id': 3},
+ 'py': {'count': 37, 'duration': 5.06, 'id': 2},
+ 'sb': {'count': 34, 'duration': 9.122000000000002, 'id': 5},
+ 'sc': {'count': 1, 'duration': 0.127, 'id': 18},
+ 'scb': {'count': 10, 'duration': 2.84, 'id': 16},
+ 'wb': {'count': 10, 'duration': 2.265, 'id': 14},
+ 'wh': {'count': 1, 'duration': 0.622, 'id': 8},
+ 'wi': {'count': 6, 'duration': 2.761, 'id': 1},
+ 'ye': {'count': 10, 'duration': 1.298, 'id': 6}}
 
 def convert_time(input):
     mm, ss = input.split(':')
