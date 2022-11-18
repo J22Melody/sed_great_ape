@@ -1,0 +1,347 @@
+Requirement already satisfied: scikit-learn in /net/cephfs/data/zifjia/condaenvs/audio_clf/lib/python3.8/site-packages (1.1.2)
+Requirement already satisfied: numpy>=1.17.3 in /net/cephfs/data/zifjia/condaenvs/audio_clf/lib/python3.8/site-packages (from scikit-learn) (1.22.3)
+Requirement already satisfied: scipy>=1.3.2 in /net/cephfs/data/zifjia/condaenvs/audio_clf/lib/python3.8/site-packages (from scikit-learn) (1.9.1)
+Requirement already satisfied: threadpoolctl>=2.0.0 in /net/cephfs/data/zifjia/condaenvs/audio_clf/lib/python3.8/site-packages (from scikit-learn) (3.1.0)
+Requirement already satisfied: joblib>=1.0.0 in /net/cephfs/data/zifjia/condaenvs/audio_clf/lib/python3.8/site-packages (from scikit-learn) (1.1.0)
+Requirement already satisfied: tensorboard in /net/cephfs/data/zifjia/condaenvs/audio_clf/lib/python3.8/site-packages (2.10.1)
+Requirement already satisfied: google-auth-oauthlib<0.5,>=0.4.1 in /net/cephfs/home/zifjia/.local/lib/python3.8/site-packages (from tensorboard) (0.4.6)
+Requirement already satisfied: tensorboard-plugin-wit>=1.6.0 in /net/cephfs/home/zifjia/.local/lib/python3.8/site-packages (from tensorboard) (1.8.1)
+Requirement already satisfied: grpcio>=1.24.3 in /net/cephfs/home/zifjia/.local/lib/python3.8/site-packages (from tensorboard) (1.47.0)
+Requirement already satisfied: google-auth<3,>=1.6.3 in /net/cephfs/home/zifjia/.local/lib/python3.8/site-packages (from tensorboard) (2.9.1)
+Requirement already satisfied: absl-py>=0.4 in /net/cephfs/home/zifjia/.local/lib/python3.8/site-packages (from tensorboard) (1.2.0)
+Requirement already satisfied: requests<3,>=2.21.0 in /net/cephfs/data/zifjia/condaenvs/audio_clf/lib/python3.8/site-packages (from tensorboard) (2.28.1)
+Requirement already satisfied: numpy>=1.12.0 in /net/cephfs/data/zifjia/condaenvs/audio_clf/lib/python3.8/site-packages (from tensorboard) (1.22.3)
+Requirement already satisfied: protobuf<3.20,>=3.9.2 in /net/cephfs/home/zifjia/.local/lib/python3.8/site-packages (from tensorboard) (3.19.4)
+Requirement already satisfied: setuptools>=41.0.0 in /net/cephfs/data/zifjia/condaenvs/audio_clf/lib/python3.8/site-packages (from tensorboard) (60.8.1)
+Requirement already satisfied: wheel>=0.26 in /net/cephfs/data/zifjia/condaenvs/audio_clf/lib/python3.8/site-packages (from tensorboard) (0.37.1)
+Requirement already satisfied: tensorboard-data-server<0.7.0,>=0.6.0 in /net/cephfs/home/zifjia/.local/lib/python3.8/site-packages (from tensorboard) (0.6.1)
+Requirement already satisfied: werkzeug>=1.0.1 in /net/cephfs/data/zifjia/condaenvs/audio_clf/lib/python3.8/site-packages (from tensorboard) (2.1.2)
+Requirement already satisfied: markdown>=2.6.8 in /net/cephfs/home/zifjia/.local/lib/python3.8/site-packages (from tensorboard) (3.4.1)
+Requirement already satisfied: cachetools<6.0,>=2.0.0 in /net/cephfs/home/zifjia/.local/lib/python3.8/site-packages (from google-auth<3,>=1.6.3->tensorboard) (5.2.0)
+Requirement already satisfied: rsa<5,>=3.1.4 in /net/cephfs/home/zifjia/.local/lib/python3.8/site-packages (from google-auth<3,>=1.6.3->tensorboard) (4.9)
+Requirement already satisfied: pyasn1-modules>=0.2.1 in /net/cephfs/home/zifjia/.local/lib/python3.8/site-packages (from google-auth<3,>=1.6.3->tensorboard) (0.2.8)
+Requirement already satisfied: six>=1.9.0 in /net/cephfs/data/zifjia/condaenvs/audio_clf/lib/python3.8/site-packages (from google-auth<3,>=1.6.3->tensorboard) (1.16.0)
+Requirement already satisfied: requests-oauthlib>=0.7.0 in /net/cephfs/home/zifjia/.local/lib/python3.8/site-packages (from google-auth-oauthlib<0.5,>=0.4.1->tensorboard) (1.3.1)
+Requirement already satisfied: importlib-metadata>=4.4 in /net/cephfs/home/zifjia/.local/lib/python3.8/site-packages (from markdown>=2.6.8->tensorboard) (4.12.0)
+Requirement already satisfied: charset-normalizer<3,>=2 in /net/cephfs/data/zifjia/condaenvs/audio_clf/lib/python3.8/site-packages (from requests<3,>=2.21.0->tensorboard) (2.1.1)
+Requirement already satisfied: idna<4,>=2.5 in /net/cephfs/data/zifjia/condaenvs/audio_clf/lib/python3.8/site-packages (from requests<3,>=2.21.0->tensorboard) (3.4)
+Requirement already satisfied: certifi>=2017.4.17 in /net/cephfs/data/zifjia/condaenvs/audio_clf/lib/python3.8/site-packages (from requests<3,>=2.21.0->tensorboard) (2022.9.14)
+Requirement already satisfied: urllib3<1.27,>=1.21.1 in /net/cephfs/data/zifjia/condaenvs/audio_clf/lib/python3.8/site-packages (from requests<3,>=2.21.0->tensorboard) (1.26.12)
+Requirement already satisfied: zipp>=0.5 in /net/cephfs/data/zifjia/condaenvs/audio_clf/lib/python3.8/site-packages (from importlib-metadata>=4.4->markdown>=2.6.8->tensorboard) (3.8.0)
+Requirement already satisfied: pyasn1<0.5.0,>=0.4.6 in /net/cephfs/home/zifjia/.local/lib/python3.8/site-packages (from pyasn1-modules>=0.2.1->google-auth<3,>=1.6.3->tensorboard) (0.4.8)
+Requirement already satisfied: oauthlib>=3.0.0 in /net/cephfs/home/zifjia/.local/lib/python3.8/site-packages (from requests-oauthlib>=0.7.0->google-auth-oauthlib<0.5,>=0.4.1->tensorboard) (3.2.0)
+Requirement already satisfied: torch in /net/cephfs/data/zifjia/condaenvs/audio_clf/lib/python3.8/site-packages (1.12.1)
+Requirement already satisfied: torchvision in /net/cephfs/data/zifjia/condaenvs/audio_clf/lib/python3.8/site-packages (0.13.1)
+Requirement already satisfied: torchaudio in /net/cephfs/data/zifjia/condaenvs/audio_clf/lib/python3.8/site-packages (0.12.1)
+Requirement already satisfied: typing-extensions in /net/cephfs/data/zifjia/condaenvs/audio_clf/lib/python3.8/site-packages (from torch) (4.0.1)
+Requirement already satisfied: pillow!=8.3.*,>=5.3.0 in /net/cephfs/data/zifjia/condaenvs/audio_clf/lib/python3.8/site-packages (from torchvision) (9.0.1)
+Requirement already satisfied: requests in /net/cephfs/data/zifjia/condaenvs/audio_clf/lib/python3.8/site-packages (from torchvision) (2.28.1)
+Requirement already satisfied: numpy in /net/cephfs/data/zifjia/condaenvs/audio_clf/lib/python3.8/site-packages (from torchvision) (1.22.3)
+Requirement already satisfied: idna<4,>=2.5 in /net/cephfs/data/zifjia/condaenvs/audio_clf/lib/python3.8/site-packages (from requests->torchvision) (3.4)
+Requirement already satisfied: charset-normalizer<3,>=2 in /net/cephfs/data/zifjia/condaenvs/audio_clf/lib/python3.8/site-packages (from requests->torchvision) (2.1.1)
+Requirement already satisfied: urllib3<1.27,>=1.21.1 in /net/cephfs/data/zifjia/condaenvs/audio_clf/lib/python3.8/site-packages (from requests->torchvision) (1.26.12)
+Requirement already satisfied: certifi>=2017.4.17 in /net/cephfs/data/zifjia/condaenvs/audio_clf/lib/python3.8/site-packages (from requests->torchvision) (2022.9.14)
+{'name': 'colobus_wav2vec2_lstm_42', 'data_path': '/home/cluster/zifjia/data/data_colobus/wav2vec2_split_42', 'test_only': False, 'balance_weights': True, 'model_type': 'lstm', 'n_embedding': 768, 'd_hid': 1024, 'nlayers': 2, 'batch_size': 1, 'n_epoch': 200, 'lr': 0.001, 'dropout': 0.2, 'patience': 10, 'step_factor': 0.7, 'seed': 42}
+cuda
+Reading data ...
+train, dev, test number of files: 212, 27, 27.
+dev files:  ['00-07b054-cam(l)', '96-21b118-C(H)', '95-01a001-DIA(E)', '96-64a343-E2', '96-65b351-L1', '96-38a209-DIA(T)', '97-73b446-L2', '97-32a189-D', '97-75b460-L3', '97-50a302-L', '97-15b085-L3', '02-10a057-DIA(L)', '95-14a057-L', '96-61a327-SQU(S)', '97-34b203-E1', '00-30a199-boom-LEO', '98-09a050-GF', '96-64b346-SQU(L)', '97-68a412-E2', '96-10b052-C(A)', '97-59a358-DIA(E)', '00-27a175-boom-LEO', '00-24a156-nic(e)', '96-46a251-L2(2)', '00-03a018-boom-cam(e)', '97-74b453-DIA(L)', '96-67a362-GF']
+test files:  ['96-01b004-L1', '00-09a062-dia(e)', '99-41a184-L', '96-58b313-L1', '99-38a161-CAM(Sequ)', '99-20a028-GF', '97-04a014-L3', '96-43a238-L(2)', '97-22a131-L3', '94-24b069-L1', '96-58a310-L1', '97-40b242-NIC(E)', '96-55b299-GF', '95-04b023-L1', '97-75b458-L3', '97-80a482-NIC(E)', '94-25a075-DIA(D)', '96-62b337-GF', '97-49a294-NIC(E)', '96-41a226-L2', '02-09a051-DIA(E)', '00-27b182-boom-EAG', '00-24a156-cam(l)', '97-56b343-DIA(E)', '96-65a348-GF', '97-19b113-L3', '97-72b442-C(A)']
+train_data_all: (1970197, 769)
+Labels in train_data_all:  {0: 1936007, 1: 34190}
+--- 181.83229064941406 seconds ---
+LSTM(
+  (lstm): LSTM(768, 1024, num_layers=2, dropout=0.2, bidirectional=True)
+  (hidden2tag): Linear(in_features=2048, out_features=2, bias=True)
+)
+Number of parameters: 39882754
+
+Train Epoch: 1 accuracy: 0.69 
+ precision: [0.98967508 0.03263342] 
+ recall: [0.68983222 0.59248318] 
+ f1: [0.81298814 0.06185967] 
+ f1_avg: 0.7999533566971525
+
+
+Validation Epoch: 1 accuracy: 0.59 
+ precision: [0.99226935 0.02918391] 
+ recall: [0.59045874 0.72798434] 
+ f1: [0.74035978 0.05611812] 
+ f1_avg: 0.7289806622265234
+
+New best val score, save model ...
+--- 240.73168992996216 seconds ---
+
+Train Epoch: 2 accuracy: 0.71 
+ precision: [0.99068125 0.03703846] 
+ recall: [0.71594627 0.61866043] 
+ f1: [0.83120018 0.06989254] 
+ f1_avg: 0.8179887539493198
+
+
+Validation Epoch: 2 accuracy: 0.59 
+ precision: [0.99276292 0.02978836] 
+ recall: [0.58904807 0.74608611] 
+ f1: [0.7393868  0.05728937] 
+ f1_avg: 0.7280433396710537
+
+--- 295.12071681022644 seconds ---
+
+Train Epoch: 3 accuracy: 0.72 
+ precision: [0.99113282 0.03880568] 
+ recall: [0.72272673 0.63386955] 
+ f1: [0.83591235 0.07313406] 
+ f1_avg: 0.8226754002964234
+
+
+Validation Epoch: 3 accuracy: 0.61 
+ precision: [0.99292619 0.03102285] 
+ recall: [0.60680762 0.74437378] 
+ f1: [0.7532693  0.05956331] 
+ f1_avg: 0.7417327862567392
+
+New best val score, save model ...
+--- 349.67077827453613 seconds ---
+
+Train Epoch: 4 accuracy: 0.73 
+ precision: [0.99134378 0.0405039 ] 
+ recall: [0.73334084 0.6374086 ] 
+ f1: [0.84304443 0.07616774] 
+ f1_avg: 0.8297363633712892
+
+
+Validation Epoch: 4 accuracy: 0.65 
+ precision: [0.99291942 0.03365254] 
+ recall: [0.64683178 0.72725049] 
+ f1: [0.78335279 0.06432837] 
+ f1_avg: 0.7713952276218062
+
+New best val score, save model ...
+--- 402.1905519962311 seconds ---
+
+Train Epoch: 5 accuracy: 0.74 
+ precision: [0.99160129 0.04235235] 
+ recall: [0.74297097 0.64366774] 
+ f1: [0.84946703 0.07947534] 
+ f1_avg: 0.8361049061753355
+
+
+Validation Epoch: 5 accuracy: 0.67 
+ precision: [0.99305121 0.03565269] 
+ recall: [0.66923704 0.72309198] 
+ f1: [0.79960458 0.0679548 ] 
+ f1_avg: 0.7874370577254844
+
+New best val score, save model ...
+--- 456.7194519042969 seconds ---
+
+Train Epoch: 6 accuracy: 0.75 
+ precision: [0.99193645 0.04413312] 
+ recall: [0.7494601  0.65501609] 
+ f1: [0.85381677 0.08269452] 
+ f1_avg: 0.8404350292206535
+
+
+Validation Epoch: 6 accuracy: 0.69 
+ precision: [0.99288948 0.03672395] 
+ recall: [0.68510191 0.70988258] 
+ f1: [0.81076754 0.06983516] 
+ f1_avg: 0.798445647309032
+
+New best val score, save model ...
+--- 508.2469096183777 seconds ---
+
+Train Epoch: 7 accuracy: 0.75 
+ precision: [0.9922005  0.04553546] 
+ recall: [0.75407837 0.6643463 ] 
+ f1: [0.8569043  0.08522917] 
+ f1_avg: 0.843512962252496
+
+
+Validation Epoch: 7 accuracy: 0.69 
+ precision: [0.99288817 0.03730034] 
+ recall: [0.69132789 0.70719178] 
+ f1: [0.81511072 0.07086305] 
+ f1_avg: 0.8027336905789964
+
+New best val score, save model ...
+--- 560.3751862049103 seconds ---
+
+Train Epoch: 8 accuracy: 0.76 
+ precision: [0.99239966 0.0465652 ] 
+ recall: [0.75713208 0.67165838] 
+ f1: [0.85894711 0.08709239] 
+ f1_avg: 0.8455526567598647
+
+
+Validation Epoch: 8 accuracy: 0.70 
+ precision: [0.99278201 0.03773162] 
+ recall: [0.69815785 0.69985323] 
+ f1: [0.81980273 0.07160287] 
+ f1_avg: 0.8073599741411089
+
+New best val score, save model ...
+--- 612.3240013122559 seconds ---
+
+Train Epoch: 9 accuracy: 0.76 
+ precision: [0.99261328 0.04767542] 
+ recall: [0.76024725 0.67964317] 
+ f1: [0.86102859 0.08910063] 
+ f1_avg: 0.8476328687716671
+
+
+Validation Epoch: 9 accuracy: 0.71 
+ precision: [0.99270807 0.03843493] 
+ recall: [0.70679563 0.69300391] 
+ f1: [0.82570191 0.07283057] 
+ f1_avg: 0.8131814626494857
+
+New best val score, save model ...
+--- 666.1469395160675 seconds ---
+
+Train Epoch: 10 accuracy: 0.76 
+ precision: [0.99281321 0.04886   ] 
+ recall: [0.76385726 0.68689675] 
+ f1: [0.86341473 0.09123063] 
+ f1_avg: 0.8500145569911305
+
+
+Validation Epoch: 10 accuracy: 0.71 
+ precision: [0.99261712 0.03824224] 
+ recall: [0.70692387 0.68909002] 
+ f1: [0.82575794 0.07246302] 
+ f1_avg: 0.8132304533810044
+
+New best val score, save model ...
+--- 718.1322767734528 seconds ---
+
+Train Epoch: 11 accuracy: 0.77 
+ precision: [0.99306604 0.0504345 ] 
+ recall: [0.76853493 0.69613922] 
+ f1: [0.86649128 0.09405484] 
+ f1_avg: 0.8530867295553136
+
+
+Validation Epoch: 11 accuracy: 0.71 
+ precision: [0.99245674 0.03850205] 
+ recall: [0.7130092 0.6795499] 
+ f1: [0.82983866 0.07287513] 
+ f1_avg: 0.8172501608355746
+
+New best val score, save model ...
+--- 770.1904366016388 seconds ---
+
+Train Epoch: 12 accuracy: 0.77 
+ precision: [0.99335962 0.05189904] 
+ recall: [0.77161085 0.70792629] 
+ f1: [0.86855511 0.09670827] 
+ f1_avg: 0.8551607916820372
+
+
+Validation Epoch: 12 accuracy: 0.72 
+ precision: [0.99252636 0.03932473] 
+ recall: [0.71915244 0.67979452] 
+ f1: [0.83400899 0.07434855] 
+ f1_avg: 0.8213756418785485
+
+New best val score, save model ...
+--- 822.0610318183899 seconds ---
+
+Train Epoch: 13 accuracy: 0.78 
+ precision: [0.9935557  0.05340433] 
+ recall: [0.77621259 0.71491664] 
+ f1: [0.87153832 0.09938461] 
+ f1_avg: 0.8581386784109644
+
+
+Validation Epoch: 13 accuracy: 0.72 
+ precision: [0.99227062 0.03904673] 
+ recall: [0.72226336 0.66731898] 
+ f1: [0.83600643 0.07377659] 
+ f1_avg: 0.823330347498895
+
+New best val score, save model ...
+--- 873.9204297065735 seconds ---
+
+Train Epoch: 14 accuracy: 0.78 
+ precision: [0.99372027 0.05456819] 
+ recall: [0.77935772 0.72111729] 
+ f1: [0.87358093 0.10145882] 
+ f1_avg: 0.8601818395031917
+
+
+Validation Epoch: 14 accuracy: 0.73 
+ precision: [0.99216205 0.03957881] 
+ recall: [0.7294615  0.65924658] 
+ f1: [0.84076919 0.07467443] 
+ f1_avg: 0.8280288372306993
+
+New best val score, save model ...
+--- 925.6308205127716 seconds ---
+
+Train Epoch: 15 accuracy: 0.78 
+ precision: [0.99392568 0.05607632] 
+ recall: [0.78331277 0.72892659] 
+ f1: [0.87613981 0.10414107] 
+ f1_avg: 0.8627428527304405
+
+
+Validation Epoch: 15 accuracy: 0.74 
+ precision: [0.9922975  0.04121492] 
+ recall: [0.74025872 0.66022505] 
+ f1: [0.84794579 0.07758645] 
+ f1_avg: 0.8351345156144542
+
+New best val score, save model ...
+--- 977.5562274456024 seconds ---
+
+Train Epoch: 16 accuracy: 0.79 
+ precision: [0.99404021 0.05735736] 
+ recall: [0.78734478 0.73269962] 
+ f1: [0.87870098 0.10638655] 
+ f1_avg: 0.8652985502152644
+
+
+Validation Epoch: 16 accuracy: 0.75 
+ precision: [0.99212805 0.04189979] 
+ recall: [0.74922744 0.64848337] 
+ f1: [0.85373672 0.07871374] 
+ f1_avg: 0.8408478868498234
+
+New best val score, save model ...
+--- 1029.4290990829468 seconds ---
+
+Train Epoch: 17 accuracy: 0.79 
+ precision: [0.99424857 0.05883938] 
+ recall: [0.79068051 0.74100614] 
+ f1: [0.88085625 0.1090219 ] 
+ f1_avg: 0.8674621485161073
+
+
+Validation Epoch: 17 accuracy: 0.75 
+ precision: [0.99218391 0.04214395] 
+ recall: [0.74989761 0.65068493] 
+ f1: [0.85419234 0.07916078] 
+ f1_avg: 0.8413033639957124
+
+New best val score, save model ...
+--- 1081.4798889160156 seconds ---
+
+Train Epoch: 18 accuracy: 0.79 
+ precision: [0.99438529 0.06031223] 
+ recall: [0.79476779 0.74589061] 
+ f1: [0.88344078 0.11160051] 
+ f1_avg: 0.8700465787695286
+
+
+Validation Epoch: 18 accuracy: 0.75 
+ precision: [0.99182198 0.04160633] 
+ recall: [0.75357528 0.63258317] 
+ f1: [0.8564383  0.07807735] 
+ f1_avg: 0.8434939540073932
+
+New best val score, save model ...
+--- 1133.5841674804688 seconds ---
+srun: Job step aborted: Waiting up to 32 seconds for job step to finish.
+slurmstepd: *** JOB 9898624 ON vesta18 CANCELLED AT 2022-11-10T17:57:10 ***
+slurmstepd: *** STEP 9898624.0 ON vesta18 CANCELLED AT 2022-11-10T17:57:10 ***

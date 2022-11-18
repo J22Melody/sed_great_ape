@@ -1,0 +1,1510 @@
+Requirement already satisfied: scikit-learn in /net/cephfs/data/zifjia/condaenvs/audio_clf/lib/python3.8/site-packages (1.1.2)
+Requirement already satisfied: numpy>=1.17.3 in /net/cephfs/data/zifjia/condaenvs/audio_clf/lib/python3.8/site-packages (from scikit-learn) (1.22.3)
+Requirement already satisfied: threadpoolctl>=2.0.0 in /net/cephfs/data/zifjia/condaenvs/audio_clf/lib/python3.8/site-packages (from scikit-learn) (3.1.0)
+Requirement already satisfied: joblib>=1.0.0 in /net/cephfs/data/zifjia/condaenvs/audio_clf/lib/python3.8/site-packages (from scikit-learn) (1.1.0)
+Requirement already satisfied: scipy>=1.3.2 in /net/cephfs/data/zifjia/condaenvs/audio_clf/lib/python3.8/site-packages (from scikit-learn) (1.9.1)
+Requirement already satisfied: tensorboard in /net/cephfs/data/zifjia/condaenvs/audio_clf/lib/python3.8/site-packages (2.10.1)
+Requirement already satisfied: werkzeug>=1.0.1 in /net/cephfs/data/zifjia/condaenvs/audio_clf/lib/python3.8/site-packages (from tensorboard) (2.1.2)
+Requirement already satisfied: markdown>=2.6.8 in /net/cephfs/home/zifjia/.local/lib/python3.8/site-packages (from tensorboard) (3.4.1)
+Requirement already satisfied: grpcio>=1.24.3 in /net/cephfs/home/zifjia/.local/lib/python3.8/site-packages (from tensorboard) (1.47.0)
+Requirement already satisfied: requests<3,>=2.21.0 in /net/cephfs/data/zifjia/condaenvs/audio_clf/lib/python3.8/site-packages (from tensorboard) (2.28.1)
+Requirement already satisfied: absl-py>=0.4 in /net/cephfs/home/zifjia/.local/lib/python3.8/site-packages (from tensorboard) (1.2.0)
+Requirement already satisfied: tensorboard-data-server<0.7.0,>=0.6.0 in /net/cephfs/home/zifjia/.local/lib/python3.8/site-packages (from tensorboard) (0.6.1)
+Requirement already satisfied: tensorboard-plugin-wit>=1.6.0 in /net/cephfs/home/zifjia/.local/lib/python3.8/site-packages (from tensorboard) (1.8.1)
+Requirement already satisfied: wheel>=0.26 in /net/cephfs/data/zifjia/condaenvs/audio_clf/lib/python3.8/site-packages (from tensorboard) (0.37.1)
+Requirement already satisfied: protobuf<3.20,>=3.9.2 in /net/cephfs/home/zifjia/.local/lib/python3.8/site-packages (from tensorboard) (3.19.4)
+Requirement already satisfied: numpy>=1.12.0 in /net/cephfs/data/zifjia/condaenvs/audio_clf/lib/python3.8/site-packages (from tensorboard) (1.22.3)
+Requirement already satisfied: google-auth-oauthlib<0.5,>=0.4.1 in /net/cephfs/home/zifjia/.local/lib/python3.8/site-packages (from tensorboard) (0.4.6)
+Requirement already satisfied: google-auth<3,>=1.6.3 in /net/cephfs/home/zifjia/.local/lib/python3.8/site-packages (from tensorboard) (2.9.1)
+Requirement already satisfied: setuptools>=41.0.0 in /net/cephfs/data/zifjia/condaenvs/audio_clf/lib/python3.8/site-packages (from tensorboard) (60.8.1)
+Requirement already satisfied: rsa<5,>=3.1.4 in /net/cephfs/home/zifjia/.local/lib/python3.8/site-packages (from google-auth<3,>=1.6.3->tensorboard) (4.9)
+Requirement already satisfied: pyasn1-modules>=0.2.1 in /net/cephfs/home/zifjia/.local/lib/python3.8/site-packages (from google-auth<3,>=1.6.3->tensorboard) (0.2.8)
+Requirement already satisfied: six>=1.9.0 in /net/cephfs/data/zifjia/condaenvs/audio_clf/lib/python3.8/site-packages (from google-auth<3,>=1.6.3->tensorboard) (1.16.0)
+Requirement already satisfied: cachetools<6.0,>=2.0.0 in /net/cephfs/home/zifjia/.local/lib/python3.8/site-packages (from google-auth<3,>=1.6.3->tensorboard) (5.2.0)
+Requirement already satisfied: requests-oauthlib>=0.7.0 in /net/cephfs/home/zifjia/.local/lib/python3.8/site-packages (from google-auth-oauthlib<0.5,>=0.4.1->tensorboard) (1.3.1)
+Requirement already satisfied: importlib-metadata>=4.4 in /net/cephfs/home/zifjia/.local/lib/python3.8/site-packages (from markdown>=2.6.8->tensorboard) (4.12.0)
+Requirement already satisfied: idna<4,>=2.5 in /net/cephfs/data/zifjia/condaenvs/audio_clf/lib/python3.8/site-packages (from requests<3,>=2.21.0->tensorboard) (3.4)
+Requirement already satisfied: urllib3<1.27,>=1.21.1 in /net/cephfs/data/zifjia/condaenvs/audio_clf/lib/python3.8/site-packages (from requests<3,>=2.21.0->tensorboard) (1.26.12)
+Requirement already satisfied: charset-normalizer<3,>=2 in /net/cephfs/data/zifjia/condaenvs/audio_clf/lib/python3.8/site-packages (from requests<3,>=2.21.0->tensorboard) (2.1.1)
+Requirement already satisfied: certifi>=2017.4.17 in /net/cephfs/data/zifjia/condaenvs/audio_clf/lib/python3.8/site-packages (from requests<3,>=2.21.0->tensorboard) (2022.9.14)
+Requirement already satisfied: zipp>=0.5 in /net/cephfs/data/zifjia/condaenvs/audio_clf/lib/python3.8/site-packages (from importlib-metadata>=4.4->markdown>=2.6.8->tensorboard) (3.8.0)
+Requirement already satisfied: pyasn1<0.5.0,>=0.4.6 in /net/cephfs/home/zifjia/.local/lib/python3.8/site-packages (from pyasn1-modules>=0.2.1->google-auth<3,>=1.6.3->tensorboard) (0.4.8)
+Requirement already satisfied: oauthlib>=3.0.0 in /net/cephfs/home/zifjia/.local/lib/python3.8/site-packages (from requests-oauthlib>=0.7.0->google-auth-oauthlib<0.5,>=0.4.1->tensorboard) (3.2.0)
+Requirement already satisfied: torch in /net/cephfs/data/zifjia/condaenvs/audio_clf/lib/python3.8/site-packages (1.12.1)
+Requirement already satisfied: torchvision in /net/cephfs/data/zifjia/condaenvs/audio_clf/lib/python3.8/site-packages (0.13.1)
+Requirement already satisfied: torchaudio in /net/cephfs/data/zifjia/condaenvs/audio_clf/lib/python3.8/site-packages (0.12.1)
+Requirement already satisfied: typing-extensions in /net/cephfs/data/zifjia/condaenvs/audio_clf/lib/python3.8/site-packages (from torch) (4.0.1)
+Requirement already satisfied: pillow!=8.3.*,>=5.3.0 in /net/cephfs/data/zifjia/condaenvs/audio_clf/lib/python3.8/site-packages (from torchvision) (9.0.1)
+Requirement already satisfied: requests in /net/cephfs/data/zifjia/condaenvs/audio_clf/lib/python3.8/site-packages (from torchvision) (2.28.1)
+Requirement already satisfied: numpy in /net/cephfs/data/zifjia/condaenvs/audio_clf/lib/python3.8/site-packages (from torchvision) (1.22.3)
+Requirement already satisfied: urllib3<1.27,>=1.21.1 in /net/cephfs/data/zifjia/condaenvs/audio_clf/lib/python3.8/site-packages (from requests->torchvision) (1.26.12)
+Requirement already satisfied: certifi>=2017.4.17 in /net/cephfs/data/zifjia/condaenvs/audio_clf/lib/python3.8/site-packages (from requests->torchvision) (2022.9.14)
+Requirement already satisfied: idna<4,>=2.5 in /net/cephfs/data/zifjia/condaenvs/audio_clf/lib/python3.8/site-packages (from requests->torchvision) (3.4)
+Requirement already satisfied: charset-normalizer<3,>=2 in /net/cephfs/data/zifjia/condaenvs/audio_clf/lib/python3.8/site-packages (from requests->torchvision) (2.1.1)
+{'name': 'chimp_wav2vec2_lstm_dropout_0.2_42', 'data_path': '/home/cluster/zifjia/data/data_chimp/wav2vec2_split_42', 'test_only': False, 'balance_weights': True, 'model_type': 'lstm', 'n_embedding': 768, 'd_hid': 1024, 'nlayers': 2, 'batch_size': 1, 'n_epoch': 200, 'lr': 0.0001, 'dropout': 0.2, 'patience': 10, 'step_factor': 0.7, 'seed': 42}
+cuda
+Reading data ...
+train, dev, test number of files: 188, 23, 24.
+dev files:  ['ASO1624_02 HW single ph_01', 'ASO1138 Sonso PS single ph_01', 'ASO1331 Sonso FK single ph feeding_01', 'ASO3453 KT pg pant ph intro, 1_20 unk hoo, 16_20 KT single ph_01', 'ASO0471 Sonso KT single ph feeding, group ph_01', 'ASO1514 MS single ph intro, KC group ph_01', 'ASO0481 Sonso KT single ph, KZ single ph feeding_01', 'ASO3132 KT single ph rest_01', 'ASO3129 KT single ph resting_01', 'ASO1614 HW single ph feeding_01', 'ASO3829 PS IN IS group ph resting, 1_30 HW single ph_01', 'ASO3462 PS single ph drum traveling_01', 'ASO3574 KT single ph feeding_01', 'ASO3856 MS single ph feeding_01', 'ASO3455 KT single ph_01', 'ASO3015 PS single ph feeding_01', 'ASO2125 KL OK KC JS group ph, FK single ph, OK KL KC KO group ph, PS single ph, PS single ph feeding_02', 'ASO3403 ZL single ph, KC fg_01', 'ASO3954 FK single ph drum traveling_01', 'ASO3404 ZL KC group ph, inf single ph other party, 3_50 KS PS ZL KC group ph, PS display, KS fg. 6_10 PS single ph_01', 'ASO3179 FK single ph resting looking at monkeys_01', 'ASO0780 Sonso ZL single ph drum_01', 'ASO3150 KT single ph_01']
+test files:  ['ASO3080 HW single ph drum traveling, 2_00 HW single ph drum traveling-resting, 5_20 HW single ph drum traveling-resting_02', 'ASO4567 KC display drum (not visible), FK SM group ph drum, 1_50 ZL single ph drum travel_01', 'ASO3457 KT single ph_01', 'ASO0334 Sonso PS single ph_01', 'ASO0020 Sonso SQ single ph, PS single ph other party 2_01', 'ASO3737 HW single ph drum resting-traveling, 1_15 JN single ph feeding, HW single ph_02', 'ASO0107 Sonso Thermal Camera KZ single ph 2_50 with reply ZD, KZ SQ group ph 3_34_01', 'ASO3016 ZL single ph feeding_01', 'ASO3770 MS single ph drum traveling-resting_01', 'ASO1487 ZL single ph start, DL unk group ph, PS single ph start_01', 'ASO0910 Sonso Thermal Camera HW resting, 2_05 HW single ph, 13_45 HW PS group ph drum traveling_01', 'ASO1487 ZL single ph start, DL unk group ph, PS single ph start_02', 'ASO1035 Sonso unk group ph 100m, 0_30 ZD single ph drum, FK unk single ph drum 100m_01', 'ASO1093 Sonso SQ single ph_01', 'ASO0094 Sonso ZL single ph_01', 'ASO2877 FK single ph, KO pg-whimper, unk MB group ph_01', 'ASO2546 FK single fg ph feeding, HW single ph drum, FK fg, FK single ph, FK fg_01', 'ASO2392 group ph, 1_30 pg to ph, 1_45 NB group ph, 2_30 SM PS MB group ph, MB fg, 3_40 PS unk group ph, SM single ph, unk display to DL, 5_46 DL single ph intro_01', 'ASO2544 HW single ph drum traveling_01', 'ASO0088 Sonso HW single ph drum,  group ph, unk F ph_01', 'ASO3874 unk pg-ph start, unk group ph, 1_50 HW single ph feeding_01', 'ASO1581 HW single ph drum, MS NB unk group ph other party, HW single ph B-U, KT HW group ph_01', 'ASO3870 FK scream, MS FK group ph drum, FK MS group fg, FK MS group ph drum, MS FK fg, MS single ph intro, FK MS group ph. FK fg, 3_19 MS FK group ph feeding, 4_24 FK single ph_01', 'ASO4619 ZL unk group ph, PS single ph intro_01']
+train_data_all: (78704, 769)
+Labels in train_data_all:  {0.0: 866, 1.0: 38429, 2.0: 17370, 3.0: 15944, 4.0: 6095}
+--- 1.7158722877502441 seconds ---
+LSTM(
+  (lstm): LSTM(768, 1024, num_layers=2, dropout=0.2, bidirectional=True)
+  (hidden2tag): Linear(in_features=2048, out_features=5, bias=True)
+)
+Number of parameters: 39888901
+
+Train Epoch: 1 accuracy: 0.49 
+ precision: [0.02640663 0.812577   0.4379997  0.62735361 0.20669961] 
+ recall: [0.17667436 0.37760545 0.50777202 0.76066232 0.52846596] 
+ f1: [0.04594595 0.51560751 0.47031221 0.6876063  0.29716764] 
+ f1_avg: 0.5183704127645331
+
+
+Validation Epoch: 1 accuracy: 0.55 
+ precision: [0.01498929 0.84744157 0.36329588 0.64063205 0.26446281] 
+ recall: [1.         0.50347157 0.51534829 0.78964942 0.41725176] 
+ f1: [0.02953586 0.63166569 0.42616549 0.70737787 0.32373541] 
+ f1_avg: 0.5783998120188019
+
+New best val score, save model ...
+--- 9.814286231994629 seconds ---
+
+Train Epoch: 2 accuracy: 0.59 
+ precision: [0.04249155 0.84425594 0.51133144 0.67834929 0.29231385] 
+ recall: [0.20323326 0.53870775 0.5611399  0.7866282  0.59901559] 
+ f1: [0.07028754 0.65772836 0.53507905 0.72848721 0.3928975 ] 
+ f1_avg: 0.6180212619162331
+
+
+Validation Epoch: 2 accuracy: 0.59 
+ precision: [0.0178117  0.84664448 0.3901365  0.66503993 0.27923077] 
+ recall: [1.         0.57290298 0.52302243 0.83416806 0.36409228] 
+ f1: [0.035      0.68337997 0.44691047 0.74006418 0.31606443] 
+ f1_avg: 0.6152335855580935
+
+New best val score, save model ...
+--- 13.559354066848755 seconds ---
+
+Train Epoch: 3 accuracy: 0.63 
+ precision: [0.05539545 0.8493609  0.52349131 0.69358709 0.35061221] 
+ recall: [0.19976905 0.58791538 0.58629822 0.79772955 0.64364233] 
+ f1: [0.08673853 0.69485922 0.55311753 0.74202205 0.45394585] 
+ f1_avg: 0.6477829776148888
+
+
+Validation Epoch: 3 accuracy: 0.62 
+ precision: [0.02621723 0.84748387 0.39497618 0.6781349  0.29639175] 
+ recall: [1.         0.6162507  0.53837072 0.83361157 0.34603811] 
+ f1: [0.05109489 0.71360278 0.45565826 0.74787818 0.31929662] 
+ f1_avg: 0.6349051098252488
+
+New best val score, save model ...
+--- 17.322779417037964 seconds ---
+
+Train Epoch: 4 accuracy: 0.65 
+ precision: [0.0763773  0.85473229 0.53341791 0.70056806 0.38333333] 
+ recall: [0.2113164  0.61687788 0.60512378 0.80444054 0.66415094] 
+ f1: [0.1122011  0.71658304 0.56701281 0.74891977 0.48610027] 
+ f1_avg: 0.6656244430932917
+
+
+Validation Epoch: 4 accuracy: 0.63 
+ precision: [0.02966102 0.8499504  0.40111064 0.6911215  0.31255814] 
+ recall: [1.         0.64308501 0.55430933 0.8230384  0.33701103] 
+ f1: [0.05761317 0.73218673 0.46542751 0.7513335  0.32432432] 
+ f1_avg: 0.6478174108704824
+
+New best val score, save model ...
+--- 21.066664695739746 seconds ---
+
+Train Epoch: 5 accuracy: 0.66 
+ precision: [0.09756098 0.85824552 0.54051458 0.70789053 0.39381384] 
+ recall: [0.22632794 0.63366208 0.61560161 0.80632213 0.67054963] 
+ f1: [0.13634783 0.72905003 0.57561973 0.75390705 0.49620591] 
+ f1_avg: 0.6756699103179604
+
+
+Validation Epoch: 5 accuracy: 0.64 
+ precision: [0.03365385 0.8487536  0.4051016  0.70315488 0.32723773] 
+ recall: [1.         0.66447739 0.55312869 0.81858653 0.34102307] 
+ f1: [0.06511628 0.74539522 0.46768156 0.75649267 0.33398821] 
+ f1_avg: 0.6573008027406844
+
+New best val score, save model ...
+--- 24.85377287864685 seconds ---
+
+Train Epoch: 6 accuracy: 0.67 
+ precision: [0.11276596 0.8621286  0.54864604 0.71523804 0.40453612] 
+ recall: [0.2448037  0.64859871 0.62170409 0.8075138  0.67891715] 
+ f1: [0.15440641 0.74027324 0.58289477 0.75858006 0.50698358] 
+ f1_avg: 0.6847355133691324
+
+
+Validation Epoch: 6 accuracy: 0.65 
+ precision: [0.03954802 0.84954514 0.41459075 0.70831331 0.3443259 ] 
+ recall: [1.         0.68343029 0.5501771  0.82025598 0.3560682 ] 
+ f1: [0.07608696 0.75748752 0.47285642 0.76018566 0.35009862] 
+ f1_avg: 0.667070881371621
+
+New best val score, save model ...
+--- 28.61755132675171 seconds ---
+
+Train Epoch: 7 accuracy: 0.68 
+ precision: [0.13059701 0.86546549 0.5545682  0.72193621 0.41291469] 
+ recall: [0.28290993 0.65872128 0.62515832 0.80914451 0.68613618] 
+ f1: [0.17870168 0.74807175 0.58775135 0.76305672 0.51556432] 
+ f1_avg: 0.6914538879818256
+
+
+Validation Epoch: 7 accuracy: 0.66 
+ precision: [0.04191617 0.84915564 0.42348104 0.71387144 0.36086529] 
+ recall: [1.         0.69825483 0.5472255  0.82192543 0.36810431] 
+ f1: [0.08045977 0.76634744 0.47746588 0.76409726 0.36444886] 
+ f1_avg: 0.6748467234838719
+
+New best val score, save model ...
+--- 32.411874294281006 seconds ---
+
+Train Epoch: 8 accuracy: 0.69 
+ precision: [0.13860314 0.86861215 0.56072418 0.72555294 0.41707196] 
+ recall: [0.29561201 0.66611153 0.62941854 0.81064977 0.68941756] 
+ f1: [0.18872097 0.75400227 0.59308886 0.76574442 0.51972789] 
+ f1_avg: 0.6965047449382362
+
+
+Validation Epoch: 8 accuracy: 0.67 
+ precision: [0.04268293 0.8481804  0.43132643 0.71796117 0.36884422] 
+ recall: [1.         0.71289172 0.54132231 0.8230384  0.36810431] 
+ f1: [0.08187135 0.77467374 0.48010471 0.76691729 0.3684739 ] 
+ f1_avg: 0.6807436552456345
+
+New best val score, save model ...
+--- 36.187607288360596 seconds ---
+
+Train Epoch: 9 accuracy: 0.69 
+ precision: [0.15557999 0.87241356 0.56688128 0.72997016 0.42521176] 
+ recall: [0.32678984 0.67365791 0.63362119 0.81315855 0.70008203] 
+ f1: [0.21080074 0.76026019 0.59839609 0.76932206 0.52907626] 
+ f1_avg: 0.7024232965758802
+
+
+Validation Epoch: 9 accuracy: 0.68 
+ precision: [0.04294479 0.84850484 0.44071051 0.71835749 0.37916667] 
+ recall: [1.         0.72415087 0.54191263 0.82749026 0.36509529] 
+ f1: [0.08235294 0.78141136 0.48610008 0.76907163 0.37199796] 
+ f1_avg: 0.6861843267064608
+
+New best val score, save model ...
+--- 39.93397831916809 seconds ---
+
+Train Epoch: 10 accuracy: 0.70 
+ precision: [0.16510732 0.87535553 0.57331954 0.73393614 0.43132337] 
+ recall: [0.34642032 0.6807359  0.63834197 0.81453838 0.70533224] 
+ f1: [0.22363026 0.76587522 0.60408608 0.77213948 0.53530071] 
+ f1_avg: 0.707614704262586
+
+
+Validation Epoch: 10 accuracy: 0.68 
+ precision: [0.04347826 0.84688581 0.44977952 0.71905222 0.38924731] 
+ recall: [1.         0.73484706 0.54191263 0.82749026 0.36308927] 
+ f1: [0.08333333 0.78689842 0.49156627 0.7694696  0.37571354] 
+ f1_avg: 0.6905539040496348
+
+New best val score, save model ...
+--- 43.729684829711914 seconds ---
+
+Train Epoch: 11 accuracy: 0.70 
+ precision: [0.16430903 0.87767146 0.57819389 0.73622761 0.43537688] 
+ recall: [0.34872979 0.68500351 0.64173863 0.81472654 0.71074651] 
+ f1: [0.22337278 0.76946012 0.60831128 0.77349053 0.5399813 ] 
+ f1_avg: 0.7109309509913624
+
+
+Validation Epoch: 11 accuracy: 0.68 
+ precision: [0.0443038  0.84571063 0.44972759 0.72321861 0.38418708] 
+ recall: [1.         0.74366673 0.53600945 0.83027268 0.34603811] 
+ f1: [0.08484848 0.79141288 0.48909238 0.77305699 0.36411609] 
+ f1_avg: 0.692056477552619
+
+New best val score, save model ...
+--- 47.4955108165741 seconds ---
+
+Train Epoch: 12 accuracy: 0.70 
+ precision: [0.17118093 0.88147311 0.58454583 0.73930337 0.43992346] 
+ recall: [0.36489607 0.69010383 0.64761082 0.81604365 0.71665299] 
+ f1: [0.23303835 0.77413705 0.61446441 0.77578034 0.54518223] 
+ f1_avg: 0.7155455656501837
+
+
+Validation Epoch: 12 accuracy: 0.69 
+ precision: [0.04635762 0.84369075 0.45367573 0.72445521 0.384     ] 
+ recall: [1.         0.75154813 0.53187721 0.83249861 0.33701103] 
+ f1: [0.08860759 0.79495832 0.48967391 0.77472812 0.35897436] 
+ f1_avg: 0.6938665105705208
+
+New best val score, save model ...
+--- 51.32100009918213 seconds ---
+
+Train Epoch: 13 accuracy: 0.71 
+ precision: [0.17023675 0.8829115  0.58925783 0.74241475 0.44518339] 
+ recall: [0.34872979 0.69442348 0.65181347 0.81798796 0.72485644] 
+ f1: [0.22878788 0.77740554 0.61895911 0.77837128 0.55159498] 
+ f1_avg: 0.719108185714458
+
+
+Validation Epoch: 13 accuracy: 0.69 
+ precision: [0.0472973  0.84312905 0.45841785 0.72921731 0.38568129] 
+ recall: [1.         0.7564271  0.53364817 0.83472454 0.33500502] 
+ f1: [0.09032258 0.79742829 0.49318058 0.77841204 0.35856146] 
+ f1_avg: 0.69644418967057
+
+New best val score, save model ...
+--- 55.09443020820618 seconds ---
+
+Train Epoch: 14 accuracy: 0.71 
+ precision: [0.16910569 0.885344   0.59249636 0.74623877 0.45281683] 
+ recall: [0.36027714 0.69684353 0.65641911 0.81817612 0.73453651] 
+ f1: [0.23017337 0.77986487 0.62282187 0.78055348 0.56025529] 
+ f1_avg: 0.7222895134301386
+
+
+Validation Epoch: 14 accuracy: 0.69 
+ precision: [0.04605263 0.84188656 0.46367852 0.72983479 0.38837209] 
+ recall: [1.         0.7603678  0.53128689 0.83583751 0.33500502] 
+ f1: [0.08805031 0.79905344 0.49518569 0.77924773 0.35971998] 
+ f1_avg: 0.6979403192648165
+
+New best val score, save model ...
+--- 58.89042639732361 seconds ---
+
+Train Epoch: 15 accuracy: 0.72 
+ precision: [0.18611111 0.8891784  0.59695226 0.74865484 0.45734066] 
+ recall: [0.38683603 0.70152749 0.66303972 0.82030858 0.73699754] 
+ f1: [0.25131283 0.78428463 0.62826283 0.78284551 0.56442797] 
+ f1_avg: 0.7266684506785793
+
+
+Validation Epoch: 15 accuracy: 0.69 
+ precision: [0.04666667 0.84135509 0.46375321 0.73054475 0.39543269] 
+ recall: [1.         0.7643085  0.53246753 0.83583751 0.32998997] 
+ f1: [0.08917197 0.80098328 0.49574059 0.77965222 0.35975943] 
+ f1_avg: 0.6991616319297449
+
+New best val score, save model ...
+--- 62.68081474304199 seconds ---
+
+Train Epoch: 16 accuracy: 0.72 
+ precision: [0.18767199 0.89125435 0.60139315 0.75037224 0.46317949] 
+ recall: [0.39376443 0.70592521 0.66603339 0.82181385 0.74093519] 
+ f1: [0.25419307 0.78783743 0.63206491 0.78446986 0.57002209] 
+ f1_avg: 0.7300362758379514
+
+
+Validation Epoch: 16 accuracy: 0.69 
+ precision: [0.04895105 0.83743842 0.4678001  0.73264907 0.39172749] 
+ recall: [1.         0.76562207 0.53600945 0.83416806 0.32296891] 
+ f1: [0.09333333 0.79992158 0.49958735 0.7801197  0.35404068] 
+ f1_avg: 0.6987571288284606
+
+--- 66.04022550582886 seconds ---
+
+Train Epoch: 17 accuracy: 0.72 
+ precision: [0.17506925 0.891992   0.60497036 0.75344195 0.46637878] 
+ recall: [0.36489607 0.70811106 0.66989062 0.82375815 0.74421657] 
+ f1: [0.2366155  0.7894859  0.63577751 0.7870326  0.57341508] 
+ f1_avg: 0.7322490686572078
+
+
+Validation Epoch: 17 accuracy: 0.70 
+ precision: [0.04761905 0.83913663 0.47266036 0.73277968 0.40881273] 
+ recall: [1.         0.77331582 0.53069658 0.83472454 0.33500502] 
+ f1: [0.09090909 0.80488281 0.5        0.78043704 0.36824697] 
+ f1_avg: 0.7030175557795311
+
+New best val score, save model ...
+--- 69.80785799026489 seconds ---
+
+Train Epoch: 18 accuracy: 0.73 
+ precision: [0.20926244 0.89515655 0.61085949 0.7560695  0.47511776] 
+ recall: [0.42263279 0.71274298 0.67553253 0.82425991 0.76127974] 
+ f1: [0.27992352 0.7936025  0.6415703  0.78869351 0.58508291] 
+ f1_avg: 0.7372541442007563
+
+
+Validation Epoch: 18 accuracy: 0.69 
+ precision: [0.04929577 0.83343527 0.46849174 0.7388724  0.38461538] 
+ recall: [1.         0.76712329 0.53541913 0.83138564 0.31594784] 
+ f1: [0.09395973 0.79890561 0.49972452 0.78240377 0.3469163 ] 
+ f1_avg: 0.6979248948469263
+
+--- 73.24158596992493 seconds ---
+
+Train Epoch: 19 accuracy: 0.73 
+ precision: [0.18124643 0.8955292  0.61234849 0.75970425 0.47828791] 
+ recall: [0.36605081 0.71513701 0.68059873 0.8248871  0.75717801] 
+ f1: [0.24244742 0.79523127 0.64467227 0.79095502 0.58625508] 
+ f1_avg: 0.7388705891654843
+
+
+Validation Epoch: 19 accuracy: 0.70 
+ precision: [0.04516129 0.83991895 0.47858276 0.73411535 0.40777917] 
+ recall: [1.         0.77781948 0.53423849 0.83583751 0.32597793] 
+ f1: [0.08641975 0.80767732 0.50488145 0.78168098 0.36231884] 
+ f1_avg: 0.7049978775901746
+
+New best val score, save model ...
+--- 76.99675750732422 seconds ---
+
+Train Epoch: 20 accuracy: 0.73 
+ precision: [0.20554926 0.89926138 0.61748634 0.76209211 0.48825469] 
+ recall: [0.41916859 0.71917042 0.68307427 0.8261415  0.77752256] 
+ f1: [0.27583587 0.79919609 0.64862649 0.79282533 0.59983545] 
+ f1_avg: 0.7434771625487064
+
+
+Validation Epoch: 20 accuracy: 0.70 
+ precision: [0.04861111 0.83603239 0.47979003 0.73519334 0.40656566] 
+ recall: [1.         0.77500469 0.53955136 0.83583751 0.32296891] 
+ f1: [0.09271523 0.80436264 0.50791887 0.78229167 0.35997764] 
+ f1_avg: 0.7036021919649106
+
+--- 80.36873602867126 seconds ---
+
+Train Epoch: 21 accuracy: 0.74 
+ precision: [0.20059524 0.89956304 0.62180829 0.76490393 0.48467824] 
+ recall: [0.3891455  0.72320383 0.68416811 0.82645509 0.77850697] 
+ f1: [0.26472899 0.80180024 0.65149937 0.79448916 0.59741895] 
+ f1_avg: 0.7454104563830994
+
+
+Validation Epoch: 21 accuracy: 0.70 
+ precision: [0.04635762 0.83533238 0.47891723 0.73953717 0.3840399 ] 
+ recall: [1.         0.77106399 0.54309327 0.83583751 0.30892678] 
+ f1: [0.08860759 0.80191257 0.50899032 0.78474399 0.34241245] 
+ f1_avg: 0.7011209380645997
+
+--- 83.7530243396759 seconds ---
+
+Train Epoch: 22 accuracy: 0.74 
+ precision: [0.16770893 0.89948821 0.62354659 0.76521237 0.48993639] 
+ recall: [0.34064665 0.72260532 0.6884859  0.83053186 0.77079573] 
+ f1: [0.2247619  0.80140258 0.65440915 0.79653523 0.59908187] 
+ f1_avg: 0.7459619857120544
+
+
+Validation Epoch: 22 accuracy: 0.71 
+ precision: [0.04666667 0.84423739 0.48671626 0.73543689 0.40754717] 
+ recall: [1.         0.78213549 0.540732   0.84307179 0.32497492] 
+ f1: [0.08917197 0.81200078 0.51230425 0.78558465 0.36160714] 
+ f1_avg: 0.7092668665300367
+
+New best val score, save model ...
+--- 87.56894445419312 seconds ---
+
+Train Epoch: 23 accuracy: 0.74 
+ precision: [0.21013667 0.90378151 0.62803094 0.7684321  0.50061678] 
+ recall: [0.426097   0.72765359 0.69188256 0.82626693 0.79901559] 
+ f1: [0.28146453 0.80621027 0.65841232 0.79630077 0.61555963] 
+ f1_avg: 0.751045436367783
+
+
+Validation Epoch: 23 accuracy: 0.70 
+ precision: [0.04375    0.83666869 0.48869016 0.73785927 0.40100251] 
+ recall: [1.         0.77669356 0.54840614 0.82860323 0.32096289] 
+ f1: [0.08383234 0.80556637 0.51682893 0.78060288 0.35654596] 
+ f1_avg: 0.7051280448932192
+
+--- 90.9350917339325 seconds ---
+
+Train Epoch: 24 accuracy: 0.74 
+ precision: [0.19323671 0.90281042 0.62996305 0.77214969 0.5       ] 
+ recall: [0.36951501 0.72976138 0.69694876 0.83084546 0.78851518] 
+ f1: [0.25376685 0.80711449 0.66176511 0.80042296 0.61195645] 
+ f1_avg: 0.7524781833174047
+
+
+Validation Epoch: 24 accuracy: 0.71 
+ precision: [0.05185185 0.84127625 0.48876111 0.73476353 0.41655886] 
+ recall: [1.         0.78176018 0.55194805 0.83861992 0.32296891] 
+ f1: [0.09859155 0.810427   0.51843637 0.78326403 0.36384181] 
+ f1_avg: 0.7092795804074379
+
+New best val score, save model ...
+--- 94.68708562850952 seconds ---
+
+Train Epoch: 25 accuracy: 0.75 
+ precision: [0.22393584 0.90587366 0.63475307 0.77390949 0.508643  ] 
+ recall: [0.41916859 0.73402899 0.69925158 0.83235073 0.80623462] 
+ f1: [0.29191797 0.81094756 0.66544309 0.80206696 0.62376238] 
+ f1_avg: 0.756828606834378
+
+
+Validation Epoch: 25 accuracy: 0.71 
+ precision: [0.04827586 0.8371532  0.49345892 0.73793103 0.41230366] 
+ recall: [1.         0.78138488 0.5566706  0.83361157 0.31594784] 
+ f1: [0.09210526 0.80830826 0.52316227 0.78285864 0.35775128] 
+ f1_avg: 0.7082483040414624
+
+--- 98.08542370796204 seconds ---
+
+Train Epoch: 26 accuracy: 0.75 
+ precision: [0.20157863 0.90649625 0.6372042  0.77605412 0.51220023] 
+ recall: [0.38337182 0.73639699 0.70224525 0.83460863 0.80246103] 
+ f1: [0.26422602 0.81264089 0.66814559 0.80426702 0.62528765] 
+ f1_avg: 0.7585109652667948
+
+
+Validation Epoch: 26 accuracy: 0.71 
+ precision: [0.04761905 0.84414541 0.49842932 0.74079529 0.43142477] 
+ recall: [1.         0.78870332 0.56198347 0.83973289 0.32497492] 
+ f1: [0.09090909 0.81548312 0.52830189 0.78716745 0.37070938] 
+ f1_avg: 0.715128915508382
+
+New best val score, save model ...
+--- 101.87906646728516 seconds ---
+
+Train Epoch: 27 accuracy: 0.75 
+ precision: [0.23515003 0.91006088 0.64099619 0.77747848 0.5188454 ] 
+ recall: [0.44341801 0.73910328 0.70679332 0.83272704 0.81985234] 
+ f1: [0.30732293 0.81572108 0.67228869 0.80415493 0.63550808] 
+ f1_avg: 0.7621723096875732
+
+
+Validation Epoch: 27 accuracy: 0.71 
+ precision: [0.04761905 0.83822938 0.49818371 0.74059406 0.41052632] 
+ recall: [1.         0.78176018 0.56670602 0.83249861 0.31293882] 
+ f1: [0.09090909 0.80901058 0.53024027 0.78386167 0.35515083] 
+ f1_avg: 0.7097684821786518
+
+--- 105.25245833396912 seconds ---
+
+Train Epoch: 28 accuracy: 0.75 
+ precision: [0.20194175 0.90874816 0.64211954 0.77843436 0.51495571] 
+ recall: [0.36027714 0.74011814 0.70880829 0.83448319 0.81066448] 
+ f1: [0.25881377 0.81581023 0.67381786 0.80548493 0.62982792] 
+ f1_avg: 0.7618491206546758
+
+
+Validation Epoch: 28 accuracy: 0.72 
+ precision: [0.05109489 0.8455073  0.50156576 0.74324988 0.43554953] 
+ recall: [1.         0.79283168 0.56729634 0.8425153  0.3219659 ] 
+ f1: [0.09722222 0.81832268 0.53240997 0.78977569 0.37024221] 
+ f1_avg: 0.717811789348445
+
+New best val score, save model ...
+--- 109.00510215759277 seconds ---
+
+Train Epoch: 29 accuracy: 0.76 
+ precision: [0.24811558 0.91212749 0.64808034 0.78193768 0.53006891] 
+ recall: [0.45612009 0.74469801 0.71329879 0.83573758 0.83297785] 
+ f1: [0.32139951 0.81995301 0.67912738 0.807943   0.64786576] 
+ f1_avg: 0.767627235736929
+
+
+Validation Epoch: 29 accuracy: 0.71 
+ precision: [0.04697987 0.84040201 0.50129333 0.73988154 0.42240216] 
+ recall: [1.         0.78457497 0.57201889 0.83416806 0.31394183] 
+ f1: [0.08974359 0.8115295  0.53432589 0.78420089 0.36018412] 
+ f1_avg: 0.7124113954509832
+
+--- 112.38770723342896 seconds ---
+
+Train Epoch: 30 accuracy: 0.76 
+ precision: [0.22056921 0.91272646 0.64923383 0.78272589 0.52488499] 
+ recall: [0.39376443 0.74594707 0.71468048 0.83780733 0.82362592] 
+ f1: [0.2827529  0.82095194 0.68038694 0.80933051 0.64116483] 
+ f1_avg: 0.767729883069837
+
+
+Validation Epoch: 30 accuracy: 0.72 
+ precision: [0.0546875  0.8458     0.50749354 0.74346325 0.4346049 ] 
+ recall: [1.         0.79358229 0.57969303 0.83861992 0.31995988] 
+ f1: [0.1037037  0.81885952 0.54119592 0.78817992 0.36857308] 
+ f1_avg: 0.7191613271796076
+
+New best val score, save model ...
+--- 116.16803646087646 seconds ---
+
+Train Epoch: 31 accuracy: 0.76 
+ precision: [0.20805369 0.91297841 0.6521648  0.78479827 0.53219697] 
+ recall: [0.39376443 0.74612923 0.71629246 0.84056698 0.82986054] 
+ f1: [0.27225549 0.82116417 0.68272608 0.81172587 0.64850311] 
+ f1_avg: 0.7692877988625657
+
+
+Validation Epoch: 31 accuracy: 0.72 
+ precision: [0.05426357 0.84670802 0.50966057 0.74228319 0.42587601] 
+ recall: [1.         0.79395759 0.57615112 0.84307179 0.31695085] 
+ f1: [0.10294118 0.8194848  0.54087005 0.78947368 0.36342726] 
+ f1_avg: 0.7191581952269452
+
+--- 119.530996799469 seconds ---
+
+Train Epoch: 32 accuracy: 0.76 
+ precision: [0.22870249 0.91481611 0.654617   0.78729428 0.53688268] 
+ recall: [0.40300231 0.75146374 0.71830743 0.83711741 0.84544709] 
+ f1: [0.29180602 0.82513286 0.6849849  0.81144177 0.65672593] 
+ f1_avg: 0.7725184843340446
+
+
+Validation Epoch: 32 accuracy: 0.71 
+ precision: [0.04402516 0.83885783 0.51092612 0.74613466 0.41643836] 
+ recall: [1.         0.78832802 0.57969303 0.83249861 0.30491474] 
+ f1: [0.08433735 0.81280836 0.54314159 0.78695423 0.35205559] 
+ f1_avg: 0.7143000958800237
+
+--- 122.89985346794128 seconds ---
+
+Train Epoch: 33 accuracy: 0.76 
+ precision: [0.17189385 0.91427302 0.65690793 0.78819526 0.533773  ] 
+ recall: [0.32909931 0.74959015 0.72210708 0.84257401 0.82329779] 
+ f1: [0.22583201 0.82378174 0.68796621 0.81447799 0.64765101] 
+ f1_avg: 0.7717031186604731
+
+
+Validation Epoch: 33 accuracy: 0.72 
+ precision: [0.05343511 0.84954865 0.51240951 0.74166667 0.42915531] 
+ recall: [1.         0.7947082  0.5850059  0.84195882 0.31594784] 
+ f1: [0.10144928 0.82121388 0.5463065  0.78863696 0.36395147] 
+ f1_avg: 0.7209326527846281
+
+New best val score, save model ...
+--- 126.72778463363647 seconds ---
+
+Train Epoch: 34 accuracy: 0.77 
+ precision: [0.24137931 0.91727656 0.6598857  0.78893852 0.54586529] 
+ recall: [0.42840647 0.75338937 0.72458261 0.84188409 0.85233798] 
+ f1: [0.30878069 0.82729455 0.6907225  0.81455185 0.66551371] 
+ f1_avg: 0.7763376303488667
+
+
+Validation Epoch: 34 accuracy: 0.72 
+ precision: [0.04605263 0.84564565 0.51287333 0.74292804 0.44027778] 
+ recall: [1.         0.79264402 0.5879575  0.83305509 0.31795386] 
+ f1: [0.08805031 0.81828749 0.54785479 0.78541448 0.36924869] 
+ f1_avg: 0.7195508076137619
+
+--- 130.10150599479675 seconds ---
+
+Train Epoch: 35 accuracy: 0.77 
+ precision: [0.21456437 0.91716238 0.6624561  0.79262266 0.54264628] 
+ recall: [0.38106236 0.75427412 0.72763385 0.84502007 0.84446267] 
+ f1: [0.27454243 0.82778119 0.69351697 0.81798312 0.66071887] 
+ f1_avg: 0.7771390426202205
+
+
+Validation Epoch: 35 accuracy: 0.72 
+ precision: [0.05185185 0.84881166 0.51424133 0.74446086 0.44444444] 
+ recall: [1.         0.79752299 0.58618654 0.84140234 0.32096289] 
+ f1: [0.09859155 0.82236842 0.54786207 0.78996865 0.37274316] 
+ f1_avg: 0.7229609523994637
+
+New best val score, save model ...
+--- 133.84628748893738 seconds ---
+
+Train Epoch: 36 accuracy: 0.77 
+ precision: [0.24287565 0.91894451 0.66538866 0.79229362 0.55052155] 
+ recall: [0.4330254  0.75760493 0.72936097 0.84213497 0.85726005] 
+ f1: [0.31120332 0.83051162 0.69590772 0.81645435 0.6704735 ] 
+ f1_avg: 0.7798489811075549
+
+
+Validation Epoch: 36 accuracy: 0.72 
+ precision: [0.04347826 0.84524287 0.51342975 0.74220683 0.43508287] 
+ recall: [1.         0.79020454 0.58677686 0.83472454 0.31594784] 
+ f1: [0.08333333 0.81679759 0.5476584  0.7857517  0.36606624] 
+ f1_avg: 0.7184441063238143
+
+--- 137.22441053390503 seconds ---
+
+Train Epoch: 37 accuracy: 0.77 
+ precision: [0.21156373 0.91827211 0.66425879 0.79430119 0.55060254] 
+ recall: [0.37182448 0.75783913 0.73056995 0.84621174 0.84708778] 
+ f1: [0.26968174 0.83037751 0.69583813 0.81943517 0.66739917] 
+ f1_avg: 0.7796770464436469
+
+
+Validation Epoch: 37 accuracy: 0.72 
+ precision: [0.05645161 0.85044865 0.51441813 0.74299754 0.44774011] 
+ recall: [1.         0.80033777 0.58972845 0.84140234 0.31795386] 
+ f1: [0.10687023 0.82463264 0.54950495 0.78914405 0.37184751] 
+ f1_avg: 0.7242366271011015
+
+New best val score, save model ...
+--- 140.98507738113403 seconds ---
+
+Train Epoch: 38 accuracy: 0.78 
+ precision: [0.24512354 0.92210573 0.67131767 0.79672538 0.55937599] 
+ recall: [0.43533487 0.76210674 0.73678756 0.84539639 0.86480722] 
+ f1: [0.31364393 0.83450634 0.7025306  0.8203396  0.67934012] 
+ f1_avg: 0.7847617530139103
+
+
+Validation Epoch: 38 accuracy: 0.72 
+ precision: [0.04375    0.8438743  0.52155844 0.74539113 0.44460227] 
+ recall: [1.         0.79620942 0.59268005 0.83249861 0.31394183] 
+ f1: [0.08383234 0.81934923 0.55484941 0.78654048 0.36801881] 
+ f1_avg: 0.721411012284022
+
+--- 144.4230272769928 seconds ---
+
+Train Epoch: 39 accuracy: 0.78 
+ precision: [0.2166891  0.92196167 0.66940462 0.79722796 0.55238297] 
+ recall: [0.37182448 0.76119597 0.73661485 0.84777973 0.8538146 ] 
+ f1: [0.27380952 0.83390111 0.70140335 0.8217271  0.67079144] 
+ f1_avg: 0.7833981978703544
+
+
+Validation Epoch: 39 accuracy: 0.72 
+ precision: [0.05426357 0.85178536 0.51809721 0.74383021 0.44598338] 
+ recall: [1.         0.80127604 0.59149941 0.83861992 0.32296891] 
+ f1: [0.10294118 0.82575904 0.55237045 0.78838608 0.37463642] 
+ f1_avg: 0.7254833431458989
+
+New best val score, save model ...
+--- 148.1808521747589 seconds ---
+
+Train Epoch: 40 accuracy: 0.78 
+ precision: [0.24679703 0.92234076 0.67450918 0.79784033 0.56395534] 
+ recall: [0.42263279 0.76491712 0.73776626 0.84803061 0.87022149] 
+ f1: [0.31162197 0.83628501 0.70472105 0.8221702  0.6843871 ] 
+ f1_avg: 0.7868531080941867
+
+
+Validation Epoch: 40 accuracy: 0.72 
+ precision: [0.04142012 0.84476247 0.52410575 0.75100806 0.4416315 ] 
+ recall: [1.         0.79752299 0.59681228 0.82915971 0.31494483] 
+ f1: [0.07954545 0.82046332 0.55810102 0.78815128 0.3676815 ] 
+ f1_avg: 0.7228333970206599
+
+--- 151.55063152313232 seconds ---
+
+Train Epoch: 41 accuracy: 0.78 
+ precision: [0.22823034 0.92262632 0.67412543 0.79975191 0.56027689] 
+ recall: [0.37528868 0.7664264  0.7388601  0.84915956 0.86316653] 
+ f1: [0.28384279 0.83730384 0.70500989 0.82371551 0.67949629] 
+ f1_avg: 0.787042958363842
+
+
+Validation Epoch: 41 accuracy: 0.73 
+ precision: [0.05426357 0.85308151 0.52257395 0.74237955 0.44744318] 
+ recall: [1.         0.80521674 0.594451   0.84028937 0.31594784] 
+ f1: [0.10294118 0.82845835 0.55619994 0.78830593 0.37037037] 
+ f1_avg: 0.7271603037879759
+
+New best val score, save model ...
+--- 155.3090512752533 seconds ---
+
+Train Epoch: 42 accuracy: 0.78 
+ precision: [0.25064103 0.92511857 0.67716866 0.80317892 0.56676304] 
+ recall: [0.45150115 0.7664264  0.74242948 0.85254641 0.86841674] 
+ f1: [0.3223413  0.83832864 0.70829901 0.82712669 0.6858883 ] 
+ f1_avg: 0.789878908182935
+
+
+Validation Epoch: 42 accuracy: 0.72 
+ precision: [0.05223881 0.84812898 0.52063983 0.74517566 0.43281471] 
+ recall: [1.         0.79958716 0.59563164 0.83806344 0.30692076] 
+ f1: [0.09929078 0.82314305 0.55561674 0.78889471 0.35915493] 
+ f1_avg: 0.7231433597002109
+
+--- 158.67442870140076 seconds ---
+
+Train Epoch: 43 accuracy: 0.78 
+ precision: [0.22138965 0.9233481  0.67708278 0.80246402 0.56597297] 
+ recall: [0.37528868 0.77017357 0.73972366 0.84972403 0.86562756] 
+ f1: [0.27849186 0.83983372 0.70701846 0.8254181  0.68443926] 
+ f1_avg: 0.7893903493923212
+
+
+Validation Epoch: 43 accuracy: 0.72 
+ precision: [0.03783784 0.8498905  0.52708333 0.7454003  0.44233577] 
+ recall: [1.         0.80108838 0.5974026  0.83416806 0.30391174] 
+ f1: [0.07291667 0.82476816 0.56004427 0.78728992 0.36028537] 
+ f1_avg: 0.7245907410337128
+
+--- 162.0878200531006 seconds ---
+
+Train Epoch: 44 accuracy: 0.78 
+ precision: [0.20139771 0.92419112 0.68246596 0.80437999 0.56137549] 
+ recall: [0.36605081 0.76707695 0.74438687 0.85235825 0.86513536] 
+ f1: [0.25983607 0.8383363  0.71208283 0.82767441 0.68091426] 
+ f1_avg: 0.7897557364670919
+
+
+Validation Epoch: 44 accuracy: 0.73 
+ precision: [0.04827586 0.85528683 0.53047521 0.74115914 0.44886364] 
+ recall: [1.         0.80296491 0.60625738 0.83973289 0.31695085] 
+ f1: [0.09210526 0.82830043 0.56584022 0.78737282 0.37154615] 
+ f1_avg: 0.7286778806057643
+
+New best val score, save model ...
+--- 165.87506914138794 seconds ---
+
+Train Epoch: 45 accuracy: 0.79 
+ precision: [0.25600549 0.92757964 0.68492573 0.80682898 0.56892872] 
+ recall: [0.43071594 0.77358245 0.74864709 0.8521701  0.87481542] 
+ f1: [0.32113646 0.84361077 0.71537023 0.82887994 0.6894679 ] 
+ f1_avg: 0.7946377824235649
+
+
+Validation Epoch: 45 accuracy: 0.72 
+ precision: [0.04402516 0.84966149 0.52837064 0.74713788 0.44460028] 
+ recall: [1.         0.80071308 0.59917355 0.83528102 0.31795386] 
+ f1: [0.08433735 0.8244614  0.5615491  0.7887546  0.37076023] 
+ f1_avg: 0.7260229366790153
+
+--- 169.24345779418945 seconds ---
+
+Train Epoch: 46 accuracy: 0.79 
+ precision: [0.20393812 0.9264486  0.6859408  0.80564745 0.56824513] 
+ recall: [0.33487298 0.77386869 0.74715026 0.85536879 0.87022149] 
+ f1: [0.2534965  0.84331268 0.71523836 0.82976393 0.68753646] 
+ f1_avg: 0.7937483745776672
+
+
+Validation Epoch: 46 accuracy: 0.73 
+ precision: [0.05035971 0.8581702  0.52959502 0.74021526 0.45133992] 
+ recall: [1.         0.806155   0.60212515 0.84195882 0.32096289] 
+ f1: [0.09589041 0.83134978 0.56353591 0.78781567 0.37514654] 
+ f1_avg: 0.7303837462691822
+
+New best val score, save model ...
+--- 172.99764847755432 seconds ---
+
+Train Epoch: 47 accuracy: 0.79 
+ precision: [0.26729349 0.92860258 0.68834946 0.80877724 0.57501335] 
+ recall: [0.4595843  0.77571626 0.74933794 0.85417712 0.88351107] 
+ f1: [0.33800425 0.84530207 0.7175501  0.83085746 0.69663648] 
+ f1_avg: 0.7970860515774071
+
+
+Validation Epoch: 47 accuracy: 0.73 
+ precision: [0.04516129 0.85032797 0.53112033 0.74925075 0.44491525] 
+ recall: [1.         0.80277726 0.60448642 0.83472454 0.31594784] 
+ f1: [0.08641975 0.82586873 0.56543346 0.7896815  0.36950147] 
+ f1_avg: 0.727499416935818
+
+--- 176.36885690689087 seconds ---
+
+Train Epoch: 48 accuracy: 0.79 
+ precision: [0.23864456 0.92871109 0.69079924 0.81084931 0.57394178] 
+ recall: [0.38221709 0.77868277 0.75037421 0.85687406 0.88318294] 
+ f1: [0.29383045 0.84710545 0.71935537 0.8332266  0.69574771] 
+ f1_avg: 0.7982900810375466
+
+
+Validation Epoch: 48 accuracy: 0.73 
+ precision: [0.0546875  0.85567214 0.53322868 0.74117647 0.45100865] 
+ recall: [1.         0.81103397 0.60153483 0.84140234 0.31394183] 
+ f1: [0.1037037  0.8327553  0.56532594 0.78811572 0.37019515] 
+ f1_avg: 0.7310127803629181
+
+New best val score, save model ...
+--- 180.1764738559723 seconds ---
+
+Train Epoch: 49 accuracy: 0.80 
+ precision: [0.26638773 0.93023039 0.69542179 0.81223329 0.57982106] 
+ recall: [0.44110855 0.78063442 0.75555556 0.85950828 0.88252666] 
+ f1: [0.33217391 0.84889216 0.72424259 0.83520234 0.69984387] 
+ f1_avg: 0.8013804597858794
+
+
+Validation Epoch: 49 accuracy: 0.73 
+ precision: [0.04605263 0.85155785 0.53398558 0.75212819 0.44524496] 
+ recall: [1.         0.80521674 0.61216057 0.83583751 0.30992979] 
+ f1: [0.08805031 0.8277392  0.57040704 0.79177649 0.36546422] 
+ f1_avg: 0.7293463195809403
+
+--- 183.5570981502533 seconds ---
+
+Train Epoch: 50 accuracy: 0.79 
+ precision: [0.26858877 0.92965774 0.69207591 0.81213633 0.57717833] 
+ recall: [0.40877598 0.78102475 0.7537133  0.85787757 0.88465956] 
+ f1: [0.32417582 0.84888424 0.72158073 0.83438053 0.69858133] 
+ f1_avg: 0.8004368558079478
+
+
+Validation Epoch: 50 accuracy: 0.73 
+ precision: [0.0530303  0.85507534 0.53150826 0.74777007 0.45100865] 
+ recall: [1.         0.80934509 0.60743802 0.83973289 0.31394183] 
+ f1: [0.10071942 0.83158199 0.56694215 0.79108781 0.37019515] 
+ f1_avg: 0.7311965423442855
+
+New best val score, save model ...
+--- 187.3142716884613 seconds ---
+
+Train Epoch: 51 accuracy: 0.80 
+ precision: [0.23337856 0.93082735 0.69819437 0.81443421 0.58086093] 
+ recall: [0.39722864 0.7822738  0.75687968 0.85994732 0.88334701] 
+ f1: [0.29401709 0.85010958 0.72635359 0.8365722  0.70085915] 
+ f1_avg: 0.8023770751266714
+
+
+Validation Epoch: 51 accuracy: 0.73 
+ precision: [0.05185185 0.8584793  0.53826267 0.74763092 0.43663912] 
+ recall: [1.         0.80934509 0.61452184 0.83416806 0.31795386] 
+ f1: [0.09859155 0.83318845 0.5738699  0.78853235 0.36796286] 
+ f1_avg: 0.7325670392318878
+
+New best val score, save model ...
+--- 191.0650360584259 seconds ---
+
+Train Epoch: 52 accuracy: 0.80 
+ precision: [0.27537313 0.93095473 0.69733362 0.81567178 0.58305451] 
+ recall: [0.426097   0.7855786  0.75883708 0.85787757 0.88630025] 
+ f1: [0.33454216 0.85211059 0.7267865  0.83624247 0.70338542] 
+ f1_avg: 0.8040244074621151
+
+
+Validation Epoch: 52 accuracy: 0.73 
+ precision: [0.04117647 0.85241984 0.53617907 0.74715487 0.44428365] 
+ recall: [1.         0.80315256 0.60802834 0.84028937 0.30792377] 
+ f1: [0.07909605 0.82705314 0.56984786 0.79099005 0.36374408] 
+ f1_avg: 0.7285529399978956
+
+--- 194.4323456287384 seconds ---
+
+Train Epoch: 53 accuracy: 0.80 
+ precision: [0.20962199 0.93211117 0.69967084 0.81565972 0.58215098] 
+ recall: [0.352194   0.78458976 0.75872193 0.86113899 0.88187039] 
+ f1: [0.26281775 0.85201198 0.72800088 0.83778259 0.7013309 ] 
+ f1_avg: 0.803607966808828
+
+
+Validation Epoch: 53 accuracy: 0.73 
+ precision: [0.04929577 0.85964912 0.53580629 0.74528302 0.45288326] 
+ recall: [1.         0.80915744 0.61393152 0.83528102 0.32296891] 
+ f1: [0.09395973 0.83363944 0.57221458 0.78771976 0.37704918] 
+ f1_avg: 0.7332964402147457
+
+New best val score, save model ...
+--- 198.18451833724976 seconds ---
+
+Train Epoch: 54 accuracy: 0.80 
+ precision: [0.27837259 0.93339092 0.70125736 0.81898507 0.58540523] 
+ recall: [0.45034642 0.78727003 0.76096718 0.86038635 0.8923708 ] 
+ f1: [0.34406705 0.85412608 0.72989315 0.83917538 0.70700637] 
+ f1_avg: 0.8066735296908853
+
+
+Validation Epoch: 54 accuracy: 0.73 
+ precision: [0.03910615 0.85434174 0.54044307 0.75124626 0.44571429] 
+ recall: [1.         0.80127604 0.61924439 0.83861992 0.31293882] 
+ f1: [0.07526882 0.82695846 0.57716644 0.79253221 0.36770772] 
+ f1_avg: 0.7304451783204995
+
+--- 201.5438950061798 seconds ---
+
+Train Epoch: 55 accuracy: 0.80 
+ precision: [0.23941606 0.9323306  0.70262809 0.82004651 0.58706738] 
+ recall: [0.37875289 0.78875329 0.76188831 0.86258154 0.88777687] 
+ f1: [0.29338104 0.85455314 0.73105925 0.8407764  0.70676594] 
+ f1_avg: 0.806887415700389
+
+
+Validation Epoch: 55 accuracy: 0.73 
+ precision: [0.05982906 0.85952712 0.54040144 0.74764034 0.44846797] 
+ recall: [1.         0.81178457 0.61983471 0.83750696 0.32296891] 
+ f1: [0.11290323 0.83497394 0.57739896 0.79002625 0.3755102 ] 
+ f1_avg: 0.735193519450908
+
+New best val score, save model ...
+--- 205.34678030014038 seconds ---
+
+Train Epoch: 56 accuracy: 0.80 
+ precision: [0.26108374 0.93578604 0.70744003 0.82115718 0.5877912 ] 
+ recall: [0.42840647 0.79028858 0.76747265 0.86076267 0.89417555] 
+ f1: [0.3244425  0.85690504 0.73623461 0.84049362 0.70931216] 
+ f1_avg: 0.8096596608266758
+
+
+Validation Epoch: 56 accuracy: 0.73 
+ precision: [0.04320988 0.85517928 0.54070661 0.75212819 0.46820809] 
+ recall: [1.         0.80559204 0.62337662 0.83583751 0.32497492] 
+ f1: [0.08284024 0.82964538 0.57910611 0.79177649 0.38365897] 
+ f1_avg: 0.7337231468280155
+
+--- 208.73080945014954 seconds ---
+
+Train Epoch: 57 accuracy: 0.80 
+ precision: [0.22781272 0.93333744 0.7053975  0.82241874 0.58593074] 
+ recall: [0.37644342 0.78914362 0.763673   0.86327145 0.88826907] 
+ f1: [0.2838485  0.85520509 0.73337941 0.84235006 0.70609716] 
+ f1_avg: 0.8078799166996888
+
+
+Validation Epoch: 57 accuracy: 0.73 
+ precision: [0.05645161 0.85955838 0.5414959  0.74925075 0.45618915] 
+ recall: [1.         0.81084631 0.62396694 0.83472454 0.32898696] 
+ f1: [0.10687023 0.83449208 0.57981349 0.7896815  0.38228438] 
+ f1_avg: 0.7359686106573038
+
+New best val score, save model ...
+--- 212.4760239124298 seconds ---
+
+Train Epoch: 58 accuracy: 0.81 
+ precision: [0.26244953 0.93636839 0.71061453 0.82279011 0.59555701] 
+ recall: [0.45034642 0.79265659 0.76891192 0.86226794 0.89729286] 
+ f1: [0.33163265 0.85854002 0.73861468 0.84206658 0.7159314 ] 
+ f1_avg: 0.8118936380291134
+
+
+Validation Epoch: 58 accuracy: 0.73 
+ precision: [0.04268293 0.8531219  0.54654812 0.74900398 0.45611511] 
+ recall: [1.         0.80765622 0.61688312 0.83695047 0.31795386] 
+ f1: [0.08187135 0.82976672 0.57958957 0.79053876 0.37470449] 
+ f1_avg: 0.7327364871142987
+
+--- 215.83725929260254 seconds ---
+
+Train Epoch: 59 accuracy: 0.81 
+ precision: [0.24346527 0.93490237 0.70998559 0.82326582 0.59140718] 
+ recall: [0.37644342 0.79489448 0.76586068 0.86421224 0.89433962] 
+ f1: [0.29569161 0.85923238 0.73686543 0.84324225 0.7119906 ] 
+ f1_avg: 0.8113831535759582
+
+
+Validation Epoch: 59 accuracy: 0.73 
+ precision: [0.05384615 0.86130952 0.54362416 0.7450495  0.44906743] 
+ recall: [1.         0.81459936 0.62160567 0.83750696 0.31394183] 
+ f1: [0.10218978 0.8373035  0.58000551 0.78857742 0.36953955] 
+ f1_avg: 0.7360280502673829
+
+New best val score, save model ...
+--- 219.59992790222168 seconds ---
+
+Train Epoch: 60 accuracy: 0.81 
+ precision: [0.29297459 0.9381652  0.71349628 0.82651782 0.59682332] 
+ recall: [0.45265589 0.79593536 0.77305699 0.86835173 0.90008203] 
+ f1: [0.35571688 0.86121748 0.74208345 0.84691849 0.71773402] 
+ f1_avg: 0.8153540365191564
+
+
+Validation Epoch: 60 accuracy: 0.73 
+ precision: [0.04458599 0.85262117 0.55299056 0.75137294 0.44807966] 
+ recall: [1.         0.80878214 0.62219599 0.83750696 0.31594784] 
+ f1: [0.08536585 0.83012327 0.58555556 0.79210526 0.37058824] 
+ f1_avg: 0.733829925497654
+
+--- 222.96591567993164 seconds ---
+
+Train Epoch: 61 accuracy: 0.81 
+ precision: [0.2459144  0.93548092 0.71257134 0.82601392 0.59825898] 
+ recall: [0.36489607 0.79874574 0.7691422  0.86352233 0.90205086] 
+ f1: [0.29381683 0.86172288 0.73977685 0.84435177 0.7193981 ] 
+ f1_avg: 0.8140195422345491
+
+
+Validation Epoch: 61 accuracy: 0.73 
+ precision: [0.04575163 0.86109453 0.548152   0.74357708 0.42938659] 
+ recall: [1.         0.81197223 0.62160567 0.83750696 0.30190572] 
+ f1: [0.0875     0.83581225 0.58257261 0.7877519  0.35453475] 
+ f1_avg: 0.7339775317515888
+
+--- 226.33470559120178 seconds ---
+
+Train Epoch: 62 accuracy: 0.81 
+ precision: [0.2386059  0.93716409 0.71497739 0.82587094 0.59453552] 
+ recall: [0.41108545 0.79406178 0.7736327  0.86534119 0.89253486] 
+ f1: [0.30195081 0.85969855 0.74314945 0.84514548 0.71367662] 
+ f1_avg: 0.8135826577593891
+
+
+Validation Epoch: 62 accuracy: 0.73 
+ precision: [0.05691057 0.85646594 0.54461062 0.75088428 0.44289694] 
+ recall: [1.         0.8140364  0.62337662 0.82693378 0.31895687] 
+ f1: [0.10769231 0.83471233 0.58133774 0.78707627 0.37084548] 
+ f1_avg: 0.7347140681334542
+
+--- 229.69881629943848 seconds ---
+
+Train Epoch: 63 accuracy: 0.81 
+ precision: [0.25941423 0.93910335 0.72126406 0.82790726 0.59991312] 
+ recall: [0.4295612  0.80017695 0.77524467 0.86446312 0.90631665] 
+ f1: [0.32347826 0.86409172 0.7472808  0.84579038 0.72194994] 
+ f1_avg: 0.8176477315953937
+
+
+Validation Epoch: 63 accuracy: 0.73 
+ precision: [0.04294479 0.85887257 0.55987395 0.74553571 0.45092461] 
+ recall: [1.         0.81197223 0.62927981 0.83639399 0.31795386] 
+ f1: [0.08235294 0.83476416 0.59255142 0.78835563 0.37294118] 
+ f1_avg: 0.737104455245284
+
+New best val score, save model ...
+--- 233.45385456085205 seconds ---
+
+Train Epoch: 64 accuracy: 0.81 
+ precision: [0.21902655 0.93855191 0.72092151 0.82782609 0.59687466] 
+ recall: [0.34295612 0.80246689 0.77466897 0.86578023 0.89614438] 
+ f1: [0.26732673 0.86519092 0.74682947 0.84637788 0.71651581] 
+ f1_avg: 0.8171651695694738
+
+
+Validation Epoch: 64 accuracy: 0.73 
+ precision: [0.05035971 0.86084014 0.54190231 0.74573721 0.45366528] 
+ recall: [1.         0.81140927 0.62219599 0.82749026 0.32898696] 
+ f1: [0.09589041 0.83539413 0.57928002 0.78448958 0.38139535] 
+ f1_avg: 0.7353181830834451
+
+--- 236.82712721824646 seconds ---
+
+Train Epoch: 65 accuracy: 0.81 
+ precision: [0.29461756 0.94040968 0.72343959 0.83019094 0.60133144] 
+ recall: [0.48036952 0.80160816 0.77737478 0.86991972 0.90401969] 
+ f1: [0.36523266 0.86547917 0.74943805 0.84959113 0.72224407] 
+ f1_avg: 0.8200534642388007
+
+
+Validation Epoch: 65 accuracy: 0.73 
+ precision: [0.04929577 0.85592549 0.55361859 0.74292804 0.43269231] 
+ recall: [1.         0.81047101 0.61865407 0.83305509 0.31594784] 
+ f1: [0.09395973 0.83257831 0.58433231 0.78541448 0.36521739] 
+ f1_avg: 0.7331879117707352
+
+--- 240.19700741767883 seconds ---
+
+Train Epoch: 66 accuracy: 0.81 
+ precision: [0.25908373 0.93846667 0.72326504 0.83139465 0.60251641] 
+ recall: [0.37875289 0.80525124 0.77639609 0.86966884 0.90352748] 
+ f1: [0.30769231 0.8667703  0.74888938 0.85010116 0.7229406 ] 
+ f1_avg: 0.8200869324469193
+
+
+Validation Epoch: 66 accuracy: 0.74 
+ precision: [0.05555556 0.85833004 0.54736303 0.75339026 0.45      ] 
+ recall: [1.         0.8140364  0.63105077 0.83472454 0.31594784] 
+ f1: [0.10526316 0.83559665 0.58623526 0.79197466 0.37124337] 
+ f1_avg: 0.7369729248449225
+
+--- 243.60068464279175 seconds ---
+
+Train Epoch: 67 accuracy: 0.82 
+ precision: [0.28040787 0.93995079 0.72723857 0.83302367 0.60736668] 
+ recall: [0.44457275 0.80527726 0.77990789 0.87173859 0.90631665] 
+ f1: [0.34390353 0.86741787 0.75265293 0.85194152 0.72732061] 
+ f1_avg: 0.8223442000895645
+
+
+Validation Epoch: 67 accuracy: 0.74 
+ precision: [0.05555556 0.85402321 0.55279503 0.75163728 0.44842407] 
+ recall: [1.         0.81459936 0.63046045 0.83027268 0.31394183] 
+ f1: [0.10526316 0.83384556 0.58907887 0.78900053 0.36932153] 
+ f1_avg: 0.7357743261240997
+
+--- 247.0119388103485 seconds ---
+
+Train Epoch: 68 accuracy: 0.82 
+ precision: [0.27983871 0.94004782 0.72708266 0.8327723  0.60562918] 
+ recall: [0.40069284 0.80829582 0.78082902 0.86891621 0.90730107] 
+ f1: [0.32953466 0.86920752 0.752998   0.85046041 0.72638907] 
+ f1_avg: 0.8227639033214521
+
+
+Validation Epoch: 68 accuracy: 0.74 
+ precision: [0.05109489 0.8576779  0.56031332 0.74888559 0.45441176] 
+ recall: [1.         0.81647589 0.63341204 0.84140234 0.30992979] 
+ f1: [0.09722222 0.83656989 0.59462455 0.79245283 0.36851521] 
+ f1_avg: 0.7387523294725123
+
+New best val score, save model ...
+--- 250.75304222106934 seconds ---
+
+Train Epoch: 69 accuracy: 0.82 
+ precision: [0.24403927 0.94135334 0.73004292 0.8343053  0.60127767] 
+ recall: [0.40184758 0.80655234 0.78341969 0.87035876 0.89565217] 
+ f1: [0.30366492 0.86875482 0.75579006 0.85195076 0.71952023] 
+ f1_avg: 0.822644399157725
+
+
+Validation Epoch: 69 accuracy: 0.74 
+ precision: [0.05691057 0.85902737 0.54865003 0.75577219 0.45492958] 
+ recall: [1.         0.81872772 0.63577332 0.8196995  0.32397192] 
+ f1: [0.10769231 0.83839354 0.58900738 0.78643887 0.37844171] 
+ f1_avg: 0.7386877623726895
+
+--- 254.11755514144897 seconds ---
+
+Train Epoch: 70 accuracy: 0.82 
+ precision: [0.28447653 0.94180681 0.72984434 0.83299217 0.60621648] 
+ recall: [0.45496536 0.807333   0.78278641 0.86778726 0.90877769] 
+ f1: [0.35006664 0.86940074 0.75538889 0.85003379 0.72728466] 
+ f1_avg: 0.8235947652446584
+
+
+Validation Epoch: 70 accuracy: 0.74 
+ precision: [0.04895105 0.86001974 0.55938494 0.74086871 0.44886364] 
+ recall: [1.         0.81741415 0.6227863  0.83528102 0.31695085] 
+ f1: [0.09333333 0.83817587 0.58938547 0.78524719 0.37154615] 
+ f1_avg: 0.7377068658917062
+
+--- 257.4809203147888 seconds ---
+
+Train Epoch: 71 accuracy: 0.82 
+ precision: [0.23379461 0.94150401 0.73007422 0.83802011 0.60418272] 
+ recall: [0.37066975 0.80959692 0.78151986 0.87286754 0.90057424] 
+ f1: [0.28673515 0.87058231 0.75492159 0.85508894 0.72318841] 
+ f1_avg: 0.824078567235953
+
+
+Validation Epoch: 71 accuracy: 0.73 
+ precision: [0.06086957 0.859375   0.54536188 0.75603493 0.43010753] 
+ recall: [1.         0.81534997 0.63164109 0.81914302 0.32096289] 
+ f1: [0.1147541  0.83678382 0.58533917 0.78632479 0.36760482] 
+ f1_avg: 0.7360664162551394
+
+--- 260.8582818508148 seconds ---
+
+Train Epoch: 72 accuracy: 0.82 
+ precision: [0.30038023 0.94183303 0.73348053 0.83708912 0.60938699] 
+ recall: [0.45612009 0.81024747 0.78411054 0.87368289 0.91173093] 
+ f1: [0.36221917 0.87109905 0.75795097 0.85499463 0.73051137] 
+ f1_avg: 0.8263780337484928
+
+
+Validation Epoch: 72 accuracy: 0.74 
+ precision: [0.04402516 0.85796241 0.56411609 0.74624625 0.44769874] 
+ recall: [1.         0.81384875 0.63105077 0.82971619 0.3219659 ] 
+ f1: [0.08433735 0.83532357 0.59570911 0.78577075 0.37456243] 
+ f1_avg: 0.7376455318430996
+
+--- 264.23495078086853 seconds ---
+
+Train Epoch: 73 accuracy: 0.82 
+ precision: [0.2776873  0.94146754 0.73204612 0.83851905 0.60507525] 
+ recall: [0.39376443 0.81199094 0.78578008 0.87217762 0.90369155] 
+ f1: [0.32569245 0.87194892 0.75796196 0.85501722 0.72483221] 
+ f1_avg: 0.8259582838880936
+
+
+Validation Epoch: 73 accuracy: 0.74 
+ precision: [0.06481481 0.85939968 0.55324675 0.74975025 0.44551724] 
+ recall: [1.         0.81666354 0.62868949 0.83528102 0.32397192] 
+ f1: [0.12173913 0.83748677 0.58856038 0.79020795 0.37514518] 
+ f1_avg: 0.7384837008539781
+
+--- 267.6321277618408 seconds ---
+
+Train Epoch: 74 accuracy: 0.82 
+ precision: [0.27449568 0.9435766  0.73732372 0.84027193 0.61902635] 
+ recall: [0.43995381 0.81420282 0.78860104 0.87600351 0.90959803] 
+ f1: [0.33806566 0.87412871 0.76210081 0.85776577 0.73669524] 
+ f1_avg: 0.829547709385982
+
+
+Validation Epoch: 74 accuracy: 0.74 
+ precision: [0.05555556 0.85523996 0.56302521 0.74974773 0.4427157 ] 
+ recall: [1.         0.81929067 0.63282172 0.82693378 0.31394183] 
+ f1: [0.10526316 0.83687943 0.5958866  0.78645144 0.36737089] 
+ f1_avg: 0.7379296891403684
+
+--- 271.04268431663513 seconds ---
+
+Train Epoch: 75 accuracy: 0.82 
+ precision: [0.28253968 0.94276601 0.73563095 0.84002891 0.6136515 ] 
+ recall: [0.41108545 0.81526972 0.78767991 0.87474912 0.907137  ] 
+ f1: [0.33490122 0.87439472 0.76076622 0.85703751 0.73207547] 
+ f1_avg: 0.828842936031128
+
+
+Validation Epoch: 75 accuracy: 0.74 
+ precision: [0.05426357 0.86003141 0.56796628 0.75150905 0.45314685] 
+ recall: [1.         0.82210546 0.63636364 0.83138564 0.32497492] 
+ f1: [0.10294118 0.84064089 0.60022272 0.78943197 0.37850467] 
+ f1_avg: 0.7423912440560986
+
+New best val score, save model ...
+--- 274.786408662796 seconds ---
+
+Train Epoch: 76 accuracy: 0.82 
+ precision: [0.27385892 0.94509378 0.7406147  0.84101327 0.61343053] 
+ recall: [0.45727483 0.8143069  0.78934945 0.87456096 0.91123872] 
+ f1: [0.34256055 0.87483925 0.76420589 0.85745911 0.73324972] 
+ f1_avg: 0.8300797467006422
+
+
+Validation Epoch: 76 accuracy: 0.74 
+ precision: [0.06542056 0.85767278 0.56130367 0.75421564 0.43546099] 
+ recall: [1.         0.82435729 0.64049587 0.82136895 0.30792377] 
+ f1: [0.12280702 0.8406851  0.5982906  0.78636121 0.36075206] 
+ f1_avg: 0.7397328719190586
+
+--- 278.1491074562073 seconds ---
+
+Train Epoch: 77 accuracy: 0.83 
+ precision: [0.2943038  0.9442787  0.73986014 0.84084737 0.61387118] 
+ recall: [0.4295612  0.81537381 0.79182499 0.87380833 0.91632486] 
+ f1: [0.34929577 0.87510473 0.76496107 0.85701104 0.735207  ] 
+ f1_avg: 0.8305109566618606
+
+
+Validation Epoch: 77 accuracy: 0.74 
+ precision: [0.04827586 0.85812402 0.57012848 0.74054054 0.45735294] 
+ recall: [1.         0.82060424 0.62868949 0.83861992 0.31193581] 
+ f1: [0.09210526 0.83894484 0.59797866 0.78653445 0.37090042] 
+ f1_avg: 0.7397748151911688
+
+--- 281.5120177268982 seconds ---
+
+Train Epoch: 78 accuracy: 0.82 
+ precision: [0.2394958  0.94402681 0.74041266 0.8401832  0.61127695] 
+ recall: [0.39491917 0.81368238 0.78917674 0.87443552 0.907137  ] 
+ f1: [0.29816914 0.87402169 0.76401739 0.85696724 0.73038309] 
+ f1_avg: 0.8288288607805393
+
+
+Validation Epoch: 78 accuracy: 0.74 
+ precision: [0.056      0.85767497 0.55584688 0.75344564 0.44262295] 
+ recall: [1.         0.82097955 0.6257379  0.82136895 0.32497492] 
+ f1: [0.10606061 0.83892617 0.58872535 0.78594249 0.37478311] 
+ f1_avg: 0.7384647982862452
+
+--- 284.88178873062134 seconds ---
+
+Train Epoch: 79 accuracy: 0.83 
+ precision: [0.28462074 0.94488284 0.74192501 0.84279925 0.61487457] 
+ recall: [0.47228637 0.81636264 0.78946459 0.87393377 0.91287941] 
+ f1: [0.35518888 0.8759336  0.76495691 0.85808418 0.73481247] 
+ f1_avg: 0.8311664429204189
+
+
+Validation Epoch: 79 accuracy: 0.74 
+ precision: [0.04458599 0.85807087 0.570966   0.74193548 0.44506259] 
+ recall: [1.         0.81797711 0.62455726 0.83194213 0.32096289] 
+ f1: [0.08536585 0.83754443 0.59656047 0.78436516 0.37296037] 
+ f1_avg: 0.7385780714888006
+
+--- 288.2516179084778 seconds ---
+
+Train Epoch: 80 accuracy: 0.83 
+ precision: [0.27133655 0.9447759  0.74073475 0.8424798  0.61404094] 
+ recall: [0.3891455  0.82003175 0.79050086 0.87619167 0.90549631] 
+ f1: [0.31973435 0.8779951  0.76480909 0.8590051  0.73181728] 
+ f1_avg: 0.8317048825758746
+
+
+Validation Epoch: 80 accuracy: 0.74 
+ precision: [0.06140351 0.85832025 0.56549521 0.74736842 0.44669366] 
+ recall: [1.         0.82079189 0.62691854 0.82971619 0.33199599] 
+ f1: [0.11570248 0.83913669 0.59462486 0.78639241 0.38089758] 
+ f1_avg: 0.74030597488512
+
+--- 291.6332120895386 seconds ---
+
+Train Epoch: 81 accuracy: 0.83 
+ precision: [0.28070175 0.94645489 0.74527589 0.84353331 0.62196751] 
+ recall: [0.44341801 0.81873065 0.79470351 0.87744606 0.91698113] 
+ f1: [0.34377798 0.87797187 0.76919648 0.86015555 0.74119753] 
+ f1_avg: 0.8338858854791347
+
+
+Validation Epoch: 81 accuracy: 0.74 
+ precision: [0.05263158 0.857087   0.57363927 0.74723618 0.44803371] 
+ recall: [1.         0.82266842 0.63459268 0.82749026 0.31995988] 
+ f1: [0.1        0.83952509 0.60257848 0.78531819 0.37331773] 
+ f1_avg: 0.7409112064550167
+
+--- 295.015394449234 seconds ---
+
+Train Epoch: 82 accuracy: 0.83 
+ precision: [0.29918033 0.94585119 0.745154   0.84618631 0.62360429] 
+ recall: [0.42147806 0.82135887 0.79671848 0.88020572 0.91632486] 
+ f1: [0.34995206 0.87922006 0.77007401 0.86286083 0.74214338] 
+ f1_avg: 0.8353782339731025
+
+
+Validation Epoch: 82 accuracy: 0.74 
+ precision: [0.06140351 0.85449581 0.56691254 0.75329949 0.44335664] 
+ recall: [1.         0.82210546 0.635183   0.82582081 0.31795386] 
+ f1: [0.11570248 0.83798776 0.59910913 0.78789488 0.3703271 ] 
+ f1_avg: 0.7396580582457141
+
+--- 298.42491579055786 seconds ---
+
+Train Epoch: 83 accuracy: 0.83 
+ precision: [0.29882353 0.94698196 0.74897541 0.84723563 0.62484639] 
+ recall: [0.43995381 0.8222176  0.79959701 0.88039388 0.91763741] 
+ f1: [0.35590845 0.88020057 0.77345882 0.86349656 0.74345341] 
+ f1_avg: 0.8368997985675719
+
+
+Validation Epoch: 83 accuracy: 0.74 
+ precision: [0.06730769 0.85631068 0.57449089 0.74452191 0.44971264] 
+ recall: [1.         0.82754738 0.63282172 0.83194213 0.31394183] 
+ f1: [0.12612613 0.84168337 0.60224719 0.78580815 0.36975783] 
+ f1_avg: 0.7417717914409977
+
+--- 301.818332195282 seconds ---
+
+Train Epoch: 84 accuracy: 0.83 
+ precision: [0.30769231 0.94767581 0.74947255 0.84553872 0.62767507] 
+ recall: [0.45265589 0.82336256 0.79758204 0.88202459 0.91911403] 
+ f1: [0.36635514 0.88115627 0.77277925 0.86339637 0.74593875] 
+ f1_avg: 0.8375035808233671
+
+
+Validation Epoch: 84 accuracy: 0.74 
+ precision: [0.05263158 0.86167712 0.57487923 0.73681641 0.46597633] 
+ recall: [1.         0.82529555 0.6322314  0.83973289 0.31594784] 
+ f1: [0.1        0.84309403 0.60219286 0.78491547 0.37656904] 
+ f1_avg: 0.7430369727291752
+
+New best val score, save model ...
+--- 305.5804250240326 seconds ---
+
+Train Epoch: 85 accuracy: 0.83 
+ precision: [0.28971256 0.94692011 0.75056972 0.84658096 0.62483191] 
+ recall: [0.44226328 0.82445549 0.79637306 0.87976668 0.91484824] 
+ f1: [0.35009141 0.88145448 0.7727933  0.86285486 0.74252613] 
+ f1_avg: 0.8370993564198337
+
+
+Validation Epoch: 85 accuracy: 0.74 
+ precision: [0.07070707 0.86       0.56728232 0.74672048 0.4469914 ] 
+ recall: [1.         0.83111278 0.63459268 0.82359488 0.31293882] 
+ f1: [0.13207547 0.84530967 0.59905266 0.783276   0.36814159] 
+ f1_avg: 0.7425650538795187
+
+--- 308.94307804107666 seconds ---
+
+Train Epoch: 86 accuracy: 0.83 
+ precision: [0.28592058 0.9488837  0.75318411 0.84651612 0.62854251] 
+ recall: [0.45727483 0.825054   0.80005757 0.87932765 0.91698113] 
+ f1: [0.35184363 0.88264688 0.77591357 0.86260998 0.7458464 ] 
+ f1_avg: 0.83859701767049
+
+
+Validation Epoch: 86 accuracy: 0.74 
+ precision: [0.05109489 0.85758634 0.57577375 0.74699399 0.46907994] 
+ recall: [1.         0.82942391 0.63695396 0.82971619 0.31193581] 
+ f1: [0.09722222 0.84327006 0.60482063 0.78618508 0.3746988 ] 
+ f1_avg: 0.7436260293703723
+
+New best val score, save model ...
+--- 312.6980302333832 seconds ---
+
+Train Epoch: 87 accuracy: 0.83 
+ precision: [0.23407202 0.94790198 0.75085398 0.8496063  0.62279723] 
+ recall: [0.39030023 0.82239975 0.79723661 0.87976668 0.91616079] 
+ f1: [0.29264069 0.88070224 0.77335046 0.86442349 0.74151783] 
+ f1_avg: 0.8364625703364557
+
+
+Validation Epoch: 87 accuracy: 0.74 
+ precision: [0.05384615 0.86398886 0.55394941 0.74733096 0.43232589] 
+ recall: [1.         0.81534997 0.63341204 0.81803005 0.32998997] 
+ f1: [0.10218978 0.83896505 0.59102176 0.78108395 0.37428896] 
+ f1_avg: 0.7379402386470567
+
+--- 316.1472313404083 seconds ---
+
+Train Epoch: 88 accuracy: 0.83 
+ precision: [0.2801636  0.94837298 0.75122536 0.8453546  0.62266682] 
+ recall: [0.47459584 0.82362278 0.79412781 0.87769694 0.91402789] 
+ f1: [0.35233605 0.88160662 0.77208105 0.86122223 0.74072597] 
+ f1_avg: 0.8365709943066614
+
+
+Validation Epoch: 88 accuracy: 0.74 
+ precision: [0.04268293 0.86178382 0.58040065 0.73811881 0.43417367] 
+ recall: [1.         0.82135485 0.63282172 0.82971619 0.3109328 ] 
+ f1: [0.08187135 0.84108378 0.60547868 0.78124181 0.36236119] 
+ f1_avg: 0.7403863090188159
+
+--- 319.51186776161194 seconds ---
+
+Train Epoch: 89 accuracy: 0.83 
+ precision: [0.26298701 0.94841672 0.75383701 0.85012732 0.62376902] 
+ recall: [0.37413395 0.82770824 0.80305124 0.87945309 0.9145201 ] 
+ f1: [0.30886559 0.8839607  0.77766628 0.86454159 0.74166722] 
+ f1_avg: 0.8392201094882664
+
+
+Validation Epoch: 89 accuracy: 0.74 
+ precision: [0.06422018 0.86164384 0.57007874 0.74496982 0.44241573] 
+ recall: [1.         0.82623381 0.64108619 0.82415136 0.31594784] 
+ f1: [0.12068966 0.84356739 0.60350097 0.78256275 0.36863663] 
+ f1_avg: 0.7422986646654925
+
+--- 322.87815594673157 seconds ---
+
+Train Epoch: 90 accuracy: 0.84 
+ precision: [0.30213707 0.95049416 0.75930359 0.84914417 0.63271049] 
+ recall: [0.47344111 0.82835879 0.80345423 0.88365529 0.92223134] 
+ f1: [0.3688709  0.88523359 0.78075524 0.86605606 0.75051739] 
+ f1_avg: 0.8421757962991359
+
+
+Validation Epoch: 90 accuracy: 0.75 
+ precision: [0.05932203 0.85821905 0.58472297 0.74251497 0.45945946] 
+ recall: [1.         0.83373991 0.64167651 0.82804674 0.30692076] 
+ f1: [0.112      0.8458024  0.61187729 0.78295185 0.36800962] 
+ f1_avg: 0.744956757071324
+
+New best val score, save model ...
+--- 326.6396391391754 seconds ---
+
+Train Epoch: 91 accuracy: 0.84 
+ precision: [0.30969845 0.94905975 0.75699566 0.85097992 0.6270675 ] 
+ recall: [0.43879908 0.82999818 0.80362694 0.87964124 0.92059065] 
+ f1: [0.36311515 0.88554493 0.77961463 0.86507325 0.74599481] 
+ f1_avg: 0.8414634093233445
+
+
+Validation Epoch: 91 accuracy: 0.74 
+ precision: [0.05426357 0.86124682 0.57265416 0.74055666 0.45078459] 
+ recall: [1.         0.82698442 0.63046045 0.82915971 0.31695085] 
+ f1: [0.10294118 0.84376795 0.60016859 0.78235757 0.37220259] 
+ f1_avg: 0.7421445562910516
+
+--- 330.0123782157898 seconds ---
+
+Train Epoch: 92 accuracy: 0.84 
+ precision: [0.28978102 0.94938975 0.75662729 0.84978229 0.62505608] 
+ recall: [0.45842956 0.8278904  0.80023028 0.88133467 0.91435603] 
+ f1: [0.35509839 0.88448707 0.77781819 0.86527094 0.74252215] 
+ f1_avg: 0.8402333200579702
+
+
+Validation Epoch: 92 accuracy: 0.74 
+ precision: [0.06862745 0.86150235 0.57340862 0.74787394 0.43438914] 
+ recall: [1.         0.82642147 0.65938607 0.83194213 0.2888666 ] 
+ f1: [0.12844037 0.84359736 0.61339923 0.78767123 0.34698795] 
+ f1_avg: 0.7427646464604152
+
+--- 333.3958160877228 seconds ---
+
+Train Epoch: 93 accuracy: 0.84 
+ precision: [0.30763052 0.95037975 0.75953286 0.85070918 0.62310606] 
+ recall: [0.44226328 0.83033646 0.80500864 0.88026844 0.91763741] 
+ f1: [0.3628612  0.88631187 0.78160984 0.86523642 0.74222016] 
+ f1_avg: 0.8420161741742491
+
+
+Validation Epoch: 93 accuracy: 0.74 
+ precision: [0.04895105 0.85863672 0.59673791 0.73076923 0.45985401] 
+ recall: [1.         0.83205104 0.62632822 0.83528102 0.31594784] 
+ f1: [0.09333333 0.84513485 0.61117512 0.77953778 0.3745541 ] 
+ f1_avg: 0.744499942862724
+
+Early stopping!
+
+Test Epoch: accuracy: 0.74 
+ precision: [0.21192053 0.83436499 0.65345149 0.72328902 0.55089059] 
+ recall: [0.34408602 0.79759233 0.61854305 0.79063509 0.63676471] 
+ f1: [0.26229508 0.81556436 0.63551826 0.75546413 0.59072306] 
+ f1_avg: 0.7416828906248178
+
+--- 337.3787958621979 seconds ---
+
+Test Epoch: accuracy: 0.75 
+ precision: [0.05932203 0.85821905 0.58472297 0.74251497 0.45945946] 
+ recall: [1.         0.83373991 0.64167651 0.82804674 0.30692076] 
+ f1: [0.112      0.8458024  0.61187729 0.78295185 0.36800962] 
+ f1_avg: 0.744956757071324
+
+--- 337.4710521697998 seconds ---
