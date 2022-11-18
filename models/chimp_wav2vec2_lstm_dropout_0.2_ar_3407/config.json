@@ -1,7 +1,7 @@
 {
     "name": "chimp_wav2vec2_lstm_dropout_0.2_ar_3407",
     "data_path": "/home/cluster/zifjia/data/data_chimp/wav2vec2_split_3407",
-    "test_only": true,
+    "test_only": false,
     "test_distribution": true,
     "balance_weights": true,
     "model_type": "lstm",
