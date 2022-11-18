@@ -203,7 +203,7 @@ class Transformer(nn.Module):
         src = self.pos_encoder(src)
         output = self.transformer_encoder(src, src_mask)
         output = self.decoder(output)
-        tag_scores = F.log_softmax(output, dim=1)
+        tag_scores = F.log_softmax(output, dim=2)
         return tag_scores
 
 class PositionalEncoding(nn.Module):
@@ -251,12 +251,12 @@ class LSTM(nn.Module):
                 output, hidden = self.lstm(torch.cat([input[:, i], output], 1), hidden)
                 output = self.hidden2tag(output)
                 outputs[:, i] = output
-            tag_scores = F.log_softmax(outputs, dim=1)
+            tag_scores = F.log_softmax(outputs, dim=2)
             return tag_scores
         else:
             lstm_out, _ = self.lstm(input)
             tag_space = self.hidden2tag(lstm_out)
-            tag_scores = F.log_softmax(tag_space, dim=1)
+            tag_scores = F.log_softmax(tag_space, dim=2)
             return tag_scores
     
 def init_model(model_type):
@@ -410,7 +410,7 @@ def test(model, use_dev=False):
             np.savetxt('./{}/{}.pred.txt'.format(RESULT_PATH, filename), pred.to('cpu').numpy(), delimiter=',')
 
             if CONFIG.get('test_distribution', None):
-                np.savetxt('./{}/{}.dist.txt'.format(RESULT_PATH, filename), output.squeeze().to('cpu').detach().numpy(), delimiter=',')
+                np.savetxt('./{}/{}.dist.txt'.format(RESULT_PATH, filename), torch.exp(output.squeeze()).to('cpu').detach().numpy(), delimiter=',')
 
     pred = torch.cat(pred_list).to('cpu').numpy()
     target = torch.cat(target_list).to('cpu').numpy()
