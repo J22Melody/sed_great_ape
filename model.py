@@ -382,7 +382,7 @@ def validate(model, epoch):
     return f1_avg
 
 def test(model, use_dev=False):
-    if CONFIG['test_only']:
+    if CONFIG.get('test_prediction', None):
         Path(RESULT_PATH).mkdir(parents=True, exist_ok=True)
 
     model.eval()
@@ -405,7 +405,7 @@ def test(model, use_dev=False):
 
         filename = filename[0]
 
-        if CONFIG['test_only']:
+        if CONFIG.get('test_prediction', None):
             np.savetxt('./{}/{}.target.txt'.format(RESULT_PATH, filename), target.to('cpu').numpy(), delimiter=',')
             np.savetxt('./{}/{}.pred.txt'.format(RESULT_PATH, filename), pred.to('cpu').numpy(), delimiter=',')
 
