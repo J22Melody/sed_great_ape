@@ -1,32 +1,32 @@
 Requirement already satisfied: scikit-learn in /net/cephfs/data/zifjia/condaenvs/audio_clf/lib/python3.8/site-packages (1.1.2)
-Requirement already satisfied: scipy>=1.3.2 in /net/cephfs/data/zifjia/condaenvs/audio_clf/lib/python3.8/site-packages (from scikit-learn) (1.9.1)
-Requirement already satisfied: joblib>=1.0.0 in /net/cephfs/data/zifjia/condaenvs/audio_clf/lib/python3.8/site-packages (from scikit-learn) (1.1.0)
 Requirement already satisfied: threadpoolctl>=2.0.0 in /net/cephfs/data/zifjia/condaenvs/audio_clf/lib/python3.8/site-packages (from scikit-learn) (3.1.0)
+Requirement already satisfied: scipy>=1.3.2 in /net/cephfs/data/zifjia/condaenvs/audio_clf/lib/python3.8/site-packages (from scikit-learn) (1.9.1)
 Requirement already satisfied: numpy>=1.17.3 in /net/cephfs/data/zifjia/condaenvs/audio_clf/lib/python3.8/site-packages (from scikit-learn) (1.22.3)
+Requirement already satisfied: joblib>=1.0.0 in /net/cephfs/data/zifjia/condaenvs/audio_clf/lib/python3.8/site-packages (from scikit-learn) (1.1.0)
 Requirement already satisfied: tensorboard in /net/cephfs/data/zifjia/condaenvs/audio_clf/lib/python3.8/site-packages (2.10.1)
-Requirement already satisfied: google-auth<3,>=1.6.3 in /net/cephfs/home/zifjia/.local/lib/python3.8/site-packages (from tensorboard) (2.9.1)
-Requirement already satisfied: absl-py>=0.4 in /net/cephfs/home/zifjia/.local/lib/python3.8/site-packages (from tensorboard) (1.2.0)
-Requirement already satisfied: google-auth-oauthlib<0.5,>=0.4.1 in /net/cephfs/home/zifjia/.local/lib/python3.8/site-packages (from tensorboard) (0.4.6)
-Requirement already satisfied: protobuf<3.20,>=3.9.2 in /net/cephfs/home/zifjia/.local/lib/python3.8/site-packages (from tensorboard) (3.19.4)
-Requirement already satisfied: markdown>=2.6.8 in /net/cephfs/home/zifjia/.local/lib/python3.8/site-packages (from tensorboard) (3.4.1)
-Requirement already satisfied: requests<3,>=2.21.0 in /net/cephfs/data/zifjia/condaenvs/audio_clf/lib/python3.8/site-packages (from tensorboard) (2.28.1)
-Requirement already satisfied: tensorboard-data-server<0.7.0,>=0.6.0 in /net/cephfs/home/zifjia/.local/lib/python3.8/site-packages (from tensorboard) (0.6.1)
-Requirement already satisfied: werkzeug>=1.0.1 in /net/cephfs/data/zifjia/condaenvs/audio_clf/lib/python3.8/site-packages (from tensorboard) (2.1.2)
-Requirement already satisfied: setuptools>=41.0.0 in /net/cephfs/data/zifjia/condaenvs/audio_clf/lib/python3.8/site-packages (from tensorboard) (60.8.1)
-Requirement already satisfied: tensorboard-plugin-wit>=1.6.0 in /net/cephfs/home/zifjia/.local/lib/python3.8/site-packages (from tensorboard) (1.8.1)
-Requirement already satisfied: numpy>=1.12.0 in /net/cephfs/data/zifjia/condaenvs/audio_clf/lib/python3.8/site-packages (from tensorboard) (1.22.3)
 Requirement already satisfied: grpcio>=1.24.3 in /net/cephfs/home/zifjia/.local/lib/python3.8/site-packages (from tensorboard) (1.47.0)
+Requirement already satisfied: google-auth<3,>=1.6.3 in /net/cephfs/home/zifjia/.local/lib/python3.8/site-packages (from tensorboard) (2.9.1)
+Requirement already satisfied: tensorboard-plugin-wit>=1.6.0 in /net/cephfs/home/zifjia/.local/lib/python3.8/site-packages (from tensorboard) (1.8.1)
+Requirement already satisfied: protobuf<3.20,>=3.9.2 in /net/cephfs/home/zifjia/.local/lib/python3.8/site-packages (from tensorboard) (3.19.4)
+Requirement already satisfied: tensorboard-data-server<0.7.0,>=0.6.0 in /net/cephfs/home/zifjia/.local/lib/python3.8/site-packages (from tensorboard) (0.6.1)
+Requirement already satisfied: requests<3,>=2.21.0 in /net/cephfs/data/zifjia/condaenvs/audio_clf/lib/python3.8/site-packages (from tensorboard) (2.28.1)
 Requirement already satisfied: wheel>=0.26 in /net/cephfs/data/zifjia/condaenvs/audio_clf/lib/python3.8/site-packages (from tensorboard) (0.37.1)
+Requirement already satisfied: markdown>=2.6.8 in /net/cephfs/home/zifjia/.local/lib/python3.8/site-packages (from tensorboard) (3.4.1)
+Requirement already satisfied: setuptools>=41.0.0 in /net/cephfs/data/zifjia/condaenvs/audio_clf/lib/python3.8/site-packages (from tensorboard) (60.8.1)
+Requirement already satisfied: werkzeug>=1.0.1 in /net/cephfs/data/zifjia/condaenvs/audio_clf/lib/python3.8/site-packages (from tensorboard) (2.1.2)
+Requirement already satisfied: absl-py>=0.4 in /net/cephfs/home/zifjia/.local/lib/python3.8/site-packages (from tensorboard) (1.2.0)
+Requirement already satisfied: numpy>=1.12.0 in /net/cephfs/data/zifjia/condaenvs/audio_clf/lib/python3.8/site-packages (from tensorboard) (1.22.3)
+Requirement already satisfied: google-auth-oauthlib<0.5,>=0.4.1 in /net/cephfs/home/zifjia/.local/lib/python3.8/site-packages (from tensorboard) (0.4.6)
 Requirement already satisfied: six>=1.9.0 in /net/cephfs/data/zifjia/condaenvs/audio_clf/lib/python3.8/site-packages (from google-auth<3,>=1.6.3->tensorboard) (1.16.0)
-Requirement already satisfied: cachetools<6.0,>=2.0.0 in /net/cephfs/home/zifjia/.local/lib/python3.8/site-packages (from google-auth<3,>=1.6.3->tensorboard) (5.2.0)
 Requirement already satisfied: rsa<5,>=3.1.4 in /net/cephfs/home/zifjia/.local/lib/python3.8/site-packages (from google-auth<3,>=1.6.3->tensorboard) (4.9)
+Requirement already satisfied: cachetools<6.0,>=2.0.0 in /net/cephfs/home/zifjia/.local/lib/python3.8/site-packages (from google-auth<3,>=1.6.3->tensorboard) (5.2.0)
 Requirement already satisfied: pyasn1-modules>=0.2.1 in /net/cephfs/home/zifjia/.local/lib/python3.8/site-packages (from google-auth<3,>=1.6.3->tensorboard) (0.2.8)
 Requirement already satisfied: requests-oauthlib>=0.7.0 in /net/cephfs/home/zifjia/.local/lib/python3.8/site-packages (from google-auth-oauthlib<0.5,>=0.4.1->tensorboard) (1.3.1)
 Requirement already satisfied: importlib-metadata>=4.4 in /net/cephfs/home/zifjia/.local/lib/python3.8/site-packages (from markdown>=2.6.8->tensorboard) (4.12.0)
+Requirement already satisfied: certifi>=2017.4.17 in /net/cephfs/data/zifjia/condaenvs/audio_clf/lib/python3.8/site-packages (from requests<3,>=2.21.0->tensorboard) (2022.9.14)
 Requirement already satisfied: charset-normalizer<3,>=2 in /net/cephfs/data/zifjia/condaenvs/audio_clf/lib/python3.8/site-packages (from requests<3,>=2.21.0->tensorboard) (2.1.1)
 Requirement already satisfied: urllib3<1.27,>=1.21.1 in /net/cephfs/data/zifjia/condaenvs/audio_clf/lib/python3.8/site-packages (from requests<3,>=2.21.0->tensorboard) (1.26.12)
 Requirement already satisfied: idna<4,>=2.5 in /net/cephfs/data/zifjia/condaenvs/audio_clf/lib/python3.8/site-packages (from requests<3,>=2.21.0->tensorboard) (3.4)
-Requirement already satisfied: certifi>=2017.4.17 in /net/cephfs/data/zifjia/condaenvs/audio_clf/lib/python3.8/site-packages (from requests<3,>=2.21.0->tensorboard) (2022.9.14)
 Requirement already satisfied: zipp>=0.5 in /net/cephfs/data/zifjia/condaenvs/audio_clf/lib/python3.8/site-packages (from importlib-metadata>=4.4->markdown>=2.6.8->tensorboard) (3.8.0)
 Requirement already satisfied: pyasn1<0.5.0,>=0.4.6 in /net/cephfs/home/zifjia/.local/lib/python3.8/site-packages (from pyasn1-modules>=0.2.1->google-auth<3,>=1.6.3->tensorboard) (0.4.8)
 Requirement already satisfied: oauthlib>=3.0.0 in /net/cephfs/home/zifjia/.local/lib/python3.8/site-packages (from requests-oauthlib>=0.7.0->google-auth-oauthlib<0.5,>=0.4.1->tensorboard) (3.2.0)
@@ -39,41 +39,43 @@ Requirement already satisfied: pillow!=8.3.*,>=5.3.0 in /net/cephfs/data/zifjia/
 Requirement already satisfied: requests in /net/cephfs/data/zifjia/condaenvs/audio_clf/lib/python3.8/site-packages (from torchvision) (2.28.1)
 Requirement already satisfied: urllib3<1.27,>=1.21.1 in /net/cephfs/data/zifjia/condaenvs/audio_clf/lib/python3.8/site-packages (from requests->torchvision) (1.26.12)
 Requirement already satisfied: charset-normalizer<3,>=2 in /net/cephfs/data/zifjia/condaenvs/audio_clf/lib/python3.8/site-packages (from requests->torchvision) (2.1.1)
-Requirement already satisfied: certifi>=2017.4.17 in /net/cephfs/data/zifjia/condaenvs/audio_clf/lib/python3.8/site-packages (from requests->torchvision) (2022.9.14)
 Requirement already satisfied: idna<4,>=2.5 in /net/cephfs/data/zifjia/condaenvs/audio_clf/lib/python3.8/site-packages (from requests->torchvision) (3.4)
-{'name': 'longcall_wav2vec2_lstm_ar_0', 'data_path': '/home/cluster/zifjia/data/data_greatarc_longcall/wav2vec2_split_0', 'test_only': True, 'balance_weights': True, 'model_type': 'lstm', 'model_autoregressive': True, 'n_embedding': 768, 'd_hid': 1024, 'nlayers': 2, 'batch_size': 1, 'n_epoch': 200, 'lr': 0.0005, 'dropout': 0.2, 'patience': 10, 'step_factor': 0.7, 'seed': 0}
+Requirement already satisfied: certifi>=2017.4.17 in /net/cephfs/data/zifjia/condaenvs/audio_clf/lib/python3.8/site-packages (from requests->torchvision) (2022.9.14)
+{'name': 'longcall_wav2vec2_lstm_ar_0', 'data_path': '/home/cluster/zifjia/data/data_greatarc_longcall/wav2vec2_split_0', 'test_only': False, 'balance_weights': True, 'model_type': 'lstm', 'model_autoregressive': True, 'n_embedding': 768, 'd_hid': 1024, 'nlayers': 2, 'batch_size': 1, 'n_epoch': 200, 'lr': 0.0005, 'dropout': 0.2, 'patience': 10, 'step_factor': 0.7, 'seed': 0}
 cuda
 Reading data ...
 train, dev, test number of files: 50, 6, 7.
 dev files:  ['134dat LC Fugit', '93dat LC Sultan', '148dat LC Fugit', '12T6lcZeke', '20T5lcNiko', '24T5lcNico']
 test files:  ['21T5lcNiko', '77datA LC Fugit', '1T7lcNico', '13T4lcDayak', '91dat LC Sultan', '13T2lcNiko', '2T6lcZeke']
+data_all: (215820, 769)
 train_data_all: (176058, 769)
 Labels in train_data_all:  {0: 105991, 1: 0, 2: 28283, 3: 3331, 4: 21523, 5: 15041, 6: 1613, 7: 139, 8: 137}
---- 1.95442533493042 seconds ---
+--- 2.3552052974700928 seconds ---
 LSTM(
   (lstm): LSTM(777, 1024, num_layers=2, dropout=0.2, bidirectional=True)
   (hidden2tag): Linear(in_features=2048, out_features=9, bias=True)
 )
 Number of parameters: 39970825
 
-Test Epoch: accuracy: 0.79 
- precision: [0.9222578  1.         0.66547862 0.26990291 0.70942201 0.51015004
- 0.13595166 0.         0.        ] 
- recall: [0.85869791 1.         0.6723251  0.50729927 0.71309192 0.61522086
- 0.39823009 1.         1.        ] 
- f1: [0.88934367 1.         0.66888434 0.35234474 0.71125223 0.55778046
- 0.2027027  0.         0.        ] 
- f1_avg: 0.7961247433971198
+Train Epoch: 1 accuracy: 0.48 
+ precision: [8.49281437e-01 0.00000000e+00 3.29514070e-01 9.39590190e-02
+ 4.43445693e-01 1.95904607e-01 5.92007893e-04 0.00000000e+00
+ 0.00000000e+00] 
+ recall: [0.53525299 1.         0.31216632 0.26568598 0.52260373 0.41725949
+ 0.00371978 0.         0.        ] 
+ f1: [0.65665457 0.         0.3206057  0.13882353 0.47978161 0.26662702
+ 0.00102145 0.         0.        ] 
+ f1_avg: 0.5308927219226576
 
---- 15.934203386306763 seconds ---
 
-Test Epoch: accuracy: 0.82 
- precision: [0.89099335 1.         0.78554887 0.32166667 0.7873244  0.55176211
- 1.         0.         1.        ] 
- recall: [0.93448859 1.         0.61605521 0.6609589  0.83738707 0.47623574
+Validation Epoch: 1 accuracy: 0.48 
+ precision: [0.88367899 1.         0.75327511 0.07297949 0.53186392 0.09889764
  0.         1.         1.        ] 
- f1: [0.9122228  1.         0.69055375 0.43273543 0.81158444 0.51122449
- 0.         0.         1.        ] 
- f1_avg: 0.8117969006759634
+ recall: [0.51775148 1.         0.12531784 0.82876712 0.77136901 0.29847909
+ 0.         1.         1.        ] 
+ f1: [0.65294157 1.         0.21488633 0.13414634 0.62960862 0.14856872
+ 0.         1.         1.        ] 
+ f1_avg: 0.5265414892245287
 
---- 23.058038234710693 seconds ---
+New best val score, save model ...
+--- 441.62687969207764 seconds ---

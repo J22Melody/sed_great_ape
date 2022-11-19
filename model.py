@@ -104,6 +104,10 @@ if CONFIG.get('binary', None):
             y_binary = np.where(y > 0, np.ones(y.shape), np.zeros(y.shape))
             data[1][:, 0] = y_binary
 
+data_all = np.concatenate([d[1] for d in np.concatenate([train, dev, test])])
+print('data_all:', data_all.shape)
+unique_all = np.unique(data_all[:, 0])
+
 train_data_all = np.concatenate([d[1] for d in train])
 print('train_data_all:', train_data_all.shape)
 
@@ -111,7 +115,7 @@ unique, counts = np.unique(train_data_all[:, 0], return_counts=True)
 num_classes_raw = dict(zip(unique, counts))
 # HACK: add missing classes (if any) for model to work with
 num_classes = {}
-for i in range(int(list(num_classes_raw.keys())[-1]) + 1):
+for i in range(int(list(unique_all)[-1]) + 1):
     if i in num_classes_raw:
         num_classes[i] = num_classes_raw[i]
     else:
@@ -384,7 +388,7 @@ def validate(model, epoch):
     return f1_avg
 
 def test(model, use_dev=False):
-    if CONFIG.get('test_prediction', None):
+    if CONFIG.get('test_prediction', None) or CONFIG.get('test_distribution', None):
         Path(RESULT_PATH).mkdir(parents=True, exist_ok=True)
 
     model.eval()
@@ -408,11 +412,11 @@ def test(model, use_dev=False):
         filename = filename[0]
 
         if CONFIG.get('test_prediction', None):
-            np.savetxt('./{}/{}.target.txt'.format(RESULT_PATH, filename), target.to('cpu').numpy(), delimiter=',')
-            np.savetxt('./{}/{}.pred.txt'.format(RESULT_PATH, filename), pred.to('cpu').numpy(), delimiter=',')
+            np.savetxt('{}/{}.target.txt'.format(RESULT_PATH, filename), target.to('cpu').numpy(), delimiter=',')
+            np.savetxt('{}/{}.pred.txt'.format(RESULT_PATH, filename), pred.to('cpu').numpy(), delimiter=',')
 
         if CONFIG.get('test_distribution', None):
-            np.savetxt('./{}/{}.dist.txt'.format(RESULT_PATH, filename), torch.exp(output.squeeze()).to('cpu').detach().numpy(), delimiter=',')
+            np.savetxt('{}/{}.dist.txt'.format(RESULT_PATH, filename), torch.exp(output.squeeze()).to('cpu').detach().numpy(), delimiter=',')
 
     pred = torch.cat(pred_list).to('cpu').numpy()
     target = torch.cat(target_list).to('cpu').numpy()

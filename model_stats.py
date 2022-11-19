@@ -14,8 +14,10 @@ MODELS = [
     'chimp_wav2vec2_lstm_dropout_0.1',
     'chimp_wav2vec2_lstm_bw',
     'chimp_wav2vec2_lstm_ar',
-    'longcall_wav2vec2_lstm_ar',
+    # 'longcall_wav2vec2_lstm_ar',
     'longcall_wav2vec2_lstm_binary_ar',
+    # 'bonobo_wav2vec2_lstm_ar',
+    'bonobo_wav2vec2_lstm_binary_ar',
 ]
 
 SEEDS = [0, 42, 3407]
