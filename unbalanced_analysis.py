@@ -1,30 +1,30 @@
 from pathlib import Path
 import numpy as np
+import matplotlib.pyplot as plt
 from sklearn.metrics import PrecisionRecallDisplay
 
-MODEL_PATH = './models/longcall_wav2vec2_lstm_binary_ar_0_bonobo'
-RESULTS_PATH = '{}/results/'.format(MODEL_PATH)
 
-dist_list = []
-for path in Path(RESULTS_PATH).rglob('*.dist.txt'):
-    dist = np.loadtxt(path, delimiter=',')
-    dist_list.append(dist)
+MODEL_PATHS = [
+    './models/bonobo_wav2vec2_lstm_binary_ar_0',
+    './models/longcall_wav2vec2_lstm_binary_ar_0',
+    './models/longcall_wav2vec2_lstm_binary_ar_0_bonobo',
+]
 
-target_list = []
-for path in Path(RESULTS_PATH).rglob('*.target.txt'):
-    target = np.loadtxt(path, delimiter=',')
-    target_list.append(target)
+for MODEL_PATH in MODEL_PATHS:
+    RESULTS_PATH = '{}/results/'.format(MODEL_PATH)
+    PIC_PATH = '{}/unbalanced_analysis.png'.format(MODEL_PATH)
 
-dist = np.concatenate(dist_list)
-target = np.concatenate(target_list)
+    dist_list = []
+    target_list = []
+    for path in Path(RESULTS_PATH).rglob('*.dist.txt'):
+        dist = np.loadtxt(path, delimiter=',')
+        dist_list.append(dist)
+        target = np.loadtxt(str(path).replace('.dist', '.target'), delimiter=',')
+        target_list.append(target)
 
-print(dist[0])
+    dist = np.concatenate(dist_list)[:, 1]
+    target = np.concatenate(target_list)
 
-dist = np.exp(dist)
+    display = PrecisionRecallDisplay.from_predictions(target, dist)
 
-print(dist.shape)
-print(target.shape)
-print(dist[0])
-print(target[0])
-
-display = PrecisionRecallDisplay.from_predictions(target, dist)
+    plt.savefig(PIC_PATH)
