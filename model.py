@@ -50,7 +50,7 @@ writer = SummaryWriter(log_dir='runs/{}/{}/'.format(CONFIG['name'], datetime.dat
 
 # The MPS backend is supported on MacOS 12.3+
 device = torch.device('cuda' if torch.cuda.is_available() else ('mps' if torch.has_mps else 'cpu'))
-device = torch.device('cpu')
+# device = torch.device('cpu')
 print(device)
 
 # read data
@@ -104,6 +104,10 @@ if CONFIG.get('binary', None):
             y_binary = np.where(y > 0, np.ones(y.shape), np.zeros(y.shape))
             data[1][:, 0] = y_binary
 
+data_all = np.concatenate([d[1] for d in np.concatenate([train, dev, test])])
+print('data_all:', data_all.shape)
+unique_all = np.unique(data_all[:, 0])
+
 train_data_all = np.concatenate([d[1] for d in train])
 print('train_data_all:', train_data_all.shape)
 
@@ -111,13 +115,15 @@ unique, counts = np.unique(train_data_all[:, 0], return_counts=True)
 num_classes_raw = dict(zip(unique, counts))
 # HACK: add missing classes (if any) for model to work with
 num_classes = {}
-for i in range(int(list(num_classes_raw.keys())[-1]) + 1):
+for i in range(int(list(unique_all)[-1]) + 1):
     if i in num_classes_raw:
         num_classes[i] = num_classes_raw[i]
     else:
         num_classes[i] = 0
 
 print('Labels in train_data_all: ', num_classes)
+
+labels = list(num_classes.keys())
 
 def length_to_mask(length, max_len=None, dtype=None):
     """length: B.
@@ -203,7 +209,7 @@ class Transformer(nn.Module):
         src = self.pos_encoder(src)
         output = self.transformer_encoder(src, src_mask)
         output = self.decoder(output)
-        tag_scores = F.log_softmax(output, dim=1)
+        tag_scores = F.log_softmax(output, dim=2)
         return tag_scores
 
 class PositionalEncoding(nn.Module):
@@ -241,6 +247,7 @@ class LSTM(nn.Module):
         if self.autoregressive:
             # see https://discuss.pytorch.org/t/lstm-using-the-prediction-of-a-previous-time-step-as-input/24262 
             # see https://pytorch.org/tutorials/intermediate/seq2seq_translation_tutorial.html
+            # caution: much slower!
             batch_size = input.size()[0]
             sent_len = input.size()[1]
             outputs = torch.zeros(batch_size, sent_len, self.tagset_size, device=device)
@@ -250,12 +257,12 @@ class LSTM(nn.Module):
                 output, hidden = self.lstm(torch.cat([input[:, i], output], 1), hidden)
                 output = self.hidden2tag(output)
                 outputs[:, i] = output
-            tag_scores = F.log_softmax(outputs, dim=1)
+            tag_scores = F.log_softmax(outputs, dim=2)
             return tag_scores
         else:
             lstm_out, _ = self.lstm(input)
             tag_space = self.hidden2tag(lstm_out)
-            tag_scores = F.log_softmax(tag_space, dim=1)
+            tag_scores = F.log_softmax(tag_space, dim=2)
             return tag_scores
     
 def init_model(model_type):
@@ -326,10 +333,10 @@ def train(model, epoch):
     target = torch.cat(target_list).to('cpu').detach().numpy()
 
     accuracy = accuracy_score(target, pred)
-    precision = precision_score(target, pred, average=None, zero_division=1)
-    recall = recall_score(target, pred, average=None, zero_division=1)
-    f1 = f1_score(target, pred, average=None, zero_division=1)
-    f1_avg = f1_score(target, pred, average='weighted', zero_division=1)
+    precision = precision_score(target, pred, average=None, zero_division=1, labels=labels)
+    recall = recall_score(target, pred, average=None, zero_division=1, labels=labels)
+    f1 = f1_score(target, pred, average=None, zero_division=1, labels=labels)
+    f1_avg = f1_score(target, pred, average='weighted', zero_division=1, labels=labels)
 
     print(f"\nTrain Epoch: {epoch} accuracy: {accuracy:.2f} \n precision: {precision} \n recall: {recall} \n f1: {f1} \n f1_avg: {f1_avg}\n")
 
@@ -363,10 +370,10 @@ def validate(model, epoch):
     target = torch.cat(target_list).to('cpu').detach().numpy()
 
     accuracy = accuracy_score(target, pred)
-    precision = precision_score(target, pred, average=None, zero_division=1)
-    recall = recall_score(target, pred, average=None, zero_division=1)
-    f1 = f1_score(target, pred, average=None, zero_division=1)
-    f1_avg = f1_score(target, pred, average='weighted', zero_division=1)
+    precision = precision_score(target, pred, average=None, zero_division=1, labels=labels)
+    recall = recall_score(target, pred, average=None, zero_division=1, labels=labels)
+    f1 = f1_score(target, pred, average=None, zero_division=1, labels=labels)
+    f1_avg = f1_score(target, pred, average='weighted', zero_division=1, labels=labels)
 
     print(f"\nValidation Epoch: {epoch} accuracy: {accuracy:.2f} \n precision: {precision} \n recall: {recall} \n f1: {f1} \n f1_avg: {f1_avg}\n")
 
@@ -381,7 +388,7 @@ def validate(model, epoch):
     return f1_avg
 
 def test(model, use_dev=False):
-    if CONFIG['test_only']:
+    if CONFIG.get('test_prediction', None) or CONFIG.get('test_distribution', None):
         Path(RESULT_PATH).mkdir(parents=True, exist_ok=True)
 
     model.eval()
@@ -404,19 +411,22 @@ def test(model, use_dev=False):
 
         filename = filename[0]
 
-        if CONFIG['test_only']:
-            np.savetxt('./{}/{}.target.txt'.format(RESULT_PATH, filename), target.to('cpu').numpy(), delimiter=',')
-            np.savetxt('./{}/{}.pred.txt'.format(RESULT_PATH, filename), pred.to('cpu').numpy(), delimiter=',')
+        if CONFIG.get('test_prediction', None):
+            np.savetxt('{}/{}.target.txt'.format(RESULT_PATH, filename), target.to('cpu').numpy(), delimiter=',')
+            np.savetxt('{}/{}.pred.txt'.format(RESULT_PATH, filename), pred.to('cpu').numpy(), delimiter=',')
+
+        if CONFIG.get('test_distribution', None):
+            np.savetxt('{}/{}.dist.txt'.format(RESULT_PATH, filename), torch.exp(output.squeeze()).to('cpu').detach().numpy(), delimiter=',')
 
     pred = torch.cat(pred_list).to('cpu').numpy()
     target = torch.cat(target_list).to('cpu').numpy()
     output = torch.cat(output_list).detach().to('cpu').numpy()
 
     accuracy = accuracy_score(target, pred)
-    precision = precision_score(target, pred, average=None, zero_division=1)
-    recall = recall_score(target, pred, average=None, zero_division=1)
-    f1 = f1_score(target, pred, average=None, zero_division=1)
-    f1_avg = f1_score(target, pred, average='weighted', zero_division=1)
+    precision = precision_score(target, pred, average=None, zero_division=1, labels=labels)
+    recall = recall_score(target, pred, average=None, zero_division=1, labels=labels)
+    f1 = f1_score(target, pred, average=None, zero_division=1, labels=labels)
+    f1_avg = f1_score(target, pred, average='weighted', zero_division=1, labels=labels)
 
     print(f"\nTest Epoch: accuracy: {accuracy:.2f} \n precision: {precision} \n recall: {recall} \n f1: {f1} \n f1_avg: {f1_avg}\n")
     

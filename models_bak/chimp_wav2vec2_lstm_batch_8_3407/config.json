@@ -1,0 +1,17 @@
+{
+    "name": "chimp_wav2vec2_lstm_batch_8_3407",
+    "data_path": "/home/cluster/zifjia/data/data_chimp/wav2vec2_split_3407",
+    "test_only": false,
+    "balance_weights": true,
+    "model_type": "lstm",
+    "n_embedding": 768,
+    "d_hid": 1024, 
+    "nlayers": 2,  
+    "batch_size": 8,
+    "n_epoch": 200,
+    "lr": 0.0001,
+    "dropout": 0.4,
+    "patience": 10,
+    "step_factor": 0.7,
+    "seed": 3407
+}

@@ -38,7 +38,7 @@ The old analysis above based on the raven tables do not include complete annotat
 
 `python analysis_new.py`
 
-There are 76 audio files, 65 of which have pulse level annotation files (can be used for multi-class classification).
+There are 76 audio files by 11 individuals, 65 of which have pulse level annotation files (can be used for multi-class classification).
 
 Now have a look at the total duration (in second) and the total duration for each pulse level.
 

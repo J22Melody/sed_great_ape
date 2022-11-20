@@ -6,17 +6,20 @@ Assume you have the raw data (https://drive.google.com/drive/folders/1FQXy6aGpXh
 
 `python analysis.py`
 
-There are 235 audio files, annotated with phase information in the excel file.
+There are 235 audio files by 11 individuals, annotated with phase information in the excel file.
 
 Now have a look at the total duration (in second) and the total duration for each phase:
 
 ```
 duration               1964.217937
+duration_annotated     1955.245000 
 intro_duration          976.710000
 build_up_duration       427.426000
 climax_duration         395.924000
 let_down_duration       155.185000
 ```
+
+Mean audio duration is ~8s, max is 17s.
 
 ## Process
 

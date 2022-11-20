@@ -35,7 +35,7 @@ See the section about [deployment](https://facebook.github.io/create-react-app/d
     - `./public/data/<dataset>_<model>` for testing results
     - `./public/data/<dataset>_<raw>` for audio files
 2. run this app (see above)
-3. go to `http://localhost:3000/?dataset=chimp&model=lstm&filename=ASO0094%20Sonso%20ZL%20single%20ph_01`, where there are 3 URL parameters:
+3. go to `http://localhost:3000/?dataset=chimp&model=wav2vec2_lstm_ar_3407&filename=ASO3150%20KT%20single%20ph_01`, where there are 3 URL parameters:
     - `dataset` 
     - `model`
     - `filename`
