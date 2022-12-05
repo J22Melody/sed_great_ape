@@ -1,3 +1,4 @@
+import math
 import pandas as pd
 import numpy as np
 import librosa
@@ -15,6 +16,20 @@ df = df[df['For Steven'] == 1.0]
 print('How many individuals?')
 print(len(df['ID'].drop_duplicates()))
 print(df['ID'].drop_duplicates())
+
+# how many units?
+unit_count = 0
+for row in df.to_dict('records'):
+    if not math.isnan(row['Intro starts (s)']):
+        unit_count += 1
+    if not math.isnan(row['Build-up starts']):
+        unit_count += 1
+    if not math.isnan(row['Climax starts']):
+        unit_count += 1
+    if not math.isnan(row['Let-down starts']):
+        unit_count += 1
+
+print('how many units?', unit_count)
 
 # get duration and check file existence
 durations = []
