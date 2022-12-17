@@ -44,7 +44,7 @@ torch.use_deterministic_algorithms(True)
 DATA_PATH = CONFIG['data_path']
 RESULT_PATH =  './models/{}/results'.format(CONFIG['name'])
 # MODEL_PATH = './models/{}/model.pt'.format(CONFIG['name'])
-MODEL_PATH = '/home/cluster/zifjia/data/models/{}.pt'.format(CONFIG['name'])
+MODEL_PATH = '/home/zifjia/data/ape_models/{}.pt'.format(CONFIG['name'])
 
 writer = SummaryWriter(log_dir='runs/{}/{}/'.format(CONFIG['name'], datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")))
 

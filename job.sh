@@ -6,7 +6,7 @@
 
 
 #SBATCH --job-name=baseline  	## job name
-#SBATCH --time=0-72:00:00       ## days-hours:minutes:seconds
+#SBATCH --time=0-2:00:00       ## days-hours:minutes:seconds
 #SBATCH --mem=8000M             ##   3GB ram (hardware ratio is < 4GB/core)
 
 ### SBATCH --output=$1/train.log	## standard out file
@@ -17,11 +17,12 @@
 #SBATCH --gres gpu:1
 ###SBATCH --gres gpu:Tesla-V100-32GB:1
 
-module load nvidia/cuda10.2-cudnn7.6.5
+module load cudnn/7.6.5.32-10.2
 module load anaconda3
 source activate audio_clf
-pip3 install scikit-learn
-pip3 install tensorboard
-pip3 install torch torchvision torchaudio
+# pip install torch==1.12.1+cu102 torchvision==0.13.1+cu102 torchaudio==0.12.1 --extra-index-url https://download.pytorch.org/whl/cu102
+# pip install scikit-learn
+# pip install tensorboard
+# pip install pandas
 
 CUBLAS_WORKSPACE_CONFIG=:4096:8 stdbuf -o0 -e0 srun --unbuffered python model.py -c $1
