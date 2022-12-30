@@ -141,9 +141,13 @@ data*/raw/**/*.wav
 data*/raw/**/*.aif
 data_colobus/raw/
 data_greatarc/raw/
-data_greatarc_longcall/raw/LC rhythm - all LC Tuanan/
+data_greatarc_longcall/raw/LC rhythm - all LC Tuanan/**/*.txt
 data*/waveform*/
 data*/spectrogram*/
 data*/wav2vec2*/
+
+!data_bonobo/raw/bonobo calls/563--8.11.12 same as 562. nobody joins in or responds. group travelling, but stops and rests after this bout. be zig zagging as he gives these vocs (146,7).wav
+!data_greatarc_longcall/raw/LC rhythm - all LC Tuanan/example_Long_Call_Fugit.mp3
+!data_chimp/raw/ASO3150 KT single ph_01.WAV
 
 visualization/public/data/
