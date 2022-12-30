@@ -137,7 +137,11 @@ node_modules/
 
 *.pt
 
-data*/raw/
+data*/raw/**/*.wav
+data*/raw/**/*.aif
+data_colobus/raw/
+data_greatarc/raw/
+data_greatarc_longcall/raw/LC rhythm - all LC Tuanan/
 data*/waveform*/
 data*/spectrogram*/
 data*/wav2vec2*/
