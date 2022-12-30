@@ -1,6 +1,6 @@
 # Data Olive Colobus
 
-Assume you have the raw data (https://github.com/QuentinGallot/OliveColobusDatabase) here in `./raw`.
+Assume you have the raw data here in `./raw`.
 
 ## Analysis
 

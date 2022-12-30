@@ -1,6 +1,6 @@
 # Data Greatarc
 
-Assume you have the raw data (https://www.dropbox.com/home/GreatARC/wetransfer_audio-files-for-zifan_2021-12-14_1301) here in `./raw`.
+Assume you have the raw data here in `./raw`.
 
 ## Note
 

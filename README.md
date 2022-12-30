@@ -18,13 +18,15 @@ To train a model, make a model directory with a `config.json` inside of `models`
 
 ### Train
 
+For example:
+
 ```
-python model.py -c models/chimp_lstm_8/config.json
+python model.py -c models/chimp_wav2vec2_lstm_0/config.json
 ```
 
 ### Results
 
-See https://github.com/bambooforest/audio_exploration/blob/main/results/metrics.csv.
+See https://github.com/bambooforest/audio_exploration/blob/main/model_stats.csv.
 
 ### Visualize
 
