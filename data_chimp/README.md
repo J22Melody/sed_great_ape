@@ -1,6 +1,6 @@
 # Data Chimp
 
-Assume you have the raw data (https://drive.google.com/drive/folders/1FQXy6aGpXhMlMO6oqkWhI8wbjGEabA2e) here in `./raw`.
+Assume you have the raw data here in `./raw`.
 
 ## Analysis
 
