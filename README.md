@@ -1,4 +1,4 @@
-# Audio Exploration
+# Automatic Sound Event Detection and Classification of Great Ape Calls using Neural Networks
 
 ## Data
 
