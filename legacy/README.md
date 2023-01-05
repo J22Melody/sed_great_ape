@@ -35,7 +35,7 @@ I think we could write results and do further experiments on new data on both mo
 
 I spot a very hidden but major bug in the model training code, which, in a word, led to training/test dataset overlapping in previous experiments. So I fix the bug and rerun the experiment (on the 13 files with pulse level annotation), and it does affect the model performance. 
 
-https://github.com/bambooforest/audio_exploration/blob/visualization/longcall/rnn.log
+https://github.com/J22Melody/sed_great_ape/blob/visualization/longcall/rnn.log
 
 ```
 Test Epoch: accuracy: 0.70 
@@ -64,7 +64,7 @@ To run a built version locally, navigate into the directory `audio_exploration/l
 
 ## [29.03.2022] Recurrent Sequence Modeling on Long Calls
 
-Following the exploration in https://github.com/bambooforest/audio_exploration/pull/3, I experimented with a more sophisticated model architecture.  I modeled each whole long call audio (~60 s) as a long sequence in a LSTM model, then output a class distribution of pulse levels at each time step (20 ms segment). It turns out to be a big success, the average f1 score on test set reaches 0.91.
+Following the exploration in https://github.com/J22Melody/sed_great_ape/pull/3, I experimented with a more sophisticated model architecture.  I modeled each whole long call audio (~60 s) as a long sequence in a LSTM model, then output a class distribution of pulse levels at each time step (20 ms segment). It turns out to be a big success, the average f1 score on test set reaches 0.91.
 
 ### Inspiration
 
@@ -78,9 +78,9 @@ There are 66 annotated long call audio files from Greatarc dataset, 13 of them h
 
 I decide to go the multi-class way, using an 8/1/1 data split, I have the file `4T10lcFugit` as test set, the file `5T10lcFugit` as dev set, and the rest 11 files as training set. I also did a contrast experiment on 66 files, by giving all the annotated entries without pulse level a class `unknown`.
 
-All the experiments happened inside `./longcall`, so to preprocess the data, first enter the directory, then run `python data_wav2vec2.py` - read the raw data, extract `wav2vec2` features for each 20ms segment (introduced in https://github.com/bambooforest/audio_exploration/pull/2, approach 3) and align them with annotations. 
+All the experiments happened inside `./longcall`, so to preprocess the data, first enter the directory, then run `python data_wav2vec2.py` - read the raw data, extract `wav2vec2` features for each 20ms segment (introduced in https://github.com/J22Melody/sed_great_ape/pull/2, approach 3) and align them with annotations. 
 
-The result is in https://github.com/bambooforest/audio_exploration/blob/rnn_clf/longcall/data_wav2vec2.log, most importantly, the statistics of class numbers before and after segmentation:
+The result is in https://github.com/J22Melody/sed_great_ape/blob/rnn_clf/longcall/data_wav2vec2.log, most importantly, the statistics of class numbers before and after segmentation:
 
 `{'Unknown': {'count': 2872, 'id': 1}, 'Full pulse': {'count': 445, 'id': 2}, 'Sub-pulse transitory element': {'count': 252, 'id': 3}, 'Pulse body': {'count': 176, 'id': 4}, 'Bubble sub-pulse': {'count': 853, 'id': 5}, 'Grumble sub-pulse': {'count': 23, 'id': 6}}`
 
@@ -90,7 +90,7 @@ Again, `0` represents segment without calls, and there are many unknown samples 
 
 ### Training and Results
 
-Run `python rnn.py`, the experiments finish within one hour on a GPU. The evaluation results (https://github.com/bambooforest/audio_exploration/blob/rnn_clf/longcall/rnn.log) on test set (for each class):
+Run `python rnn.py`, the experiments finish within one hour on a GPU. The evaluation results (https://github.com/J22Melody/sed_great_ape/blob/rnn_clf/longcall/rnn.log) on test set (for each class):
 
 ```
 Test Epoch: accuracy: 0.87 
@@ -103,7 +103,7 @@ Test Epoch: accuracy: 0.87
  f1_avg: 0.9120521962326353
 ```
 
-To get a more direct feeling of the predictions, see in parallel https://github.com/bambooforest/audio_exploration/blob/rnn_clf/longcall/rnn.pred.txt and https://github.com/bambooforest/audio_exploration/blob/rnn_clf/longcall/rnn.target.txt. 
+To get a more direct feeling of the predictions, see in parallel https://github.com/J22Melody/sed_great_ape/blob/rnn_clf/longcall/rnn.pred.txt and https://github.com/J22Melody/sed_great_ape/blob/rnn_clf/longcall/rnn.target.txt. 
 
 The statistics, in general, are very satisfying, most of the known classes perform very well (over 0.90), the `unknown` class perform badly as expected, the last class `Grumble sub-pulse` perform badly probably because of lack of samples.
 
@@ -124,12 +124,12 @@ Some takeaway on my side:
 
 - We can successfully train classifiers to extract monkey calls from audio, no matter binary or multi-class.
 - One key aspect is data (as always). We are still in a very low-resource setting, but as long as we have balanced, well-structured data, it's promising to train a good classifier.
-- Another thing is how we want to generalize. In https://github.com/bambooforest/audio_exploration/pull/2 I find that data cannot generalize across files in the `OliveColobusDatabase ` dataset (but do not know why). In https://github.com/bambooforest/audio_exploration/pull/3, I find that the reason might be: different individuals? Different call repertoires, etc. It is definitely hard to classify when, say, we train a model on some data, then there comes a new individual with totally unseen repertoires. Conversely, if we, say, have (at least) tens of audio of Kelly, which contains a comprehensive list of his repertoires, then we can confidently deal with a future file of his (at least) (semi-)automatically.
+- Another thing is how we want to generalize. In https://github.com/J22Melody/sed_great_ape/pull/2 I find that data cannot generalize across files in the `OliveColobusDatabase ` dataset (but do not know why). In https://github.com/J22Melody/sed_great_ape/pull/3, I find that the reason might be: different individuals? Different call repertoires, etc. It is definitely hard to classify when, say, we train a model on some data, then there comes a new individual with totally unseen repertoires. Conversely, if we, say, have (at least) tens of audio of Kelly, which contains a comprehensive list of his repertoires, then we can confidently deal with a future file of his (at least) (semi-)automatically.
 - In terms of features and model architecture, I think especially the features, all kinds of feature selection would work to some extent, raw wavforms, spectrogram, wav2vec, etc. It is similar in terms of modeling, nevertheless, the model architecture in this couple of experiments turns out to be the most sophisticated and performs the best.
 
 ## [17.03.2022] Same Experiments on Greatarc Dataset
 
-I tried to rerun some of the same experiments on the Greatarc data, as I performed in https://github.com/bambooforest/audio_exploration/pull/2. The experiments are rather rough, but a main finding is that the Greatarc data does generate across files, as opposed to the OliveColobusDatabase data. I think this is a very good signal to do further exploration.
+I tried to rerun some of the same experiments on the Greatarc data, as I performed in https://github.com/J22Melody/sed_great_ape/pull/2. The experiments are rather rough, but a main finding is that the Greatarc data does generate across files, as opposed to the OliveColobusDatabase data. I think this is a very good signal to do further exploration.
 
 ### Binary Classification on Calls
 
@@ -145,9 +145,9 @@ Observation on Data:
 - Still a very class-imbalanced task since most of the 1-second segments are not calls.
 
 Experiments and results:
-- Learn from `Kelly experiment Tiger 19-12-2010` to predict `Kelly experiment spots 11-1-2011`: AUC-PR (area under the precision-recall curve, the higher the better) = 0.72 (https://github.com/bambooforest/audio_exploration/blob/greatarc/greatarc/greatarc_clf_kelly_19_to_11_test.png)
-- Learn from `Kelly experiment Tiger 19-12-2010` to predict `YetYeni experiment tiger sheet 10-02-2011 (1)_1st half`: AUC-PR = 0.41 (https://github.com/bambooforest/audio_exploration/blob/greatarc/greatarc/greatarc_clf_kelly_to_yetyeni_test.png)
-- Learn from `YetYeni experiment tiger sheet 10-02-2011 (1)_1st half` to predict `Kelly experiment spots 11-1-2011`: AUC-PR = 0.64 (https://github.com/bambooforest/audio_exploration/blob/greatarc/greatarc/greatarc_clf_yetyeni_to_kelly_11_test.png)
+- Learn from `Kelly experiment Tiger 19-12-2010` to predict `Kelly experiment spots 11-1-2011`: AUC-PR (area under the precision-recall curve, the higher the better) = 0.72 (https://github.com/J22Melody/sed_great_ape/blob/greatarc/greatarc/greatarc_clf_kelly_19_to_11_test.png)
+- Learn from `Kelly experiment Tiger 19-12-2010` to predict `YetYeni experiment tiger sheet 10-02-2011 (1)_1st half`: AUC-PR = 0.41 (https://github.com/J22Melody/sed_great_ape/blob/greatarc/greatarc/greatarc_clf_kelly_to_yetyeni_test.png)
+- Learn from `YetYeni experiment tiger sheet 10-02-2011 (1)_1st half` to predict `Kelly experiment spots 11-1-2011`: AUC-PR = 0.64 (https://github.com/J22Melody/sed_great_ape/blob/greatarc/greatarc/greatarc_clf_yetyeni_to_kelly_11_test.png)
 
 Interpretations:
 - We can successfully learn and predict the calls of the same individual (Kelly).
@@ -168,8 +168,8 @@ Observation on Data:
 - The problem of imbalanced classes is more severe: the most common call types are `Grumph`, `Kiss-squeak` and `Rolling call`, yet in training set there are 6843 non-call segments, 438 `Kiss-squeak`s, 59 `Grumph`s and 41 `Rolling call`s.
 
 Experiments and results:
-- Train a classifier to tell different call types? f1 score for the 3 classes: 0.84, 0.22222222, 0.46666667 (https://github.com/bambooforest/audio_exploration/blob/greatarc/greatarc/cnn_nonzero.log)
-- Train a classifier to tell different call types and non-calls? f1 score for the 4 classes: 0.0869565, 0.0, 0.10526316, 0.96308725 (https://github.com/bambooforest/audio_exploration/blob/greatarc/greatarc_log/cnn.log)
+- Train a classifier to tell different call types? f1 score for the 3 classes: 0.84, 0.22222222, 0.46666667 (https://github.com/J22Melody/sed_great_ape/blob/greatarc/greatarc/cnn_nonzero.log)
+- Train a classifier to tell different call types and non-calls? f1 score for the 4 classes: 0.0869565, 0.0, 0.10526316, 0.96308725 (https://github.com/J22Melody/sed_great_ape/blob/greatarc/greatarc_log/cnn.log)
 
 Interpretations:
 - The imbalanced distribution of classes is tricky to deal with, and the minority samples are just too few. 
@@ -197,7 +197,7 @@ Labels in train:  {0.0: 1545, 1.0: 1748, 2.0: 506, 3.0: 46, 4.0: 2, 5.0: 13}
 ```
 
 Experiments and results:
-- Learn from 80% of the files and predict the rest: f1 score of 5 classes: 0.73981191, 0.71527778, 0.34693878, 0.66666667 0.66666667 (https://github.com/bambooforest/audio_exploration/blob/greatarc/longcall/clf_by_file.log)
+- Learn from 80% of the files and predict the rest: f1 score of 5 classes: 0.73981191, 0.71527778, 0.34693878, 0.66666667 0.66666667 (https://github.com/J22Melody/sed_great_ape/blob/greatarc/longcall/clf_by_file.log)
 
 Interpretations:
 - The statistics look much better, surprisingly good results on those minority classes.
@@ -216,7 +216,7 @@ I think either:
 
 I am more inclined to the first conclusion.
 
-The general approach is similar, as introduced in https://github.com/bambooforest/audio_exploration/pull/1:
+The general approach is similar, as introduced in https://github.com/J22Melody/sed_great_ape/pull/1:
 
 1. Split each .wav file to 1-second segments, extract the features for each 1-second segment, which can be the raw waveform, spectrogram, MFCC or feature vector from a pretrained model.
 2. Read text annotations and match each segment (and the features) to a 0/1 class.
@@ -226,10 +226,10 @@ The general approach is similar, as introduced in https://github.com/bamboofores
 
 ### Approach 1: Spectrogram + Feed-forward Network
 
-Extend the naive approach https://github.com/bambooforest/audio_exploration/pull/1 to the full dataset, and split data by files:
+Extend the naive approach https://github.com/J22Melody/sed_great_ape/pull/1 to the full dataset, and split data by files:
 
 1. Segment and generate spectrogram data by `scipy`: `python data.py` -> writes data to `./data_full_clf_1/`.
-2. Train and test a feed-forward network model by `scikit-learn` on CPU: `python clf.py` -> writes results to https://github.com/bambooforest/audio_exploration/blob/torch_cnn/clf.log, https://github.com/bambooforest/audio_exploration/blob/torch_cnn/clf_train.png, and https://github.com/bambooforest/audio_exploration/blob/torch_cnn/clf_test.png.
+2. Train and test a feed-forward network model by `scikit-learn` on CPU: `python clf.py` -> writes results to https://github.com/J22Melody/sed_great_ape/blob/torch_cnn/clf.log, https://github.com/J22Melody/sed_great_ape/blob/torch_cnn/clf_train.png, and https://github.com/J22Melody/sed_great_ape/blob/torch_cnn/clf_test.png.
 
 How to prevent overfitting? 
 
@@ -244,7 +244,7 @@ Approach as introduced in:
 Steps:
 
 1. Segment and generate waveform data by `torchaudio`: `python torch_data_waveform.py` -> writes data to `./data_waveform_1/` and `./data_waveform_1_split`.
-2. Train and test a CNN model by `torch` on CPU/GPU: `python torch_cnn.py` -> writes results to https://github.com/bambooforest/audio_exploration/blob/torch_cnn/torch_cnn.log and https://github.com/bambooforest/audio_exploration/blob/torch_cnn/torch_cnn_test.png, save model to https://github.com/bambooforest/audio_exploration/blob/torch_cnn/torch_cnn.pt.
+2. Train and test a CNN model by `torch` on CPU/GPU: `python torch_cnn.py` -> writes results to https://github.com/J22Melody/sed_great_ape/blob/torch_cnn/torch_cnn.log and https://github.com/J22Melody/sed_great_ape/blob/torch_cnn/torch_cnn_test.png, save model to https://github.com/J22Melody/sed_great_ape/blob/torch_cnn/torch_cnn.pt.
 
 How to prevent overfitting? 
 
@@ -259,7 +259,7 @@ Approach as introduced in:
 Steps:
 
 1. Segment and generate Wav2Vec2 feature vector data by `torchaudio`: `python torch_data_wav2vec2.py` -> writes data to `./data_wav2vec2_1/` and `./data_wav2vec2_1_split`.
-2. Train and test an RNN model by `torch` on CPU/GPU: `python torch_rnn.py` -> writes results to https://github.com/bambooforest/audio_exploration/blob/torch_cnn/torch_rnn.log and https://github.com/bambooforest/audio_exploration/blob/torch_cnn/torch_rnn_test.png, save model to https://github.com/bambooforest/audio_exploration/blob/torch_cnn/torch_rnn.pt.
+2. Train and test an RNN model by `torch` on CPU/GPU: `python torch_rnn.py` -> writes results to https://github.com/J22Melody/sed_great_ape/blob/torch_cnn/torch_rnn.log and https://github.com/J22Melody/sed_great_ape/blob/torch_cnn/torch_rnn_test.png, save model to https://github.com/J22Melody/sed_great_ape/blob/torch_cnn/torch_rnn.pt.
 
 How to prevent overfitting? 
 
@@ -298,7 +298,7 @@ How to prevent overfitting?
 
 5. Evaluation. As the classes are highly imbalanced (hudreds of "monkey call" segments among a total of a few thousands), look at the precision and recall scores, also plot the precision-recall curve.
 
-    https://github.com/bambooforest/audio_exploration/blob/clf/clf.log
+    https://github.com/J22Melody/sed_great_ape/blob/clf/clf.log
 
     training:
 

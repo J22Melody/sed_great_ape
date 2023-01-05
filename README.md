@@ -28,12 +28,12 @@ tensorboard --logdir=runs
 
 ### Results
 
-See https://github.com/bambooforest/audio_exploration/blob/main/model_stats.csv.
+See https://github.com/J22Melody/sed_great_ape/blob/main/model_stats.csv.
 
 ### Visualize
 
-See https://github.com/bambooforest/audio_exploration/tree/main/visualization.
+See https://github.com/J22Melody/sed_great_ape/tree/main/visualization.
 
 ## Legacy
 
-See previous exploration logs in https://github.com/bambooforest/audio_exploration/tree/main/legacy.
+See previous exploration logs in https://github.com/J22Melody/sed_great_ape/tree/main/legacy.
