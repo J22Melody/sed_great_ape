@@ -1,4 +1,4 @@
-# Automatic Sound Event Detection and Classification of Great Ape Calls using Neural Networks
+# Automatic Sound Event Detection and Classification of Great Ape Calls Using Neural Networks
 
 ## Data
 
