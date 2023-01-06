@@ -1,5 +1,20 @@
 # Automatic Sound Event Detection and Classification of Great Ape Calls Using Neural Networks
 
+## Citation
+
+Please cite [our paper](https://arxiv.org/abs/2301.02214).
+
+<!-- as follows:
+
+```
+@article{jiang2022machine,
+  title={Machine Translation between Spoken Languages and Signed Languages Represented in SignWriting},
+  author={Jiang, Zifan and Moryossef, Amit and M{\"u}ller, Mathias and Ebling, Sarah},
+  journal={arXiv preprint arXiv:2210.05404},
+  year={2022}
+}
+``` -->
+
 ## Data
 
 Prepare each data set in a `data_xxx` directory, which contains:
