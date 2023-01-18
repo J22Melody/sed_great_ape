@@ -2,7 +2,16 @@
 
 ## Citation
 
-Please cite [our paper](https://arxiv.org/abs/2301.02214).
+Please cite [our paper](https://arxiv.org/abs/2301.02214) as follows:
+
+```
+@article{jiang2023automatic,
+  title={Automatic Sound Event Detection and Classification of Great Ape Calls Using Neural Networks},
+  author={Jiang, Zifan and Soldati, Adrian and Schamberg, Isaac and Lameira, Adriano R and Moran, Steven},
+  journal={arXiv preprint arXiv:2301.02214},
+  year={2023}
+}
+```
 
 <!-- as follows:
 
