@@ -6,7 +6,7 @@
 
 
 #SBATCH --job-name=baseline  	## job name
-#SBATCH --time=0-2:00:00       ## days-hours:minutes:seconds
+#SBATCH --time=5-00:00:00       ## days-hours:minutes:seconds
 #SBATCH --mem=8000M             ##   3GB ram (hardware ratio is < 4GB/core)
 
 ### SBATCH --output=$1/train.log	## standard out file
