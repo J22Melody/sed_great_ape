@@ -16,9 +16,14 @@ MODELS = [
     'chimp_wav2vec2_lstm_ar',
     'chimp_wav2vec2_lstm_ar_bi',
     'longcall_wav2vec2_lstm_ar',
+    'longcall_wav2vec2_lstm_ar_bi',
     'longcall_wav2vec2_lstm_binary_ar',
+    'longcall_wav2vec2_lstm_binary_ar_bi',
+    'longcall_wav2vec2_lstm_ar',
     'bonobo_wav2vec2_lstm_ar',
+    'bonobo_wav2vec2_lstm_ar_bi',
     'bonobo_wav2vec2_lstm_binary_ar',
+    'bonobo_wav2vec2_lstm_binary_ar_bi',
     'longcall_wav2vec2_lstm_binary_ar_bonobo'
 ]
 

@@ -65,6 +65,22 @@
 # sbatch --output=models/colobus_wav2vec2_lstm_42/train.log ./job.sh models/colobus_wav2vec2_lstm_42/config.json
 # sbatch --output=models/colobus_wav2vec2_lstm_3407/train.log ./job.sh models/colobus_wav2vec2_lstm_3407/config.json
 
-sbatch --output=models/chimp_wav2vec2_lstm_ar_bi_0/train.log ./job.sh models/chimp_wav2vec2_lstm_ar_bi_0/config.json
-sbatch --output=models/chimp_wav2vec2_lstm_ar_bi_42/train.log ./job.sh models/chimp_wav2vec2_lstm_ar_bi_42/config.json
-sbatch --output=models/chimp_wav2vec2_lstm_ar_bi_3407/train.log ./job.sh models/chimp_wav2vec2_lstm_ar_bi_3407/config.json
+# sbatch --output=models/chimp_wav2vec2_lstm_ar_bi_0/train.log ./job.sh models/chimp_wav2vec2_lstm_ar_bi_0/config.json
+# sbatch --output=models/chimp_wav2vec2_lstm_ar_bi_42/train.log ./job.sh models/chimp_wav2vec2_lstm_ar_bi_42/config.json
+# sbatch --output=models/chimp_wav2vec2_lstm_ar_bi_3407/train.log ./job.sh models/chimp_wav2vec2_lstm_ar_bi_3407/config.json
+
+# sbatch --output=models/longcall_wav2vec2_lstm_ar_bi_0/train.log ./job.sh models/longcall_wav2vec2_lstm_ar_bi_0/config.json
+# sbatch --output=models/longcall_wav2vec2_lstm_ar_bi_42/train.log ./job.sh models/longcall_wav2vec2_lstm_ar_bi_42/config.json
+# sbatch --output=models/longcall_wav2vec2_lstm_ar_bi_3407/train.log ./job.sh models/longcall_wav2vec2_lstm_ar_bi_3407/config.json
+
+# sbatch --output=models/bonobo_wav2vec2_lstm_ar_bi_0/train.log ./job.sh models/bonobo_wav2vec2_lstm_ar_bi_0/config.json
+# sbatch --output=models/bonobo_wav2vec2_lstm_ar_bi_42/train.log ./job.sh models/bonobo_wav2vec2_lstm_ar_bi_42/config.json
+# sbatch --output=models/bonobo_wav2vec2_lstm_ar_bi_3407/train.log ./job.sh models/bonobo_wav2vec2_lstm_ar_bi_3407/config.json
+
+# sbatch --output=models/longcall_wav2vec2_lstm_binary_ar_bi_0/train.log ./job.sh models/longcall_wav2vec2_lstm_binary_ar_bi_0/config.json
+# sbatch --output=models/longcall_wav2vec2_lstm_binary_ar_bi_42/train.log ./job.sh models/longcall_wav2vec2_lstm_binary_ar_bi_42/config.json
+# sbatch --output=models/longcall_wav2vec2_lstm_binary_ar_bi_3407/train.log ./job.sh models/longcall_wav2vec2_lstm_binary_ar_bi_3407/config.json
+
+# sbatch --output=models/bonobo_wav2vec2_lstm_binary_ar_bi_0/train.log ./job.sh models/bonobo_wav2vec2_lstm_binary_ar_bi_0/config.json
+sbatch --output=models/bonobo_wav2vec2_lstm_binary_ar_bi_42/train.log ./job.sh models/bonobo_wav2vec2_lstm_binary_ar_bi_42/config.json
+sbatch --output=models/bonobo_wav2vec2_lstm_binary_ar_bi_3407/train.log ./job.sh models/bonobo_wav2vec2_lstm_binary_ar_bi_3407/config.json
