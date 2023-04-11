@@ -239,24 +239,60 @@ class LSTM(nn.Module):
         self.autoregressive = autoregressive
         self.hidden_dim = hidden_dim
         self.tagset_size = tagset_size
-        embedding_dim = (embedding_dim + tagset_size) if autoregressive else embedding_dim
-        self.lstm = nn.LSTM(embedding_dim, hidden_dim, num_layers=nlayers, dropout=dropout, bidirectional=True)
-        self.hidden2tag = nn.Linear(hidden_dim * 2, tagset_size)
+
+        # embedding_dim = (embedding_dim + tagset_size) if autoregressive else embedding_dim
+        # self.lstm = nn.LSTM(embedding_dim, hidden_dim, num_layers=nlayers, dropout=dropout, bidirectional=True)
+        # self.hidden2tag = nn.Linear(hidden_dim * 2, tagset_size)
+
+        if autoregressive:
+            embedding_dim = embedding_dim + tagset_size
+            self.lstm_forward = nn.LSTM(embedding_dim, hidden_dim, num_layers=nlayers, dropout=dropout)
+            self.hidden2tag_forward = nn.Linear(hidden_dim, tagset_size)
+            self.lstm_backward = nn.LSTM(embedding_dim, hidden_dim, num_layers=nlayers, dropout=dropout)
+            self.hidden2tag_backward = nn.Linear(hidden_dim, tagset_size)
+        else:
+            self.lstm = nn.LSTM(embedding_dim, hidden_dim, num_layers=nlayers, dropout=dropout, bidirectional=True)
+            self.hidden2tag = nn.Linear(hidden_dim * 2, tagset_size)
 
     def forward(self, input):
+        # unidirectional
+        # if self.autoregressive:
+        #     # see https://discuss.pytorch.org/t/lstm-using-the-prediction-of-a-previous-time-step-as-input/24262 
+        #     # see https://pytorch.org/tutorials/intermediate/seq2seq_translation_tutorial.html
+        #     # caution: much slower!
+        #     batch_size = input.size()[0]
+        #     sent_len = input.size()[1]
+        #     outputs = torch.zeros(batch_size, sent_len, self.tagset_size, device=device)
+        #     output = torch.zeros(batch_size, self.tagset_size, device=device)
+        #     hidden = None
+        #     for i in range(sent_len):
+        #         output, hidden = self.lstm(torch.cat([input[:, i], output], 1), hidden)
+        #         output = self.hidden2tag(output)
+        #         outputs[:, i] = output
+        #     tag_scores = F.log_softmax(outputs, dim=2)
+        #     return tag_scores
+
+        # bidirectional
         if self.autoregressive:
-            # see https://discuss.pytorch.org/t/lstm-using-the-prediction-of-a-previous-time-step-as-input/24262 
-            # see https://pytorch.org/tutorials/intermediate/seq2seq_translation_tutorial.html
-            # caution: much slower!
             batch_size = input.size()[0]
             sent_len = input.size()[1]
-            outputs = torch.zeros(batch_size, sent_len, self.tagset_size, device=device)
-            output = torch.zeros(batch_size, self.tagset_size, device=device)
-            hidden = None
+            outputs_forward = torch.zeros(batch_size, sent_len, self.tagset_size, device=device)
+            output_forward = torch.zeros(batch_size, self.tagset_size, device=device)
+            hidden_forward = None
+            outputs_backward = torch.zeros(batch_size, sent_len, self.tagset_size, device=device)
+            output_backward = torch.zeros(batch_size, self.tagset_size, device=device)
+            hidden_backward = None
+            
             for i in range(sent_len):
-                output, hidden = self.lstm(torch.cat([input[:, i], output], 1), hidden)
-                output = self.hidden2tag(output)
-                outputs[:, i] = output
+                output_forward, hidden_forward = self.lstm_forward(torch.cat([input[:, i], output_forward], 1), hidden_forward)
+                output_forward = self.hidden2tag_forward(output_forward)
+                outputs_forward[:, i] = output_forward
+                back_i = sent_len - 1 - i
+                output_backward, hidden_backward = self.lstm_backward(torch.cat([input[:, back_i], output_backward], 1), hidden_backward)
+                output_backward = self.hidden2tag_backward(output_backward)
+                outputs_backward[:, back_i] = output_backward
+
+            outputs = torch.add(outputs_forward, outputs_backward)
             tag_scores = F.log_softmax(outputs, dim=2)
             return tag_scores
         else:
