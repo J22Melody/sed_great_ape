@@ -5,24 +5,15 @@
 Please cite [our paper](https://arxiv.org/abs/2301.02214) as follows:
 
 ```
-@article{jiang2023automatic,
-  title={Automatic Sound Event Detection and Classification of Great Ape Calls Using Neural Networks},
-  author={Jiang, Zifan and Soldati, Adrian and Schamberg, Isaac and Lameira, Adriano R and Moran, Steven},
-  journal={arXiv preprint arXiv:2301.02214},
-  year={2023}
+@inproceedings{jiang-etal-2023-machine,
+    title={Automatic Sound Event Detection and Classification of Great Ape Calls Using Neural Networks},
+    author={Jiang, Zifan and Soldati, Adrian and Schamberg, Isaac and Lameira, Adriano R and Moran, Steven},
+    booktitle = "Proceedings of the 20th International Congress of Phonetic Sciences (ICPhS 2023)",
+    month = August,
+    year = "2023",
+    address = "Prague, the Czech Republic"
 }
 ```
-
-<!-- as follows:
-
-```
-@article{jiang2022machine,
-  title={Machine Translation between Spoken Languages and Signed Languages Represented in SignWriting},
-  author={Jiang, Zifan and Moryossef, Amit and M{\"u}ller, Mathias and Ebling, Sarah},
-  journal={arXiv preprint arXiv:2210.05404},
-  year={2022}
-}
-``` -->
 
 ## Data
 
