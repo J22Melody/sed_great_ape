@@ -9,6 +9,7 @@ Please cite [our paper](https://arxiv.org/abs/2301.02214) as follows:
     title = "Automatic Sound Event Detection and Classification of Great Ape Calls Using Neural Networks",
     author = {Jiang, Zifan and Soldati, Adrian and Schamberg, Isaac and Lameira, Adriano R and Moran, Steven},
     booktitle = "Proceedings of the 20th International Congress of Phonetic Sciences (ICPhS 2023)",
+    pages = "3121--3125",
     month = august,
     year = "2023",
     address = "Prague, the Czech Republic"
