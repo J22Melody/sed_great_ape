@@ -2,7 +2,7 @@
 
 ## Citation
 
-Please cite [our paper](https://arxiv.org/abs/2301.02214) as follows:
+Please cite [our preprint](https://arxiv.org/abs/2301.02214) (Arxiv) and [our paper](https://guarant.cz/icphs2023/508.pdf) (ICPhS) as follows:
 
 ```
 @inproceedings{jiang-etal-2023-automatic,
